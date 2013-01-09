@@ -6,18 +6,19 @@ package gameEngine;
 
 import dungeon.Dungeon;
 import fileio.FileIO;
+import item.Item;
 
 /**
  *
  * @author Thomas
  */
-public class Controller {
+public class UserInterface {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Dungeon test = FileIO.readDungeon();
-        System.out.println("");
+        Game game = new Game();
+
     }
 }
