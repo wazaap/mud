@@ -11,9 +11,10 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,68 +25,78 @@ import java.util.logging.Logger;
 public class FileIO {
 
     public static Dungeon readDungeon() {
-        Dungeon tempDungeon = new Dungeon();
+        FileInputStream fstream = null;
         try {
-            FileInputStream fstream = new FileInputStream("testDungeon.txt");
-            // Get the object of DataInputStream
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String strLine;
+            Dungeon tempDungeon = new Dungeon();
+            fstream = new FileInputStream("testDungeon.txt");
+            try (DataInputStream in = new DataInputStream(fstream)) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String strLine;
 
-            //Read File Line By Line
-            while ((strLine = br.readLine()) != null) {
-                String[] arr = strLine.split("#");
-                // id, strLine, strLine, north, south, east, west
+                //Read File Line By Line
+                while ((strLine = br.readLine()) != null) {
+                    String[] arr = strLine.split("#");
+                    // id, strLine, strLine, north, south, east, west
 
-                // Creates a temperary room to be added
-                Room tempRoom = new Room(
-                        Integer.valueOf(arr[0]),
-                        Integer.valueOf(arr[1]),
-                        Integer.valueOf(arr[2]),
-                        Integer.valueOf(arr[3]),
-                        Integer.valueOf(arr[4]),
-                        arr[5],
-                        arr[6]);
-                tempDungeon.addRoom(tempRoom);
+                    // Creates a temperary room to be added
+                    Room tempRoom = new Room(
+                            Integer.parseInt(arr[0]),
+                            Integer.parseInt(arr[1]),
+                            Integer.parseInt(arr[2]),
+                            Integer.parseInt(arr[3]),
+                            Integer.parseInt(arr[4]),
+                            arr[5],
+                            arr[6]);
+                    tempDungeon.addRoom(tempRoom);
+                }
             }
-            //Close the input stream
-            in.close();
-        } catch (Exception e) {//Catch exception if any
-            System.err.println("Error: " + e.getMessage());
+            catch (IOException ex) {
+                Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+            }            return tempDungeon;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fstream.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return tempDungeon;
+        return null;
     }
-    
-    
-    public static Monster readMonster() {       
+
+    public static Monster readMonster() {
+
+        Monster tempMonster = null;
+        // Read a random line between 0 and the lineCount
         try {
-            FileInputStream fstream = new FileInputStream("random-monsters.txt");
-            // Get the object of DataInputStream
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String strLine;
-
-            //Read File Line By Line
-            while ((strLine = br.readLine()) != null) {
-                String[] arr = strLine.split("#");
-                // id, strLine, strLine, north, south, east, west
-
-                // Creates a temperary room to be added
-                Room tempRoom = new Room(
-                        Integer.valueOf(arr[0]),
-                        Integer.valueOf(arr[1]),
-                        Integer.valueOf(arr[2]),
-                        Integer.valueOf(arr[3]),
-                        Integer.valueOf(arr[4]),
-                        arr[5],
-                        arr[6]);
-                tempDungeon.addRoom(tempRoom);
+            FileInputStream fstream = null;
+            try {
+                fstream = new FileInputStream("random-monsters.txt");
+            } catch (FileNotFoundException ex) {
+                System.out.println(ex);
             }
-            //Close the input stream
-            in.close();
-        } catch (Exception e) {//Catch exception if any
-            System.err.println("Error: " + e.getMessage());
+            try (DataInputStream in = new DataInputStream(fstream)) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+
+                ArrayList<Monster> tempMonsters;
+                tempMonsters = new ArrayList();
+
+                String strLine;
+                while ((strLine = br.readLine()) != null) {
+                    String[] arr = strLine.split("#");
+                    tempMonster = new Monster(arr[0], arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
+                    tempMonsters.add(tempMonster);
+                }
+
+                Random gen = new Random();
+                int randomNumber = gen.nextInt(tempMonsters.size());
+                return tempMonsters.get(randomNumber);
+            }
+        } catch (IOException | NumberFormatException e) {//Catch exception if any
+            System.err.println("ddError: " + e);
         }
-        return tempDungeon;
+        return tempMonster;
     }
 }
