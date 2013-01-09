@@ -20,7 +20,7 @@ public class FileIO {
     public static Dungeon readDungeon() {
         Dungeon tempDungeon = new Dungeon();
         try {
-            FileInputStream fstream = new FileInputStream("test-dungeon.txt");
+            FileInputStream fstream = new FileInputStream("testDungeon.txt");
             // Get the object of DataInputStream
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
