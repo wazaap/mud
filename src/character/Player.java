@@ -5,7 +5,7 @@
 package character;
 
 import java.util.ArrayList;
-
+import item.Item;
 /**
  *
  * @author Thomas
