@@ -23,6 +23,9 @@ public class UserInterface {
         Scanner scanner = new Scanner(System.in);
         String move = "";
         while (move.equals("stop") == false) {
+            System.out.println(game.getCurrentRoom().getTitle());
+            System.out.println(game.getCurrentRoom().getDescription());
+            System.out.println(game.getCurrentRoom().availableDirections());
             System.out.println("Where would you like to go: ");
             move = scanner.next();
             game.move(move);
