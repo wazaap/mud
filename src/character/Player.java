@@ -5,6 +5,7 @@
 package character;
 
 import item.Item;
+import dungeon.Room;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,7 @@ public class Player {
     private Item weapon;
     private Item amour;
     private int gold;
+    private Room currentRoom;
     ArrayList inventory = new ArrayList();
 
     public Player(String name, int hitPoints, Item weapon, Item amour, int gold) {
@@ -75,4 +77,13 @@ public class Player {
     public void setInventory(ArrayList inventory) {
         this.inventory = inventory;
     }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+    
 }
