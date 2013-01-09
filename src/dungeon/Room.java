@@ -4,6 +4,9 @@
  */
 package dungeon;
 
+import character.Monster;
+import java.util.ArrayList;
+
 /**
  *
  * @author Mads
@@ -17,6 +20,8 @@ public class Room {
     private int west;
     private String title;
     private String description;
+    
+    private ArrayList<Monster> monsters = new ArrayList();
 
     public Room(int id, int north, int south, int east, int west, String title, String description) {
         this.id = id;
@@ -28,7 +33,22 @@ public class Room {
         this.description = description;
     }
 
-
+    public String availableDirections() {
+        String res = "Available directions: ";
+        if (this.north != -1) {
+            res += "[north]";
+        }
+        if (this.south != -1) {
+            res += "[south]";
+        }
+        if (this.west != -1) {
+            res += "[west]";
+        }
+        if (this.east != -1) {
+            res += "[east]";
+        }
+        return res;
+    }
 
     public int getId() {
         return id;

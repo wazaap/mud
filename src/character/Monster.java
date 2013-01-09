@@ -11,13 +11,17 @@ package character;
 public class Monster {
     private String name;
     private String description;
-    private int hitPoints;
+    private int healthpoints;
     private int attackPoints;
 
+    public Monster() {
+        
+    }    
+    
     public Monster(String name, String description, int hitPoints, int attackPoints) {
         this.name = name;
         this.description = description;
-        this.hitPoints = hitPoints;
+        this.healthpoints = hitPoints;
         this.attackPoints = attackPoints;
     }
 
@@ -38,11 +42,11 @@ public class Monster {
     }
 
     public int getHitPoints() {
-        return hitPoints;
+        return healthpoints;
     }
 
     public void setHitPoints(int hitPoints) {
-        this.hitPoints = hitPoints;
+        this.healthpoints = hitPoints;
     }
 
     public int getAttackPoints() {
