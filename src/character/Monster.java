@@ -8,6 +8,6 @@ package character;
  *
  * @author Thomas
  */
-public class NewClass {
-    
+public class Monster {
+
 }
