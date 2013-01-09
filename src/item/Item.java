@@ -16,6 +16,14 @@ public class Item {
     private int gold;
     private int amour;
 
+    public int getAmour() {
+        return amour;
+    }
+
+    public void setAmour(int amour) {
+        this.amour = amour;
+    }
+
     public String getName() {
         return name;
     }
@@ -54,13 +62,5 @@ public class Item {
 
     public void setGold(int gold) {
         this.gold = gold;
-    }
-
-    public int getShield() {
-        return shield;
-    }
-
-    public void setShield(int shield) {
-        this.shield = shield;
     }
 }
