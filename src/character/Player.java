@@ -4,13 +4,15 @@
  */
 package character;
 
-import java.util.ArrayList;
 import item.Item;
+import java.util.ArrayList;
+
 /**
  *
  * @author Thomas
  */
 public class Player {
+
     private String name;
     private int hitPoints;
     private Item weapon;
@@ -73,9 +75,4 @@ public class Player {
     public void setInventory(ArrayList inventory) {
         this.inventory = inventory;
     }
-    
-    
-    
-    
-    
 }
