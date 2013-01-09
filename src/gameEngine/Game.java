@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mud;
+package gameEngine;
 
 /**
  *
  * @author Thomas
  */
-public class Mud {
+public class Game {
 
     /**
      * @param args the command line arguments
