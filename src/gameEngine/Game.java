@@ -25,7 +25,7 @@ public class Game {
         dungeon = FileIO.readDungeon();
         sword = new Item();
         shield = new Item();
-        player = new Player("Mads", 10, sword, shield, 200);
+        player = new Player("Mads", 10, sword, shield, 200, dungeon.getRoom(5));
     }
 
     public void move(String direction) {

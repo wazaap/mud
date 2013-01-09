@@ -22,12 +22,13 @@ public class Player {
     private Room currentRoom;
     ArrayList inventory = new ArrayList();
 
-    public Player(String name, int hitPoints, Item weapon, Item amour, int gold) {
+    public Player(String name, int hitPoints, Item weapon, Item amour, int gold, Room room) {
         this.name = name;
         this.hitPoints = hitPoints;
         this.weapon = weapon;
         this.amour = amour;
         this.gold = gold;
+        this.currentRoom = room;
     }
 
     public String getName() {
