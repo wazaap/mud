@@ -4,9 +4,7 @@
  */
 package gameEngine;
 
-import dungeon.Dungeon;
-import fileio.FileIO;
-import item.Item;
+
 import java.util.Scanner;
 
 /**
@@ -21,7 +19,7 @@ public class UserInterface {
     public static void main(String[] args) {
         Game game = new Game();
         Scanner scanner = new Scanner(System.in);
-        String command = "";
+        String command;
         System.out.println("Type \"help\" to see a list of commands. \nType \"stop\" to quit the game.\n");
         System.out.println(game.getCurrentRoom().availableDirections());
         System.out.println("Where would you like to go: ");
@@ -46,12 +44,7 @@ public class UserInterface {
             }
             System.out.println("What would you like to do?: ");
             command = scanner.next();
-
-            System.out.println(game.getCurrentRoom().getId());
         }
         System.out.println("You quit the game!! ");
-    }
-
-    public void run() {
     }
 }

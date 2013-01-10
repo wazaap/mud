@@ -54,7 +54,6 @@ public class Game {
                     res += "You enter " + getCurrentRoom().getTitle() + "\n";
                     res += getCurrentRoom().getDescription() + "\n";
                     res += player.getCurrentRoom().availableDirections();
-                    System.out.println(getCurrentRoom().getId());
                     return res;
                 }
             }
