@@ -43,7 +43,7 @@ public class Room {
     }
 
     public String availableDirections() {
-        String res = "Available directions: ";
+        String res = "You can continue towards: ";
         if (this.north != -1) {
             res += "[north]";
         }

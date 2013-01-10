@@ -10,7 +10,6 @@ import dungeon.Room;
 import fileio.FileIO;
 import item.Item;
 
-
 /**
  *
  * @author Thomas
@@ -29,8 +28,9 @@ public class Game {
         player = new Player("Mads", 10, sword, shield, 200, dungeon.getRoom(1));
     }
 
-    public void move(String direction) {
+    public String move(String direction) {
         Room currentRoom = player.getCurrentRoom();
+        String res;
         int moveTo = 0;
         switch (direction) {
             case "north":
@@ -50,14 +50,30 @@ public class Game {
             for (int i = 0; i < dungeon.size(); i++) {
                 if (dungeon.getRoom(i).getId() == moveTo) {
                     player.setCurrentRoom(dungeon.getRoom(i));
+                    res = "\nYou go towards " + direction + "\n";
+                    res += "You enter " + getCurrentRoom().getTitle() + "\n";
+                    res += getCurrentRoom().getDescription() + "\n";
+                    res += player.getCurrentRoom().availableDirections();
+                    System.out.println(getCurrentRoom().getId());
+                    return res;
                 }
             }
         }
-
+        res = "You walk into the wall.. AND IT HURTS!!";
+        return res;
     }
 
     public Room getCurrentRoom() {
         return player.getCurrentRoom();
     }
-    
+
+    public String help() {
+        String res = "You can use the following commands: \n";
+        res += "Type \"north\" to go towards the north \n";
+        res += "Type \"south\" to go towards the south \n";
+        res += "Type \"east\" to go towards the south \n";
+        res += "Type \"west\" to go towards the south \n";
+        res += "Type \"attack\" to attack a monster \n";
+        return res;
+    }
 }
