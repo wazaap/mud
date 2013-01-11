@@ -151,9 +151,9 @@ public class Game {
     }
     public String getPlayerInventory() {
         String res = "You have the following items in your inventory: \n";
-        for (int i = 0; i< player.getInventory().indexOf(i); i++)
-            res += i + ":" +player.getInventory().get(i).toString();
-        
+        for (int i = 0; i< player.getInventory().size(); i++){
+            res += i + ": " +player.getInventory().get(i).toString() + "\n";
+        }
         return res;
     }
 }
