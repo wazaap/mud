@@ -21,7 +21,7 @@ public class Game {
     private Player player;
     private Dungeon dungeon;
     private Room currentRoom;
-    
+
     public Game() {
         dungeon = FileIO.readDungeon(null);
         sword = new Item();
@@ -31,7 +31,7 @@ public class Game {
 
     public String move(String direction) {
         currentRoom = player.getCurrentRoom();
-        String res;
+        String res = "";
         int moveTo = 0;
         switch (direction) {
             case "north":
@@ -47,6 +47,10 @@ public class Game {
                 moveTo = currentRoom.getWest();
                 break;
         }
+        while (currentRoom.amountOfMonsters() > 0) {
+            res = "In your attempt to escape, a monster attacks you";
+            return res;
+        } 
         if (moveTo > 0) {
             for (int i = 0; i < dungeon.size(); i++) {
                 if (dungeon.getRoom(i).getId() == moveTo) {
@@ -59,9 +63,13 @@ public class Game {
                     return res;
                 }
             }
+            res = "You walk into the wall.. AND IT HURTS!!";
         }
-        res = "You walk into the wall.. AND IT HURTS!!";
+
+
+
         return res;
+
     }
 
     public Room getCurrentRoom() {
@@ -78,15 +86,18 @@ public class Game {
         res += "Type \"look\" to look around \n";
         return res;
     }
-    
-    public String look(){
+
+    public String look() {
         currentRoom = player.getCurrentRoom();
         String res;
-        res = currentRoom.getTitle()+ "\n";
-        res += currentRoom.getDescription()+ "\n";
-        res += currentRoom.availableDirections()+ "\n";
+        res = currentRoom.getTitle() + "\n";
+        res += currentRoom.getDescription() + "\n";
+        res += currentRoom.availableDirections() + "\n";
         res += currentRoom.getMonsters();
-        
+
         return res;
+    }
+
+    public void attack() {
     }
 }

@@ -9,15 +9,15 @@ package character;
  * @author Thomas
  */
 public class Monster {
+
     private String name;
     private String description;
     private int healthpoints;
     private int attackPoints;
 
     public Monster() {
-        
-    }    
-    
+    }
+
     public Monster(String name, String description, int hitPoints, int attackPoints) {
         this.name = name;
         this.description = description;
@@ -56,6 +56,4 @@ public class Monster {
     public void setAttackPoints(int attackPoints) {
         this.attackPoints = attackPoints;
     }
-    
-    
 }
