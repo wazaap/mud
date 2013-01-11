@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fileio;
 
 import character.Monster;
@@ -13,10 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,79 +17,85 @@ import java.util.logging.Logger;
  */
 public class FileIO {
 
-    public static Dungeon readDungeon() {
-        FileInputStream fstream = null;
+    /**
+     * Reads a file from a specified filepath, and returns a string with the
+     * content.
+     *
+     * @param filepath Path to the file
+     * @return String
+     */
+    private static String readFile(String filepath) {
+        String res = "";
         try {
-            Dungeon tempDungeon = new Dungeon();
-            fstream = new FileInputStream("testDungeon.txt");
-            try (DataInputStream in = new DataInputStream(fstream)) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                String strLine;
+            // Forsøg at indlæse filen
+            FileInputStream fstream = new FileInputStream(filepath);
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-                //Read File Line By Line
-                while ((strLine = br.readLine()) != null) {
-                    String[] arr = strLine.split("#");
-                    // id, strLine, strLine, north, south, east, west
-
-                    // Creates a temperary room to be added
-                    Room tempRoom = new Room(
-                            Integer.parseInt(arr[0]),
-                            Integer.parseInt(arr[1]),
-                            Integer.parseInt(arr[2]),
-                            Integer.parseInt(arr[3]),
-                            Integer.parseInt(arr[4]),
-                            arr[5],
-                            arr[6]);
-                    tempDungeon.addRoom(tempRoom);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return tempDungeon;
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+            // Temperary input
+            String tempStr;
             try {
-                fstream.close();
+                // Imens inputtet ikke er tomt, tilføj det til strLine
+                while ((tempStr = br.readLine()) != null) {
+                    res += tempStr + "\n";
+                }
+                // Remove the last linebreak
+                res = res.substring(0, res.length() - 1);
+
             } catch (IOException ex) {
-                Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("ERROR: File: \"" + filepath + "\" could not be read!\n" + ex);
             }
+        } catch (FileNotFoundException ex) {
+            System.out.println("ERROR: File: \"" + filepath + "\" could not be found!\n" + ex);
         }
-        return null;
+
+
+        return res;
     }
 
-    public static Monster readMonster() {
+    /**
+     * Reads a dungeon from a specified file. 
+     * @return A dungeon
+     */
+    public static Dungeon readDungeon() {
+        Dungeon tempDungeon = new Dungeon();
 
-        Monster tempMonster = null;
-        // Read a random line between 0 and the lineCount
-        try {
-            FileInputStream fstream = null;
-            try {
-                fstream = new FileInputStream("random-monsters.txt");
-            } catch (FileNotFoundException ex) {
-                System.out.println(ex);
-            }
-            try (DataInputStream in = new DataInputStream(fstream)) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String StrInput = readFile("testDungeon.txt");
+        String[] rooms = StrInput.split("\n");
+        // id, strLine, strLine, north, south, east, west
 
-
-                ArrayList<Monster> tempMonsters;
-                tempMonsters = new ArrayList();
-
-                String strLine;
-                while ((strLine = br.readLine()) != null) {
-                    String[] arr = strLine.split("#");
-                    tempMonster = new Monster(arr[0], arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
-                    tempMonsters.add(tempMonster);
-                }
-
-                Random gen = new Random();
-                int randomNumber = gen.nextInt(tempMonsters.size());
-                return tempMonsters.get(randomNumber);
-            }
-        } catch (IOException | NumberFormatException e) {//Catch exception if any
-            System.err.println("ddError: " + e);
+        for (int i = 0; i < rooms.length; i++) {
+            String[] arr = rooms[i].split("#");
+            // Creates a temperary room to be added
+            Room tempRoom = new Room(
+                    Integer.parseInt(arr[0]),
+                    Integer.parseInt(arr[1]),
+                    Integer.parseInt(arr[2]),
+                    Integer.parseInt(arr[3]),
+                    Integer.parseInt(arr[4]),
+                    arr[5],
+                    arr[6]);
+            tempDungeon.addRoom(tempRoom);
         }
+        return tempDungeon;
+    }
+
+    /**
+     * Reads a random monster from the 'random-monsters.txt' file. More monsters can be added there. 
+     * @return A random monster
+     */
+    public static Monster readRandomMonster() {
+        String[] monsters = readFile("random-monsters.txt").split("\n");
+
+        Random gen = new Random();
+        int randomNum = gen.nextInt(monsters.length);
+
+        String[] arr = monsters[randomNum].split("#");
+        Monster tempMonster = new Monster(
+                arr[0],
+                arr[1],
+                Integer.parseInt(arr[2]),
+                Integer.parseInt(arr[3]));
         return tempMonster;
     }
 }
