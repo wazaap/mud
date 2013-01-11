@@ -37,7 +37,7 @@ public class Room {
         Random gen = new Random();
         int randomNumber = gen.nextInt(5);
         for (int i = 0; i < randomNumber; i++) {
-            monsters.add(FileIO.readMonster());
+            monsters.add(FileIO.readRandomMonster());
         }
     }
 

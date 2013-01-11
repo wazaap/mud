@@ -17,12 +17,6 @@ import java.util.Random;
  */
 public class FileIO {
 
-    public static void main(String[] args) {
-        String str = readFile("testDungeon.txt");
-        System.out.println(str);
-
-    }
-
     /**
      * Reads a file from a specified filepath, and returns a string with the
      * content.
@@ -59,6 +53,10 @@ public class FileIO {
         return res;
     }
 
+    /**
+     * Reads a dungeon from a specified file. 
+     * @return A dungeon
+     */
     public static Dungeon readDungeon() {
         Dungeon tempDungeon = new Dungeon();
 
@@ -82,7 +80,11 @@ public class FileIO {
         return tempDungeon;
     }
 
-    public static Monster readMonster() {
+    /**
+     * Reads a random monster from the 'random-monsters.txt' file. More monsters can be added there. 
+     * @return A random monster
+     */
+    public static Monster readRandomMonster() {
         String[] monsters = readFile("random-monsters.txt").split("\n");
 
         Random gen = new Random();
