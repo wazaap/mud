@@ -53,7 +53,8 @@ public class Game {
                     res = "\nYou go towards " + direction + "\n";
                     res += "You enter " + getCurrentRoom().getTitle() + "\n";
                     res += getCurrentRoom().getDescription() + "\n";
-                    res += player.getCurrentRoom().availableDirections();
+                    res += player.getCurrentRoom().availableDirections() + "\n";
+                    res += player.getCurrentRoom().getMonsters();
                     return res;
                 }
             }
