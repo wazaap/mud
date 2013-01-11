@@ -16,17 +16,6 @@ public class Item {
     private int gold;
     private int amour;
 
-    public Item(String name, String description, int healthpoints, int damage, int gold, int amour) {
-        this.name = name;
-        this.description = description;
-        this.healthpoints = healthpoints;
-        this.damage = damage;
-        this.gold = gold;
-        this.amour = amour;
-    }
-
-    
-    
     public int getAmour() {
         return amour;
     }
