@@ -20,7 +20,8 @@ public class Game {
     private Item shield;
     private Player player;
     private Dungeon dungeon;
-
+    private Room currentRoom;
+    
     public Game() {
         dungeon = FileIO.readDungeon();
         sword = new Item();
@@ -29,7 +30,7 @@ public class Game {
     }
 
     public String move(String direction) {
-        Room currentRoom = player.getCurrentRoom();
+        currentRoom = player.getCurrentRoom();
         String res;
         int moveTo = 0;
         switch (direction) {
@@ -74,6 +75,18 @@ public class Game {
         res += "Type \"east\" to go towards the south \n";
         res += "Type \"west\" to go towards the south \n";
         res += "Type \"attack\" to attack a monster \n";
+        res += "Type \"look\" to look around \n";
+        return res;
+    }
+    
+    public String look(){
+        currentRoom = player.getCurrentRoom();
+        String res;
+        res = currentRoom.getTitle()+ "\n";
+        res += currentRoom.getDescription()+ "\n";
+        res += currentRoom.availableDirections()+ "\n";
+        res += currentRoom.getMonsters();
+        
         return res;
     }
 }
