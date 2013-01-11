@@ -16,17 +16,17 @@ public class Player {
 
     private String name;
     private int hitPoints;
-    private Item weapon;
-    private Item amour;
+    private Item slot1;
+    private Item slot2;
     private int gold;
     private Room currentRoom;
     ArrayList inventory = new ArrayList();
 
-    public Player(String name, int hitPoints, Item weapon, Item amour, int gold, Room room) {
+    public Player(String name, int hitPoints, Item slot1, Item slot2, int gold, Room room) {
         this.name = name;
         this.hitPoints = hitPoints;
-        this.weapon = weapon;
-        this.amour = amour;
+        this.slot1 = slot1;
+        this.slot2 = slot2;
         this.gold = gold;
         this.currentRoom = room;
     }
@@ -48,19 +48,19 @@ public class Player {
     }
 
     public Item getWeapon() {
-        return weapon;
+        return slot1;
     }
 
     public void setWeapon(Item weapon) {
-        this.weapon = weapon;
+        this.slot1 = weapon;
     }
 
     public Item getAmour() {
-        return amour;
+        return slot2;
     }
 
     public void setAmour(Item amour) {
-        this.amour = amour;
+        this.slot2 = amour;
     }
 
     public int getGold() {
@@ -85,5 +85,13 @@ public class Player {
 
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
+    }
+
+    public Item getGearSlot1() {
+        return slot1;
+    }
+
+    public Item getGearSlot2() {
+        return slot1;
     }
 }
