@@ -5,9 +5,7 @@
 package dungeon;
 
 import character.Monster;
-import fileio.FileIO;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -32,13 +30,10 @@ public class Room {
         this.west = west;
         this.title = title;
         this.description = description;
-
-        // Create random monsters
-        Random gen = new Random();
-        int randomNumber = gen.nextInt(5);
-        for (int i = 0; i < randomNumber; i++) {
-            monsters.add(FileIO.readRandomMonster());
-        }
+    }
+    
+    public void addMonster(Monster monster) {
+        monsters.add(monster);
     }
 
     public String availableDirections() {

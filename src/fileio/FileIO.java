@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -17,9 +18,11 @@ import java.util.Random;
  * @author Mads
  */
 public class FileIO {
+
     public static final String RANDOM_MONSTERS_FILEPATH = "random-monsters.txt";
     public static final String STANDARD_DUNGEON_FILEPATH = "testDungeon.txt";
     public static final String STANDARD_WEAPONS_PATH = "weapons.txt";
+
     /**
      * Reads a file from a specified filepath, and returns a string with the
      * content.
@@ -57,20 +60,20 @@ public class FileIO {
     }
 
     /**
-     * Reads a dungeon from a specified file. 
+     * Reads a dungeon from a specified file.
+     *
      * @return A dungeon
      */
     public static Dungeon readDungeon(String filepath) {
         String fileInput;
-        if(filepath == null) {
+        if (filepath == null) {
             fileInput = readFile(STANDARD_DUNGEON_FILEPATH);
-        }
-        else {
+        } else {
             fileInput = readFile(filepath);
         }
         Dungeon tempDungeon = new Dungeon();
 
-         
+
         String[] rooms = fileInput.split("\n");
         // id, strLine, strLine, north, south, east, west
 
@@ -91,44 +94,50 @@ public class FileIO {
     }
 
     /**
-     * Reads a random monster from the 'random-monsters.txt' file. More monsters can be added there. 
+     * Reads a random monster from the 'random-monsters.txt' file. More monsters
+     * can be added there.
+     *
      * @return A random monster
      */
-    public static Monster readRandomMonster() {
-        String[] monsters = readFile(RANDOM_MONSTERS_FILEPATH).split("\n");
+    public static ArrayList<Monster> getAllMonsters() {
+        String[] strInput = readFile(RANDOM_MONSTERS_FILEPATH).split("\n");
 
-        Random gen = new Random();
-        int randomNum = gen.nextInt(monsters.length);
-
-        String[] arr = monsters[randomNum].split("#");
-        Monster tempMonster = new Monster(
-                arr[0],
-                arr[1],
-                Integer.parseInt(arr[2]),
-                Integer.parseInt(arr[3]));
-        return tempMonster;
+        ArrayList<Monster> monsters = new ArrayList();
+        for (int i = 0; i < strInput.length; i++) {
+            String[] arr = strInput[i].split("#");
+            Monster tempMonster = new Monster(
+                    arr[0],
+                    arr[1],
+                    Integer.parseInt(arr[2]),
+                    Integer.parseInt(arr[3]));
+            monsters.add(tempMonster);
+        }
+        return monsters;
     }
-    
-    
-        /**
-     * Reads a random monster from the 'random-monsters.txt' file. More monsters can be added there. 
+
+    /**
+     * Reads a random monster from the 'random-monsters.txt' file. More monsters
+     * can be added there.
+     *
      * @return A random monster
      */
-    public static Item readWeapons() {
-        String[] weapons = readFile(STANDARD_WEAPONS_PATH).split("\n");
+    public static ArrayList<Item> getAllItems() {
+        String[] strArr = readFile(STANDARD_WEAPONS_PATH).split("\n");
 
-        Random gen = new Random();
-        int randomNum = gen.nextInt(weapons.length);
-        
-        
-        String[] arr = weapons[randomNum].split("#");
-        Item tempWeapon = new Item(
-                arr[0], 
-                arr[1], 
-                Integer.parseInt(arr[2]), 
-                Integer.parseInt(arr[3]), 
-                Integer.parseInt(arr[4]), 
-                Integer.parseInt(arr[5]));
-        return tempWeapon;
+        ArrayList<Item> items = new ArrayList();
+
+        for (int i = 0; i < strArr.length; i++) {
+            String[] arr = strArr[i].split("#");
+            Item tempItem = new Item(
+                    arr[0],
+                    arr[1],
+                    Integer.parseInt(arr[2]),
+                    Integer.parseInt(arr[3]),
+                    Integer.parseInt(arr[4]),
+                    Integer.parseInt(arr[5]));
+            items.add(tempItem);
+        }
+
+        return items;
     }
 }

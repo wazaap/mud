@@ -4,11 +4,14 @@
  */
 package gameEngine;
 
+import character.Monster;
 import character.Player;
 import dungeon.Dungeon;
 import dungeon.Room;
 import fileio.FileIO;
 import item.Item;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -22,14 +25,36 @@ public class Game {
     private Dungeon dungeon;
     private Room currentRoom;
 
+    private ArrayList<Item> items = FileIO.getAllItems();
+    private ArrayList<Monster> monsters = FileIO.getAllMonsters();
+    
     public Game() {
+        // Initialize the dungeon
         dungeon = FileIO.readDungeon(null);
-        sword = new Item();
-        shield = new Item();
+        
+        // Add monsters to rooms
+        for(int i = 0; i < dungeon.size(); i++) {
+            Random gen = new Random();
+            int nextMonster = gen.nextInt(monsters.size());
+            int amountOfMonsters = gen.nextInt(5);
+            for(int j = 0; j < amountOfMonsters; j++) {
+                dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
+                
+            } 
+        }
+        
+        sword = items.get(0);
+        shield = items.get(4);
         player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
-        sword.setDamage(20);
+        
     }
 
+    public Monster getRandomMonster() {
+        Random gen = new Random();
+        int num = gen.nextInt(monsters.size());
+        return monsters.get(num);
+    }
+    
     public String move(String direction) {
         currentRoom = player.getCurrentRoom();
         String res = "";
