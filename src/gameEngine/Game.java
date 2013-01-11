@@ -38,8 +38,9 @@ public class Game {
             int amountOfMonsters = gen.nextInt(5);
             for (int j = 0; j < amountOfMonsters; j++) {
                 dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
-
-            }
+                nextMonster = gen.nextInt(monsters.size());
+                
+            } 
         }
 
         sword = items.get(0);
