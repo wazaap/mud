@@ -126,4 +126,8 @@ public class Room {
         }
         return res;
     }
+    
+    public int amountOfMonsters() {
+        return monsters.size();        
+    }
 }

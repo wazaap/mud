@@ -4,7 +4,6 @@
  */
 package gameEngine;
 
-
 import java.util.Scanner;
 
 /**
@@ -44,7 +43,7 @@ public class UserInterface {
                 case "look":
                     System.out.println(game.look());
                     break;
-                default :
+                default:
                     System.out.println("I do not understand the command: " + command + "\nType \"help\" to see the commands.");
             }
             System.out.println("What would you like to do?: ");

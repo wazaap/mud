@@ -49,10 +49,10 @@ public class FileIO {
                             arr[6]);
                     tempDungeon.addRoom(tempRoom);
                 }
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-            }            return tempDungeon;
+            }
+            return tempDungeon;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
