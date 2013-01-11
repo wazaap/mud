@@ -46,6 +46,9 @@ public class Game {
         sword = items.get(0);
         shield = items.get(4);
         player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
+        player.getInventory().add(items.get(1));
+        player.getInventory().add(items.get(1));
+        player.getInventory().add(items.get(1));
 
     }
 
@@ -145,5 +148,12 @@ public class Game {
         res += "A " + currentRoom.getMonster(0).getName() + " hits you. You now have " + player.getHitPoints() + " hitpoints left.";
         return res;
 
+    }
+    public String getPlayerInventory() {
+        String res = "You have the following items in your inventory: \n";
+        for (int i = 0; i< player.getInventory().indexOf(i); i++)
+            res += i + ":" +player.getInventory().get(i).toString();
+        
+        return res;
     }
 }
