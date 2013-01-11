@@ -41,6 +41,9 @@ public class UserInterface {
                 case "help":
                     System.out.println(game.help());
                     break;
+                case "look":
+                    System.out.println(game.look());
+                    break;
                 default :
                     System.out.println("I do not understand the command: " + command + "\nType \"help\" to see the commands.");
             }

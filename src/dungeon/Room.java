@@ -22,7 +22,6 @@ public class Room {
     private int west;
     private String title;
     private String description;
-    
     private ArrayList<Monster> monsters = new ArrayList();
 
     public Room(int id, int north, int south, int east, int west, String title, String description) {
@@ -33,11 +32,11 @@ public class Room {
         this.west = west;
         this.title = title;
         this.description = description;
-        
+
         // Create random monsters
         Random gen = new Random();
         int randomNumber = gen.nextInt(5);
-        for(int i = 0; i < randomNumber; i++) {
+        for (int i = 0; i < randomNumber; i++) {
             monsters.add(FileIO.readMonster());
         }
     }
@@ -113,5 +112,18 @@ public class Room {
 
     public void setEast(int east) {
         this.east = east;
+    }
+
+    public String getMonsters() {
+        String res;
+        if (monsters.size() > 0) {
+            res = "You see the following monsters:\n";
+            for (int i = 0; i < monsters.size(); i++) {
+                res += monsters.get(i).getName() + "\n";
+            }
+        } else {
+            res = "You see no monsters in this room!";
+        }
+        return res;
     }
 }
