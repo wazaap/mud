@@ -130,4 +130,13 @@ public class Room {
     public int amountOfMonsters() {
         return monsters.size();        
     }
+    
+    public Monster getMonster(int i){
+        Monster thisMonster = monsters.get(i);
+        return thisMonster;
+    }
+    
+    public void removeFirstMonster(){
+        monsters.remove(0);
+    }
 }
