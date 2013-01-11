@@ -1,4 +1,4 @@
-Pencil#A sharpned pencil which you are able to stab monsters with#0#0#125#0#0
+Pencil#A sharpned pencil which you are able to stab monsters with#0#125#0#0
 Iron sword#A heavy sword, build to slaughter!#0#20#0#0
 Faxi Kondi Booster#Energydrink which gives you 10 hp!#10#0#0#0
 Gold#Gold which you can use to buy items#0#0#10#0
