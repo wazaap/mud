@@ -23,7 +23,7 @@ public class Game {
     private Room currentRoom;
     
     public Game() {
-        dungeon = FileIO.readDungeon();
+        dungeon = FileIO.readDungeon(null);
         sword = new Item();
         shield = new Item();
         player = new Player("Mads", 10, sword, shield, 200, dungeon.getRoom(1));
