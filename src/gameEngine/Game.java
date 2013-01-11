@@ -26,7 +26,8 @@ public class Game {
         dungeon = FileIO.readDungeon();
         sword = new Item();
         shield = new Item();
-        player = new Player("Mads", 10, sword, shield, 200, dungeon.getRoom(1));
+        player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
+        sword.setDamage(20);
     }
 
     public String move(String direction) {
@@ -50,7 +51,7 @@ public class Game {
         while (currentRoom.amountOfMonsters() > 0) {
             res = "In your attempt to escape, a monster attacks you";
             return res;
-        } 
+        }
         if (moveTo > 0) {
             for (int i = 0; i < dungeon.size(); i++) {
                 if (dungeon.getRoom(i).getId() == moveTo) {
@@ -98,6 +99,20 @@ public class Game {
         return res;
     }
 
-    public void attack() {
+    public String attack() {
+        if (currentRoom.amountOfMonsters() > 0) {
+            if (player.getHitPoints() > 0 && currentRoom.getMonster(0).getHitPoints() > 0) {
+                player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
+                currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
+                if (player.getHitPoints() <= 0) {
+                    return "You have died!";
+                } else if (currentRoom.getMonster(0).getHitPoints() <= 0) {
+                    currentRoom.removeFirstMonster();
+                    return "You have killed the a " + currentRoom.getMonster(0).getName();
+                }
+            }
+            
+        }
+        return "There is no monsters left in the room.";
     }
 }
