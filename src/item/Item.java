@@ -14,7 +14,7 @@ public class Item {
     private int healthpoints;
     private int damage;
     private int gold;
-    private int amour;
+    private int shield;
 
     public Item(String name, String description, int healthpoints, int damage, int gold, int amour) {
         this.name = name;
@@ -22,17 +22,34 @@ public class Item {
         this.healthpoints = healthpoints;
         this.damage = damage;
         this.gold = gold;
-        this.amour = amour;
+        this.shield = amour;
     }
 
-    
-    
-    public int getAmour() {
-        return amour;
+    @Override
+    public String toString() {
+        String res = "";
+        if (healthpoints > 0) {
+            res += this.name + ": " + this.description + " (Healthpoints: " + this.healthpoints +")";
+        }
+        if (damage > 0) {
+            res += this.name + ": " + this.description + " (Damage: " + this.damage +")";
+        }
+        if (gold > 0) {
+            res += this.name + ": " + this.description + " (Value: " + this.gold +")";
+        }
+        if (shield > 0) {
+            res += this.name + ": " + this.description + " (Amour points: " + this.damage +")";
+        }
+
+        return res;
     }
 
-    public void setAmour(int amour) {
-        this.amour = amour;
+    public int getShield() {
+        return shield;
+    }
+
+    public void setShield(int shield) {
+        this.shield = shield;
     }
 
     public String getName() {
