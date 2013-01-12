@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -86,8 +85,8 @@ public class FileIO {
                     Integer.parseInt(arr[2]),
                     Integer.parseInt(arr[3]),
                     Integer.parseInt(arr[4]),
-                    arr[5],
-                    arr[6]);
+                    arr[5].replace("\n", ""),
+                    arr[6].replace("\n", ""));
             tempDungeon.addRoom(tempRoom);
         }
         return tempDungeon;

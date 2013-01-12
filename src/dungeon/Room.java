@@ -31,13 +31,13 @@ public class Room {
         this.title = title;
         this.description = description;
     }
-    
+
     public void addMonster(Monster monster) {
         monsters.add(monster);
     }
 
     public String availableDirections() {
-        String res = "You can continue towards: ";
+        String res = "You can continue towards:" + System.getProperty("line.separator");
         if (this.north != -1) {
             res += "[north]";
         }
@@ -50,6 +50,7 @@ public class Room {
         if (this.east != -1) {
             res += "[east]";
         }
+        res += System.getProperty("line.separator");
         return res;
     }
 
@@ -112,26 +113,26 @@ public class Room {
     public String getMonsters() {
         String res;
         if (monsters.size() > 0) {
-            res = "You see the following monsters:\n";
+            res = "You see the following monsters:"  + System.getProperty("line.separator");
             for (int i = 0; i < monsters.size(); i++) {
-                res += monsters.get(i).getName() + "\n";
+                res += monsters.get(i).getName()  + System.getProperty("line.separator");
             }
         } else {
-            res = "You see no monsters in this room!";
+            res = "You see no monsters in this room!" + System.getProperty("line.separator");
         }
         return res;
     }
-    
+
     public int amountOfMonsters() {
-        return monsters.size();        
+        return monsters.size();
     }
-    
-    public Monster getMonster(int i){
+
+    public Monster getMonster(int i) {
         Monster thisMonster = monsters.get(i);
         return thisMonster;
     }
-    
-    public void removeFirstMonster(){
+
+    public void removeFirstMonster() {
         monsters.remove(0);
     }
 }
