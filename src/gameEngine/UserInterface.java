@@ -21,10 +21,15 @@ public class UserInterface {
         String command;
         System.out.println("Type \"help\" to see a list of commands. \nType \"stop\" to quit the game.\n");
         System.out.println(game.getCurrentRoom().availableDirections());
-        System.out.println("Where would you like to go: ");
-        command = scanner.next();
-        while (command.equals("stop") == false) {
+        boolean stop = false;
+        while (stop == false) {
+            System.out.println("Where would you like to do: ");
+            command = scanner.next();
             switch (command) {
+                case "stop":
+                    System.out.println("You quit the game!! ");
+                    stop = true;
+                    break;
                 case "north":
                     System.out.println(game.move(command));
                     break;
@@ -46,12 +51,18 @@ public class UserInterface {
                 case "attack":
                     System.out.println(game.attack());
                     break;
+                case "use":
+                    System.out.println(game.getPlayerInventory());
+                    break;
+                case "gear":
+                    System.out.println(game.getPlayerGear());
+                    break;
                 default:
                     System.out.println("I do not understand the command: " + command + "\nType \"help\" to see the commands.");
+
             }
-            System.out.println("What would you like to do?: ");
-            command = scanner.next();
+
+
         }
-        System.out.println("You quit the game!! ");
     }
 }

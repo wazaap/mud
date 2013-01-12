@@ -39,13 +39,14 @@ public class Game {
             for (int j = 0; j < amountOfMonsters; j++) {
                 dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
                 nextMonster = gen.nextInt(monsters.size());
-                
-            } 
+
+            }
         }
 
         sword = items.get(0);
         shield = items.get(4);
         player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
+        player.getInventory().add(items.get(1));
 
     }
 
@@ -141,9 +142,32 @@ public class Game {
             currentRoom.removeFirstMonster();
             return "You have killed the a " + monsterName;
         }
-        String res = "You hit a " + currentRoom.getMonster(0).getName() + " it now has " + currentRoom.getMonster(0).getHitPoints() + "hitpoints left \n";
+        String res = "You hit a " + currentRoom.getMonster(0).getName() + " it now has " + currentRoom.getMonster(0).getHitPoints() + " hitpoints left \n";
         res += "A " + currentRoom.getMonster(0).getName() + " hits you. You now have " + player.getHitPoints() + " hitpoints left.";
         return res;
 
+    }
+
+    public String getPlayerInventory() {
+        String res = "You have the following items in your inventory: \n";
+        for (int i = 0; i < player.getInventory().size(); i++) {
+            res += i + ": " + player.getInventory().get(i).toString() + "\n";
+        }
+        return res;
+    }
+
+    public String getPlayerGear() {
+        String res = "You have the following gear equipped: \n";
+        if (player.getGearSlot1() == null) {
+            res += "You have nothing equipped in slot 1.\n";
+        } else {
+            res += player.getGearSlot1().toString() + "\n";
+        }
+        if (player.getGearSlot2() == null) {
+            res += "You have nothing equipped in slot 1.\n";
+        } else {
+            res += player.getGearSlot2().toString() + "\n";
+        }
+        return res;
     }
 }
