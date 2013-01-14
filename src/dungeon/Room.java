@@ -22,7 +22,7 @@ private static final long serialVersionUID = 19981017L;
     private int west;
     private String title;
     private String description;
-    private ArrayList<Monster> monsters = new ArrayList();
+    private ArrayList<Monster> monsters = new ArrayList<>();
 
     public Room(int id, int north, int south, int east, int west, String title, String description) {
         this.id = id;

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -79,7 +78,7 @@ public class FileIO implements Serializable {
             fileInput = readFile(filepath);
         }
         Dungeon tempDungeon = new Dungeon();
-        if (fileInput != "") {
+        if (!"".equals(fileInput)) {
             String[] rooms = fileInput.split("\n");
             // id, strLine, strLine, north, south, east, west
 
@@ -112,7 +111,7 @@ public class FileIO implements Serializable {
     public static ArrayList<Monster> getAllMonsters() {
         String[] strInput = readFile(RANDOM_MONSTERS_FILEPATH).split("\n");
 
-        ArrayList<Monster> monsters = new ArrayList();
+        ArrayList<Monster> monsters = new ArrayList<>();
         for (int i = 0; i < strInput.length; i++) {
             String[] arr = strInput[i].split("#");
             Monster tempMonster = new Monster(
@@ -134,7 +133,8 @@ public class FileIO implements Serializable {
     public static ArrayList<Item> getAllItems() {
         String[] strArr = readFile(STANDARD_WEAPONS_PATH).split("\n");
 
-        ArrayList<Item> items = new ArrayList();
+        ArrayList<Item> items;
+        items = new ArrayList<>();
 
         for (int i = 0; i < strArr.length; i++) {
             String[] arr = strArr[i].split("#");
@@ -156,8 +156,8 @@ public class FileIO implements Serializable {
         String filename = "savegames/" + savedName + ".mud";
 
 
-        FileOutputStream fos = null;
-        ObjectOutputStream out = null;
+        FileOutputStream fos;
+        ObjectOutputStream out;
 
         try {
             fos = new FileOutputStream(filename);
@@ -175,9 +175,9 @@ public class FileIO implements Serializable {
     public static Game loadGame(String filepath) {
         String filename = "savegames/" + filepath;
 
-        Game myGame = null;
-        FileInputStream fis = null;
-        ObjectInputStream in = null;
+        Game myGame;
+        FileInputStream fis;
+        ObjectInputStream in;
 
         try {
             fis = new FileInputStream(filename);
@@ -186,10 +186,7 @@ public class FileIO implements Serializable {
             in.close();
             return myGame;
 
-        } catch (IOException ex) {
-            System.out.println(ex);
-            return null;
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex);
             return null;
         }
