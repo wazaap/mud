@@ -76,7 +76,7 @@ public class Game {
                 break;
         }
         while (currentRoom.amountOfMonsters() > 0) {
-            res = "In your attempt to escape, a monster attacks you" + System.getProperty("line.separator");
+            res = "In your attempt to escape, a " + monsters.get(0).getName() + " attacks you" + System.getProperty("line.separator");
             return res;
         }
         if (moveTo > 0) {
