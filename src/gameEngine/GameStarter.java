@@ -56,13 +56,13 @@ public class GameStarter {
                 switch (choice) {
                     case "n":
                         // New game
-                        out.write("Please select a dungeon to load:" + System.getProperty("line.separator"));
-                        out.write(FileIO.readFilesInFolder("dungeons"));
-                        out.write("Type the name of the dungeon you want to load:" + System.getProperty("line.separator"));
-                        out.flush();
+                        outstream.write("Please select a dungeon to load:" + System.getProperty("line.separator"));
+                        outstream.write(FileIO.readFilesInFolder("dungeons"));
+                        outstream.write("Type the name of the dungeon you want to load:" + System.getProperty("line.separator"));
+                        outstream.flush();
                         String dungeon = "dungeons\\" + in.readLine();
-                        Game newGame = new Game(dungeon, out, inS);
-                        newGame.run(out, inS);
+                        Game newGame = new Game(dungeon, outstream, instream);
+                        newGame.run(outstream, instream);
                         break;
                     case "l":
                         // Load game
