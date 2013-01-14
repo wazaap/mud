@@ -6,6 +6,7 @@ package gameEngine;
 
 import fileio.FileIO;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Mads
  */
-public class GameStarter  {
+public class GameStarter {
 
     public GameStarter(OutputStreamWriter out, InputStreamReader inS) {
         Game game = null;
@@ -26,13 +27,26 @@ public class GameStarter  {
 
             boolean stop = false;
             while (!stop) {
+                // Indlæs og skriv velkomstskærmen
+                out.write(System.getProperty("line.separator"));
+                out.write(System.getProperty("line.separator"));
+                try (FileReader inputStream = new FileReader("welcome.txt")) {
+                    int c;
+                    while ((c = inputStream.read()) != -1) {
+                        out.write((char) c);
+                        out.flush();
+                    }
+                    out.write(System.getProperty("line.separator"));
+                    out.write(System.getProperty("line.separator"));
+                }
 
                 out.write("MENU:" + System.getProperty("line.separator"));
                 out.write("------------" + System.getProperty("line.separator"));
                 out.write("n: New Game" + System.getProperty("line.separator"));
                 out.write("l: Load Game" + System.getProperty("line.separator"));
-                out.write("q: Quit:" + System.getProperty("line.separator"));
+                out.write("q: Quit" + System.getProperty("line.separator"));
                 out.write(System.getProperty("line.separator") + "What do you want to do?");
+                out.write(System.getProperty("line.separator"));
                 out.flush();
 
                 String choice = in.readLine();
@@ -41,7 +55,7 @@ public class GameStarter  {
                         // New game
                         out.write("Please select a dungeon to load:" + System.getProperty("line.separator"));
                         out.write(FileIO.readFilesInFolder("dungeons"));
-                        out.write("Type the name of the dungeon you want to load:"+ System.getProperty("line.separator"));
+                        out.write("Type the name of the dungeon you want to load:" + System.getProperty("line.separator"));
                         out.flush();
                         String dungeon = in.readLine();
                         game = new Game(dungeon, out, inS);
@@ -50,12 +64,12 @@ public class GameStarter  {
                         // Load game
                         out.write("Please select a savegame to load:" + System.getProperty("line.separator"));
                         out.write(FileIO.readFilesInFolder("savegames"));
-                        out.write("Type the name of the savegame you want to load:"+ System.getProperty("line.separator"));
+                        out.write("Type the name of the savegame you want to load:" + System.getProperty("line.separator"));
                         out.flush();
                         String loadedGame = in.readLine();
                         game = FileIO.loadGame(loadedGame);
-                        if(game != null) {
-                        game.run(out, inS);
+                        if (game != null) {
+                            game.run(out, inS);
                         }
                         break;
                     case "q":
@@ -68,5 +82,4 @@ public class GameStarter  {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
