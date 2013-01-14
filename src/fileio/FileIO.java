@@ -133,7 +133,8 @@ public class FileIO {
                     Integer.parseInt(arr[2]),
                     Integer.parseInt(arr[3]),
                     Integer.parseInt(arr[4]),
-                    Integer.parseInt(arr[5]));
+                    Integer.parseInt(arr[5]),
+                    Integer.parseInt(arr[6]));
             items.add(tempItem);
         }
 

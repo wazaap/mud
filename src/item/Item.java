@@ -10,15 +10,18 @@ public class Item {
 
     private String name;
     private String description;
+    //Item type: 1. Weapon 2.Amour 3.Healing 4.Valuable
+    private int itemType;
     // Attributes
     private int healthpoints;
     private int damage;
     private int gold;
     private int shield;
 
-    public Item(String name, String description, int healthpoints, int damage, int gold, int amour) {
+    public Item(String name, String description, int itemType, int healthpoints, int damage, int gold, int amour) {
         this.name = name;
         this.description = description;
+        this.itemType = itemType;
         this.healthpoints = healthpoints;
         this.damage = damage;
         this.gold = gold;
@@ -91,4 +94,9 @@ public class Item {
     public void setGold(int gold) {
         this.gold = gold;
     }
+
+    public int getItemType() {
+        return itemType;
+    }
+    
 }
