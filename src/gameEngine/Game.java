@@ -54,7 +54,7 @@ public class Game implements Serializable {
             }
             sword = items.get(0);
             shield = items.get(4);
-            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(29));
+            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(28));
             player.getInventory().add(items.get(1));
             player.getInventory().add(items.get(2));
             player.getInventory().add(items.get(3));

@@ -61,7 +61,7 @@ public class GameStarter {
                         out.write(FileIO.readFilesInFolder("dungeons"));
                         out.write("Type the name of the dungeon you want to load:" + System.getProperty("line.separator"));
                         out.flush();
-                        String dungeon = in.readLine();
+                        String dungeon = "dungeons\\" + in.readLine();
                         Game newGame = new Game(dungeon, out, inS);
                         newGame.run(out, inS);
                         break;
