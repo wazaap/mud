@@ -6,6 +6,7 @@ package gameEngine;
 
 import character.Monster;
 import character.Player;
+
 import dungeon.Dungeon;
 import dungeon.Room;
 import fileio.FileIO;
@@ -26,7 +27,6 @@ import java.util.logging.Logger;
  * @author Thomas
  */
 public class Game implements Serializable {
-
     private static final long serialVersionUID = 19981017L;
     private static final String newLine = System.getProperty("line.separator");
     private Item sword;
@@ -195,8 +195,6 @@ public class Game implements Serializable {
         InputStreamReader instream = newIn;
         BufferedReader in = new BufferedReader(instream);
 
-        System.out.println("LORT!");
-
         try {
             //Scanner scanner = new Scanner(System.in);
             String command;
@@ -285,36 +283,32 @@ public class Game implements Serializable {
         }
     }
 
-    public void useItem(OutputStreamWriter newOut, InputStreamReader newIn) {
-        OutputStreamWriter ostream = newOut;
-        BufferedWriter out = new BufferedWriter(ostream);
-
+    public void useItem(OutputStreamWriter out, InputStreamReader newIn) {
         InputStreamReader instream = newIn;
         BufferedReader in = new BufferedReader(instream);
         boolean equipped = false;
-        while (equipped == false) {
+        while (!equipped) {
             try {
                 out.write(this.getPlayerInventory());
-                out.newLine();
-                out.flush();
+                out.write(System.getProperty("line.separator"));
                 out.write("Choose an item by pressing a number: ");
-                out.newLine();
+                out.write(System.getProperty("line.separator"));
                 out.flush();
                 try {
                     int itemNumber = Integer.parseInt(in.readLine());
                     if (itemNumber >= player.getInventory().size() || itemNumber < 0) {
                         out.write("You do not have that item...");
-                        out.newLine();
+                        out.write(System.getProperty("line.separator"));
                         out.flush();
                     } else {
                         if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
                             out.write(player.useItem(itemNumber));
                             equipped = true;
-                            out.newLine();
+                            out.write(System.getProperty("line.separator"));
                             out.flush();
                         } else {
                             out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
-                            out.newLine();
+                            out.write(System.getProperty("line.separator"));
                             out.flush();
                             int slotNumber = Integer.parseInt(in.readLine());
                             while (slotNumber != 1 && slotNumber != 2) {
@@ -324,13 +318,13 @@ public class Game implements Serializable {
                             }
                             out.write(player.equip(itemNumber, slotNumber));
                             equipped = true;
-                            out.newLine();
+                            out.write(System.getProperty("line.separator"));
                             out.flush();
                         }
                     }
                 } catch (NumberFormatException ex) {
                     out.write("You have to enter a number. Please try again!" + System.lineSeparator());
-                    out.newLine();
+                    out.write(System.getProperty("line.separator"));
                     out.flush();
                 }
             } catch (IOException ex) {

@@ -15,6 +15,10 @@ import java.io.OutputStreamWriter;
 public class LocalCMD {
 
     public static void main(String[] args) {
-        GameStarter game = new GameStarter(new OutputStreamWriter(System.out), new InputStreamReader(System.in) );
+        // Gets a reader and a writer of the System: command-line
+        OutputStreamWriter out = new OutputStreamWriter(System.out);
+        InputStreamReader in = new InputStreamReader(System.in);
+        
+        GameStarter game = new GameStarter(out, in);
     }
 }
