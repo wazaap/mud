@@ -54,7 +54,7 @@ public class Game implements Serializable {
             }
             sword = items.get(0);
             shield = items.get(4);
-            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
+            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(29));
             player.getInventory().add(items.get(1));
             player.getInventory().add(items.get(2));
             player.getInventory().add(items.get(3));
@@ -125,12 +125,15 @@ public class Game implements Serializable {
         res += "Type \"look\" to look around" + System.getProperty("line.separator");
         res += "Type \"use\" to use somthing in your inventory" + System.getProperty("line.separator");
         res += "Type \"gear\" to see what gear you got equipped" + System.getProperty("line.separator");
+        res += "Type \"savegame\" to save your progress" + System.getProperty("line.separator");
+        res += "Type \"stop\" to quit the game." + System.lineSeparator();
+        
         return res;
     }
 
     public String look() {
         currentRoom = player.getCurrentRoom();
-        String res = "";
+        String res;
         res = currentRoom.getTitle() + System.getProperty("line.separator");
         res += currentRoom.getDescription() + System.getProperty("line.separator");
         res += currentRoom.availableDirections() + System.getProperty("line.separator");
@@ -193,15 +196,11 @@ public class Game implements Serializable {
 
         InputStreamReader instream = newIn;
         BufferedReader in = new BufferedReader(instream);
-
-        System.out.println("LORT!");
-
+        
         try {
             //Scanner scanner = new Scanner(System.in);
             String command;
-            out.write("Type \"help\" to see a list of commands.");
-            out.newLine();
-            out.write("Type \"stop\" to quit the game.");
+            out.write("Remeber you can allways type \"help\" to see a list of commands.");
             out.newLine();
             out.write(this.getCurrentRoom().availableDirections());
             out.newLine();
