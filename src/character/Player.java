@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author Thomas
  */
 public class Player implements Serializable {
+    private static final long serialVersionUID = 19981017L;
 
     private String name;
     private int hitPoints;

@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author Mads
  */
 public class Room implements Serializable {
+private static final long serialVersionUID = 19981017L;
 
     private int id;
     private int north;

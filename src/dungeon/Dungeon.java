@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Dungeon implements Serializable {
 
+    private static final long serialVersionUID = 19981017L;
     private ArrayList<Room> rooms = new ArrayList();
 
     public Dungeon() {

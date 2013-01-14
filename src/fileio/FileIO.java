@@ -7,11 +7,13 @@ import gameEngine.Game;
 import item.Item;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
  * @author Mads
  */
 public class FileIO implements Serializable {
+    private static final long serialVersionUID = 19981017L;
 
     public static final String RANDOM_MONSTERS_FILEPATH = "random-monsters.txt";
     public static final String STANDARD_DUNGEON_FILEPATH = "testDungeon.txt";
@@ -53,10 +56,10 @@ public class FileIO implements Serializable {
                 res = res.substring(0, res.length() - 1);
 
             } catch (IOException ex) {
-                System.out.println("ERROR: File: \"" + filepath + "\" could not be read!\n" + ex);
+                System.out.println("ERROR: File: \"" + filepath + "\" could not be read!" + System.lineSeparator());
             }
         } catch (FileNotFoundException ex) {
-            System.out.println("ERROR: File: \"" + filepath + "\" could not be found!\n" + ex);
+            System.out.println("ERROR: File: \"" + filepath + "\" could not be found!" + System.lineSeparator());
         }
 
 
@@ -76,25 +79,28 @@ public class FileIO implements Serializable {
             fileInput = readFile(filepath);
         }
         Dungeon tempDungeon = new Dungeon();
+        if (fileInput != "") {
+            String[] rooms = fileInput.split("\n");
+            // id, strLine, strLine, north, south, east, west
 
+            for (int i = 0; i < rooms.length; i++) {
+                String[] arr = rooms[i].split("#");
+                // Creates a temperary room to be added
+                Room tempRoom = new Room(
+                        Integer.parseInt(arr[0]),
+                        Integer.parseInt(arr[1]),
+                        Integer.parseInt(arr[2]),
+                        Integer.parseInt(arr[3]),
+                        Integer.parseInt(arr[4]),
+                        arr[5].replace("\n", ""),
+                        arr[6].replace("\n", ""));
+                tempDungeon.addRoom(tempRoom);
 
-        String[] rooms = fileInput.split("\n");
-        // id, strLine, strLine, north, south, east, west
-
-        for (int i = 0; i < rooms.length; i++) {
-            String[] arr = rooms[i].split("#");
-            // Creates a temperary room to be added
-            Room tempRoom = new Room(
-                    Integer.parseInt(arr[0]),
-                    Integer.parseInt(arr[1]),
-                    Integer.parseInt(arr[2]),
-                    Integer.parseInt(arr[3]),
-                    Integer.parseInt(arr[4]),
-                    arr[5].replace("\n", ""),
-                    arr[6].replace("\n", ""));
-            tempDungeon.addRoom(tempRoom);
+            }
+            return tempDungeon;
+        } else {
+            return null;
         }
-        return tempDungeon;
     }
 
     /**
@@ -145,10 +151,10 @@ public class FileIO implements Serializable {
 
         return items;
     }
-    
-    public static String serializeGame(Game game) {
-        String filename = "savegame.txt";
-        
+
+    public static String saveGame(Game game, String savedName) {
+        String filename = "savegames/" + savedName + ".mud";
+
 
         FileOutputStream fos = null;
         ObjectOutputStream out = null;
@@ -158,11 +164,49 @@ public class FileIO implements Serializable {
             out = new ObjectOutputStream(fos);
             out.writeObject(game);
             out.close();
-            System.out.println("Object Persisted");
-        }
-        catch (IOException ex) {
+            //System.out.println("Object Persisted");
+        } catch (IOException ex) {
             System.out.println(ex);
+            return "Game could not be saved!";
         }
-        return "Game was saved!";
+        return "Game was saved to: \"" + savedName + ".mud\"!";
+    }
+
+    public static Game loadGame(String filepath) {
+        String filename = "savegames/" + filepath;
+
+        Game myGame = null;
+        FileInputStream fis = null;
+        ObjectInputStream in = null;
+
+        try {
+            fis = new FileInputStream(filename);
+            in = new ObjectInputStream(fis);
+            myGame = (Game) in.readObject();
+            in.close();
+            return myGame;
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+            return null;
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+            return null;
+        }
+        
+    }
+
+    public static String readFilesInFolder(String folder) {
+        String res = "";
+        File actual = new File(folder);
+        for (File f : actual.listFiles()) {
+            res += f.getName() + System.getProperty("line.separator");
+        }
+        if ("".equals(res)) {
+            res += "No files found!" + System.getProperty("line.separator");
+            return res;
+        } else {
+            return res;
+        }
     }
 }

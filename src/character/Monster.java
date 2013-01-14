@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @author Thomas
  */
 public class Monster implements Serializable {
+    private static final long serialVersionUID = 19981017L;
 
     private String name;
     private String description;

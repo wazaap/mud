@@ -24,6 +24,7 @@ import java.util.Random;
  * @author Thomas
  */
 public class Game implements Serializable {
+private static final long serialVersionUID = 19981017L;
 
     private static final String newLine = System.getProperty("line.separator");
     private Item sword;
@@ -36,28 +37,27 @@ public class Game implements Serializable {
 
     public Game(String dungeonPath, OutputStreamWriter newOut, InputStreamReader newIn) {
         // Initialize the dungeon
-        dungeon = FileIO.readDungeon(null);
-        
-        // Add monsters to rooms
-        for (int i = 0; i < dungeon.size(); i++) {
-            Random gen = new Random();
-            int nextMonster = gen.nextInt(monsters.size());
-            int amountOfMonsters = gen.nextInt(5);
-            for (int j = 0; j < amountOfMonsters; j++) {
-                dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
-                nextMonster = gen.nextInt(monsters.size());
+        dungeon = FileIO.readDungeon(dungeonPath);
+        if (dungeon != null) {
 
+            // Add monsters to rooms
+            for (int i = 0; i < dungeon.size(); i++) {
+                Random gen = new Random();
+                int nextMonster = gen.nextInt(monsters.size());
+                int amountOfMonsters = gen.nextInt(5);
+                for (int j = 0; j < amountOfMonsters; j++) {
+                    dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
+                    nextMonster = gen.nextInt(monsters.size());
+                }
             }
+            sword = items.get(0);
+            shield = items.get(4);
+            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
+            player.getInventory().add(items.get(1));
+            player.getInventory().add(items.get(2));
+            player.getInventory().add(items.get(3));
+            this.run(newOut, newIn);
         }
-
-        sword = items.get(0);
-        shield = items.get(4);
-        player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
-        player.getInventory().add(items.get(1));
-        player.getInventory().add(items.get(2));
-        player.getInventory().add(items.get(3));
-        this.run(newOut, newIn);
-
     }
 
     public Monster getRandomMonster() {
@@ -192,10 +192,9 @@ public class Game implements Serializable {
         InputStreamReader instream = newIn;
         BufferedReader in = new BufferedReader(instream);
 
-
+        System.out.println("LORT!");
 
         try {
-
             //Scanner scanner = new Scanner(System.in);
             String command;
             String useItem;
@@ -271,8 +270,12 @@ public class Game implements Serializable {
                         out.flush();
                         break;
                     case "savegame":
-                        out.write(FileIO.serializeGame(this));
-                        out.newLine();
+                        out.write("Please give your savegame a name: " + System.getProperty("line.separator"));
+                        out.flush();
+
+                        String input = in.readLine();
+                        out.write(FileIO.saveGame(this, input) + System.getProperty("line.separator"));
+                        out.write("Resuming game..." + System.getProperty("line.separator"));
                         out.flush();
                         break;
                     default:
