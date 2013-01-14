@@ -54,6 +54,8 @@ public class Game implements Serializable {
         shield = items.get(4);
         player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
         player.getInventory().add(items.get(1));
+        player.getInventory().add(items.get(2));
+        player.getInventory().add(items.get(3));
         this.run(newOut, newIn);
 
     }
@@ -119,6 +121,8 @@ public class Game implements Serializable {
         res += "Type \"west\" to go towards the south" + System.getProperty("line.separator");
         res += "Type \"attack\" to attack a monster" + System.getProperty("line.separator");
         res += "Type \"look\" to look around" + System.getProperty("line.separator");
+        res += "Type \"use\" to use somthing in your inventory" + System.getProperty("line.separator");
+        res += "Type \"gear\" to see what gear you got equipped" + System.getProperty("line.separator");
         return res;
     }
 
@@ -194,6 +198,7 @@ public class Game implements Serializable {
 
             //Scanner scanner = new Scanner(System.in);
             String command;
+            String useItem;
             out.write("Type \"help\" to see a list of commands.");
             out.newLine();
             out.write("Type \"stop\" to quit the game.");
@@ -203,7 +208,7 @@ public class Game implements Serializable {
             out.flush();
             boolean stop = false;
             while (!stop) {
-                out.write("Where would you like to do:");
+                out.write("What would you like to do:");
                 out.newLine();
                 out.flush();
                 command = in.readLine();
@@ -252,6 +257,13 @@ public class Game implements Serializable {
                         out.write(this.getPlayerInventory());
                         out.newLine();
                         out.flush();
+                        out.write("Choose an item by pressing a number: ");
+                        out.newLine();
+                        out.flush();
+                        useItem = in.readLine();
+                        out.write(player.useItem(Integer.parseInt(useItem)));
+                        out.flush();
+                        out.newLine();
                         break;
                     case "gear":
                         out.write(this.getPlayerGear());

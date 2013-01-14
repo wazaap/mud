@@ -32,10 +32,6 @@ public class Player implements Serializable {
         this.currentRoom = room;
     }
 
-   
-
-    
-    
     public String getName() {
         return name;
     }
@@ -98,5 +94,38 @@ public class Player implements Serializable {
 
     public Item getGearSlot2() {
         return slot1;
+    }
+
+    public String useItem(int itemNumber) {
+        String res = null;
+        int gold = 0;
+        if (itemNumber > inventory.size() || itemNumber < 0) {
+            return "You do not have that item.. ";
+        } else {
+            Item item = (Item) inventory.get(itemNumber);
+            switch (item.getItemType()) {
+                case 1:
+                    res = null;
+                    break;
+                case 2:
+                    res = null;
+                    break;
+                case 3:
+                    this.hitPoints = this.hitPoints + item.getHealthpoints();
+                    res = "You use a " + item.getName() + System.getProperty("line.separator");
+                    res += "You now have " + this.getHitPoints() + " healthpoints";
+                    inventory.remove(itemNumber);
+                    break;
+                case 4:
+                    for (int i = 0; i < inventory.size(); i++) {
+                        item = (Item) inventory.get(i);
+                        gold += item.getGold();
+                    }
+                    res = "You look at all your gold.... You got " + gold;
+                    break;
+            }
+            return res;
+        }
+
     }
 }
