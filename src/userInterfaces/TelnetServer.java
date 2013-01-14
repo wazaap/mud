@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameEngine;
+package userInterfaces;
 
+import gameEngine.Game;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -28,7 +29,7 @@ public class TelnetServer {
             OutputStreamWriter out = new OutputStreamWriter(myClient.getOutputStream());
             InputStreamReader in = new InputStreamReader(myClient.getInputStream());
 
-            UserInterface myGame = new UserInterface(out, in);
+            Game myGame = new Game(null, out, in);
             
         } catch (IOException ex) {
             System.out.println("The server was not created!");

@@ -10,6 +10,11 @@ import dungeon.Dungeon;
 import dungeon.Room;
 import fileio.FileIO;
 import item.Item;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -28,7 +33,7 @@ public class Game {
     private ArrayList<Item> items = FileIO.getAllItems();
     private ArrayList<Monster> monsters = FileIO.getAllMonsters();
 
-    public Game(String dungeonPath) {
+    public Game(String dungeonPath,OutputStreamWriter newOut, InputStreamReader newIn) {
         // Initialize the dungeon
         dungeon = FileIO.readDungeon(null);
 
@@ -48,6 +53,7 @@ public class Game {
         shield = items.get(4);
         player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
         player.getInventory().add(items.get(1));
+        this.run(newOut, newIn);
 
     }
 
@@ -83,10 +89,10 @@ public class Game {
             for (int i = 0; i < dungeon.size(); i++) {
                 if (dungeon.getRoom(i).getId() == moveTo) {
                     player.setCurrentRoom(dungeon.getRoom(i));
-                    res = "You go towards " + direction  + System.getProperty("line.separator");
-                    res += "You enter " + getCurrentRoom().getTitle()  + System.getProperty("line.separator");
-                    res += getCurrentRoom().getDescription()  + System.getProperty("line.separator");
-                    res += player.getCurrentRoom().availableDirections()  + System.getProperty("line.separator");
+                    res = "You go towards " + direction + System.getProperty("line.separator");
+                    res += "You enter " + getCurrentRoom().getTitle() + System.getProperty("line.separator");
+                    res += getCurrentRoom().getDescription() + System.getProperty("line.separator");
+                    res += player.getCurrentRoom().availableDirections() + System.getProperty("line.separator");
                     res += player.getCurrentRoom().getMonsters();
                     return res;
                 }
@@ -117,7 +123,7 @@ public class Game {
 
     public String look() {
         currentRoom = player.getCurrentRoom();
-        String res ="";
+        String res = "";
         res = currentRoom.getTitle() + System.getProperty("line.separator");
         res += currentRoom.getDescription() + System.getProperty("line.separator");
         res += currentRoom.availableDirections() + System.getProperty("line.separator");
@@ -170,5 +176,99 @@ public class Game {
             res += player.getGearSlot2().toString() + System.getProperty("line.separator");
         }
         return res;
+    }
+
+    public void run(OutputStreamWriter newOut, InputStreamReader newIn) {
+    
+
+        OutputStreamWriter ostream = newOut;
+        BufferedWriter out = new BufferedWriter(ostream);
+
+        InputStreamReader instream = newIn;
+        BufferedReader in = new BufferedReader(instream);
+
+
+
+        try {
+
+            //Scanner scanner = new Scanner(System.in);
+            String command;
+            out.write("Type \"help\" to see a list of commands.");
+            out.newLine();
+            out.write("Type \"stop\" to quit the game.");
+            out.newLine();
+            out.write(this.getCurrentRoom().availableDirections());
+            out.newLine();
+            out.flush();
+            boolean stop = false;
+            while (!stop) {
+                out.write("Where would you like to do:");
+                out.newLine();
+                out.flush();
+                command = in.readLine();
+                switch (command) {
+                    case "stop":
+                        out.write("You quit the game!");
+                        out.flush();
+                        stop = true;
+                        break;
+                    case "north":
+                        out.write(this.move(command));
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "south":
+                        out.write(this.move(command));
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "east":
+                        out.write(this.move(command));
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "west":
+                        out.write(this.move(command));
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "help":
+                        out.write(this.help());
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "look":
+                        out.write(this.look());
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "attack":
+                        out.write(this.attack());
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "use":
+                        out.write(this.getPlayerInventory());
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "gear":
+                        out.write(this.getPlayerGear());
+                        out.newLine();
+                        out.flush();
+                        break;
+                    default:
+                        out.write("I do not understand the command: " + command);
+                        out.newLine();
+                        out.write("Type \"help\" to see the commands.");
+                        out.newLine();
+                        out.flush();
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+
+
     }
 }
