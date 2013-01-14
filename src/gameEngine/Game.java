@@ -205,6 +205,8 @@ public class Game {
             out.newLine();
             out.flush();
             boolean stop = false;
+            boolean equipped = false;
+            boolean slotted = false;
             while (!stop) {
                 out.write("What would you like to do:");
                 out.newLine();
@@ -252,33 +254,43 @@ public class Game {
                         out.flush();
                         break;
                     case "use":
-                        out.write(this.getPlayerInventory());
-                        out.newLine();
-                        out.flush();
-                        out.write("Choose an item by pressing a number: ");
-                        out.newLine();
-                        out.flush();
-                        int itemNumber = Integer.parseInt(in.readLine());
-                        if (itemNumber > player.getInventory().size() || itemNumber < 0) {
-                            out.write("You do not have that item...");
+                        while (equipped == false) {
+                            out.write(this.getPlayerInventory());
                             out.newLine();
                             out.flush();
-                            break;
-                        } else {
-                            if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
-                                out.write(player.useItem(itemNumber));
-                                out.newLine();
-                                out.flush();
-                            } else {
-                                out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
-                                out.newLine();
-                                out.flush();
-                                int slotNumber = Integer.parseInt(in.readLine());
-                                out.write(player.equip(itemNumber, slotNumber));
+                            out.write("Choose an item by pressing a number: ");
+                            out.newLine();
+                            out.flush();
+                            try {
+                                int itemNumber = Integer.parseInt(in.readLine());
+                                if (itemNumber > player.getInventory().size() || itemNumber < 0) {
+                                    out.write("You do not have that item...");
+                                    out.newLine();
+                                    out.flush();
+                                } else {
+                                    if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
+                                        out.write(player.useItem(itemNumber));
+                                        equipped = true;
+                                        out.newLine();
+                                        out.flush();
+                                    } else {
+                                        out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
+                                        out.newLine();
+                                        out.flush();
+                                        int slotNumber = Integer.parseInt(in.readLine());
+                                        out.write(player.equip(itemNumber, slotNumber));
+                                        equipped = true;
+                                        out.newLine();
+                                        out.flush();
+                                    }
+                                }
+                            } catch (NumberFormatException ex) {
+                                out.write("You have to enter a number. Please try again!" + System.lineSeparator());
                                 out.newLine();
                                 out.flush();
                             }
                         }
+                        equipped = false;
                         break;
                     case "gear":
                         out.write(this.getPlayerGear());
@@ -296,7 +308,6 @@ public class Game {
         } catch (IOException ex) {
             System.out.println(ex);
         }
-
-
     }
+
 }
