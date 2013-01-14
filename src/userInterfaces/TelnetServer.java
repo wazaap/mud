@@ -30,7 +30,7 @@ public class TelnetServer {
         ServerSocket myServer;
 
         Socket myClient;
-        ArrayList<Thread> threads = new ArrayList();
+        ArrayList<Thread> threads = new ArrayList<>();
         // Opret serveren. Luk igen, hvis porten er optaget
         try {
 
@@ -70,7 +70,7 @@ public class TelnetServer {
                 out.close();
                 in.close();
                 client.close();
-            } catch (IOException ex) {
+            } catch (IOException | NullPointerException ex) {
                 Logger.getLogger(TelnetServer.class.getName()).log(Level.SEVERE, null, ex);
             }
 

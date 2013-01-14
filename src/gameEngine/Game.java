@@ -58,7 +58,8 @@ public class Game implements Serializable {
             player.getInventory().add(items.get(1));
             player.getInventory().add(items.get(2));
             player.getInventory().add(items.get(3));
-            this.run(newOut, newIn);
+            // Tester noget
+            //this.run(newOut, newIn);
         }
     }
 
@@ -130,7 +131,7 @@ public class Game implements Serializable {
 
     public String look() {
         currentRoom = player.getCurrentRoom();
-        String res = "";
+        String res;
         res = currentRoom.getTitle() + System.getProperty("line.separator");
         res += currentRoom.getDescription() + System.getProperty("line.separator");
         res += currentRoom.availableDirections() + System.getProperty("line.separator");
@@ -185,7 +186,7 @@ public class Game implements Serializable {
         return res;
     }
 
-    public void run(OutputStreamWriter newOut, InputStreamReader newIn) {
+    public final void run(OutputStreamWriter newOut, InputStreamReader newIn) {
 
 
         OutputStreamWriter ostream = newOut;
@@ -279,8 +280,8 @@ public class Game implements Serializable {
                         out.flush();
                 }
             }
-        } catch (IOException ex) {
-            System.out.println(ex);
+        } catch (IOException | NullPointerException ex) {
+            System.out.println("Håndteret fejl?" + ex);
         }
     }
 

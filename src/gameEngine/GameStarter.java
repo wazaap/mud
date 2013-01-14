@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class GameStarter {
 
     public GameStarter(OutputStreamWriter out, InputStreamReader inS) {
-        Game game = null;
+        Game game;
         try {
             InputStreamReader instream = inS;
             BufferedReader in = new BufferedReader(instream);
@@ -50,6 +50,10 @@ public class GameStarter {
                 out.flush();
 
                 String choice = in.readLine();
+                // In case brugeren afbryder spillet, bliver choice sat til null. Så bliver der smidt exceptions over det hele.. 
+                if (choice == null) {
+                    choice = "q";
+                }
                 switch (choice) {
                     case "n":
                         // New game
@@ -58,7 +62,8 @@ public class GameStarter {
                         out.write("Type the name of the dungeon you want to load:" + System.getProperty("line.separator"));
                         out.flush();
                         String dungeon = in.readLine();
-                        game = new Game(dungeon, out, inS);
+                        Game newGame = new Game(dungeon, out, inS);
+                        newGame.run(out, inS);
                         break;
                     case "l":
                         // Load game
@@ -66,7 +71,8 @@ public class GameStarter {
                         out.write(FileIO.readFilesInFolder("savegames"));
                         out.write("Type the name of the savegame you want to load:" + System.getProperty("line.separator"));
                         out.flush();
-                        String loadedGame = in.readLine();
+                        String loadedGame;
+                        loadedGame = in.readLine();
                         game = FileIO.loadGame(loadedGame);
                         if (game != null) {
                             game.run(out, inS);

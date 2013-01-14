@@ -22,7 +22,7 @@ public class Player implements Serializable {
     private Item slot2;
     private int gold;
     private Room currentRoom;
-    ArrayList<Item> inventory = new ArrayList();
+    ArrayList<Item> inventory = new ArrayList<>();
 
     public Player(String name, int hitPoints, Item slot1, Item slot2, int gold, Room room) {
         this.name = name;
@@ -76,7 +76,7 @@ public class Player implements Serializable {
         return inventory;
     }
 
-    public void setInventory(ArrayList inventory) {
+    public void setInventory(ArrayList<Item> inventory) {
         this.inventory = inventory;
     }
 
@@ -99,7 +99,8 @@ public class Player implements Serializable {
     public String useItem(int itemNumber) {
         String res = null;
 
-        Item item = (Item) inventory.get(itemNumber);
+        Item item;
+        item = inventory.get(itemNumber);
         switch (item.getItemType()) {
             case 3:
                 this.hitPoints = this.hitPoints + item.getHealthpoints();
@@ -109,7 +110,7 @@ public class Player implements Serializable {
                 break;
             case 4:
                 for (int i = 0; i < inventory.size(); i++) {
-                    item = (Item) inventory.get(i);
+                    item = inventory.get(i);
                     gold += item.getGold();
                 }
                 res = "You look at all your gold.... You got " + gold;
@@ -119,7 +120,7 @@ public class Player implements Serializable {
     }
 
     public String equip(int itemNumber, int slotNumber) {
-        String res = null;
+        String res;
         switch (slotNumber) {
             case 1:
                 res = "You put your " + this.slot1.getName() + " in your backpack." + System.lineSeparator();
