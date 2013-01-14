@@ -278,6 +278,11 @@ public class Game {
                                         out.newLine();
                                         out.flush();
                                         int slotNumber = Integer.parseInt(in.readLine());
+                                        while (slotNumber != 1 && slotNumber != 2){
+                                            out.write("You have to choose between slot 1 and slot 2" + System.lineSeparator());
+                                            out.flush();
+                                            slotNumber = Integer.parseInt(in.readLine());
+                                        }
                                         out.write(player.equip(itemNumber, slotNumber));
                                         equipped = true;
                                         out.newLine();
