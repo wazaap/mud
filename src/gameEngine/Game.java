@@ -54,7 +54,7 @@ public class Game implements Serializable {
             }
             sword = items.get(0);
             shield = items.get(4);
-            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(1));
+            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(28));
             player.getInventory().add(items.get(1));
             player.getInventory().add(items.get(2));
             player.getInventory().add(items.get(3));
@@ -126,6 +126,9 @@ public class Game implements Serializable {
         res += "Type \"look\" to look around" + System.getProperty("line.separator");
         res += "Type \"use\" to use somthing in your inventory" + System.getProperty("line.separator");
         res += "Type \"gear\" to see what gear you got equipped" + System.getProperty("line.separator");
+        res += "Type \"savegame\" to save your progress" + System.getProperty("line.separator");
+        res += "Type \"stop\" to quit the game." + System.lineSeparator();
+        
         return res;
     }
 
@@ -198,9 +201,7 @@ public class Game implements Serializable {
         try {
             //Scanner scanner = new Scanner(System.in);
             String command;
-            out.write("Type \"help\" to see a list of commands.");
-            out.newLine();
-            out.write("Type \"stop\" to quit the game.");
+            out.write("Remeber you can allways type \"help\" to see a list of commands.");
             out.newLine();
             out.write(this.getCurrentRoom().availableDirections());
             out.newLine();

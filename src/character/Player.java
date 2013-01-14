@@ -109,11 +109,12 @@ public class Player implements Serializable {
                 inventory.remove(itemNumber);
                 break;
             case 4:
+                gold = 0;
                 for (int i = 0; i < inventory.size(); i++) {
                     item = inventory.get(i);
                     gold += item.getGold();
                 }
-                res = "You look at all your gold.... You got " + gold;
+                res = "You look at all your valuables.... They are worth " + gold + " goldpieces.";
                 break;
         }
         return res;
