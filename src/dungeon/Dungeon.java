@@ -4,13 +4,14 @@
  */
 package dungeon;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Thomas
  */
-public class Dungeon {
+public class Dungeon implements Serializable {
 
     private ArrayList<Room> rooms = new ArrayList();
 

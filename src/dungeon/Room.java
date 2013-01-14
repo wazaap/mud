@@ -5,13 +5,14 @@
 package dungeon;
 
 import character.Monster;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Mads
  */
-public class Room {
+public class Room implements Serializable {
 
     private int id;
     private int north;

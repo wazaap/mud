@@ -3,20 +3,25 @@ package fileio;
 import character.Monster;
 import dungeon.Dungeon;
 import dungeon.Room;
+import gameEngine.Game;
 import item.Item;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Mads
  */
-public class FileIO {
+public class FileIO implements Serializable {
 
     public static final String RANDOM_MONSTERS_FILEPATH = "random-monsters.txt";
     public static final String STANDARD_DUNGEON_FILEPATH = "testDungeon.txt";
@@ -138,5 +143,25 @@ public class FileIO {
         }
 
         return items;
+    }
+    
+    public static String serializeGame(Game game) {
+        String filename = "savegame.txt";
+        
+
+        FileOutputStream fos = null;
+        ObjectOutputStream out = null;
+
+        try {
+            fos = new FileOutputStream(filename);
+            out = new ObjectOutputStream(fos);
+            out.writeObject(game);
+            out.close();
+            System.out.println("Object Persisted");
+        }
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+        return "Game was saved!";
     }
 }

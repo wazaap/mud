@@ -15,6 +15,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,7 +23,7 @@ import java.util.Random;
  *
  * @author Thomas
  */
-public class Game {
+public class Game implements Serializable {
 
     private static final String newLine = System.getProperty("line.separator");
     private Item sword;
@@ -33,10 +34,10 @@ public class Game {
     private ArrayList<Item> items = FileIO.getAllItems();
     private ArrayList<Monster> monsters = FileIO.getAllMonsters();
 
-    public Game(String dungeonPath,OutputStreamWriter newOut, InputStreamReader newIn) {
+    public Game(String dungeonPath, OutputStreamWriter newOut, InputStreamReader newIn) {
         // Initialize the dungeon
         dungeon = FileIO.readDungeon(null);
-
+        
         // Add monsters to rooms
         for (int i = 0; i < dungeon.size(); i++) {
             Random gen = new Random();
@@ -179,7 +180,7 @@ public class Game {
     }
 
     public void run(OutputStreamWriter newOut, InputStreamReader newIn) {
-    
+
 
         OutputStreamWriter ostream = newOut;
         BufferedWriter out = new BufferedWriter(ostream);
@@ -254,6 +255,11 @@ public class Game {
                         break;
                     case "gear":
                         out.write(this.getPlayerGear());
+                        out.newLine();
+                        out.flush();
+                        break;
+                    case "savegame":
+                        out.write(FileIO.serializeGame(this));
                         out.newLine();
                         out.flush();
                         break;

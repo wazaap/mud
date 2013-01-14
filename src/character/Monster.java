@@ -4,11 +4,13 @@
  */
 package character;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Thomas
  */
-public class Monster {
+public class Monster implements Serializable {
 
     private String name;
     private String description;

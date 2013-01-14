@@ -4,15 +4,16 @@
  */
 package character;
 
-import item.Item;
 import dungeon.Room;
+import item.Item;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Thomas
  */
-public class Player {
+public class Player implements Serializable {
 
     private String name;
     private int hitPoints;

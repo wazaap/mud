@@ -1,12 +1,14 @@
 package item;
 
+import java.io.Serializable;
+
 /**
  * Describes an item with a name and a description. New items should extends
  * this class, and overwrite the values which the item should improve.
  *
  * @author Mads
  */
-public class Item {
+public class Item implements Serializable {
 
     private String name;
     private String description;
