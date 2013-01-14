@@ -88,7 +88,7 @@ public class Game implements Serializable {
                 break;
         }
         while (currentRoom.amountOfMonsters() > 0) {
-            res = "In your attempt to escape, a " + monsters.get(0).getName() + " blocks your path" + System.getProperty("line.separator");
+            res = "In your attempt to escape, a " + currentRoom.getMonster(0).getName() + " blocks your path" + System.getProperty("line.separator");
             return res;
         }
         if (moveTo > 0) {
