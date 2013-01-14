@@ -18,14 +18,16 @@ import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Thomas
  */
 public class Game implements Serializable {
-private static final long serialVersionUID = 19981017L;
 
+    private static final long serialVersionUID = 19981017L;
     private static final String newLine = System.getProperty("line.separator");
     private Item sword;
     private Item shield;
@@ -205,8 +207,7 @@ private static final long serialVersionUID = 19981017L;
             out.newLine();
             out.flush();
             boolean stop = false;
-            boolean equipped = false;
-            boolean slotted = false;
+
             while (!stop) {
                 out.write("What would you like to do:");
                 out.newLine();
@@ -254,48 +255,7 @@ private static final long serialVersionUID = 19981017L;
                         out.flush();
                         break;
                     case "use":
-                        while (equipped == false) {
-                            out.write(this.getPlayerInventory());
-                            out.newLine();
-                            out.flush();
-                            out.write("Choose an item by pressing a number: ");
-                            out.newLine();
-                            out.flush();
-                            try {
-                                int itemNumber = Integer.parseInt(in.readLine());
-                                if (itemNumber > player.getInventory().size() || itemNumber < 0) {
-                                    out.write("You do not have that item...");
-                                    out.newLine();
-                                    out.flush();
-                                } else {
-                                    if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
-                                        out.write(player.useItem(itemNumber));
-                                        equipped = true;
-                                        out.newLine();
-                                        out.flush();
-                                    } else {
-                                        out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
-                                        out.newLine();
-                                        out.flush();
-                                        int slotNumber = Integer.parseInt(in.readLine());
-                                        while (slotNumber != 1 && slotNumber != 2){
-                                            out.write("You have to choose between slot 1 and slot 2" + System.lineSeparator());
-                                            out.flush();
-                                            slotNumber = Integer.parseInt(in.readLine());
-                                        }
-                                        out.write(player.equip(itemNumber, slotNumber));
-                                        equipped = true;
-                                        out.newLine();
-                                        out.flush();
-                                    }
-                                }
-                            } catch (NumberFormatException ex) {
-                                out.write("You have to enter a number. Please try again!" + System.lineSeparator());
-                                out.newLine();
-                                out.flush();
-                            }
-                        }
-                        equipped = false;
+                        useItem(newOut, newIn);
                         break;
                     case "gear":
                         out.write(this.getPlayerGear());
@@ -324,4 +284,57 @@ private static final long serialVersionUID = 19981017L;
         }
     }
 
+    public void useItem(OutputStreamWriter newOut, InputStreamReader newIn) {
+        OutputStreamWriter ostream = newOut;
+        BufferedWriter out = new BufferedWriter(ostream);
+
+        InputStreamReader instream = newIn;
+        BufferedReader in = new BufferedReader(instream);
+        boolean equipped = false;
+        while (equipped == false) {
+            try {
+                out.write(this.getPlayerInventory());
+                out.newLine();
+                out.flush();
+                out.write("Choose an item by pressing a number: ");
+                out.newLine();
+                out.flush();
+                try {
+                    int itemNumber = Integer.parseInt(in.readLine());
+                    if (itemNumber >= player.getInventory().size() || itemNumber < 0) {
+                        out.write("You do not have that item...");
+                        out.newLine();
+                        out.flush();
+                    } else {
+                        if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
+                            out.write(player.useItem(itemNumber));
+                            equipped = true;
+                            out.newLine();
+                            out.flush();
+                        } else {
+                            out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
+                            out.newLine();
+                            out.flush();
+                            int slotNumber = Integer.parseInt(in.readLine());
+                            while (slotNumber != 1 && slotNumber != 2) {
+                                out.write("You have to choose between slot 1 and slot 2" + System.lineSeparator());
+                                out.flush();
+                                slotNumber = Integer.parseInt(in.readLine());
+                            }
+                            out.write(player.equip(itemNumber, slotNumber));
+                            equipped = true;
+                            out.newLine();
+                            out.flush();
+                        }
+                    }
+                } catch (NumberFormatException ex) {
+                    out.write("You have to enter a number. Please try again!" + System.lineSeparator());
+                    out.newLine();
+                    out.flush();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
