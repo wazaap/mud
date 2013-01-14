@@ -85,7 +85,7 @@ private static final long serialVersionUID = 19981017L;
                 break;
         }
         while (currentRoom.amountOfMonsters() > 0) {
-            res = "In your attempt to escape, a " + monsters.get(0).getName() + " attacks you" + System.getProperty("line.separator");
+            res = "In your attempt to escape, a " + monsters.get(0).getName() + " blocks your path" + System.getProperty("line.separator");
             return res;
         }
         if (moveTo > 0) {
@@ -176,7 +176,7 @@ private static final long serialVersionUID = 19981017L;
             res += player.getGearSlot1().toString() + System.getProperty("line.separator");
         }
         if (player.getGearSlot2() == null) {
-            res += "You have nothing equipped in slot 1." + System.getProperty("line.separator");
+            res += "You have nothing equipped in slot 2." + System.getProperty("line.separator");
         } else {
             res += player.getGearSlot2().toString() + System.getProperty("line.separator");
         }
@@ -197,7 +197,6 @@ private static final long serialVersionUID = 19981017L;
         try {
             //Scanner scanner = new Scanner(System.in);
             String command;
-            String useItem;
             out.write("Type \"help\" to see a list of commands.");
             out.newLine();
             out.write("Type \"stop\" to quit the game.");
@@ -206,6 +205,8 @@ private static final long serialVersionUID = 19981017L;
             out.newLine();
             out.flush();
             boolean stop = false;
+            boolean equipped = false;
+            boolean slotted = false;
             while (!stop) {
                 out.write("What would you like to do:");
                 out.newLine();
@@ -253,16 +254,48 @@ private static final long serialVersionUID = 19981017L;
                         out.flush();
                         break;
                     case "use":
-                        out.write(this.getPlayerInventory());
-                        out.newLine();
-                        out.flush();
-                        out.write("Choose an item by pressing a number: ");
-                        out.newLine();
-                        out.flush();
-                        useItem = in.readLine();
-                        out.write(player.useItem(Integer.parseInt(useItem)));
-                        out.flush();
-                        out.newLine();
+                        while (equipped == false) {
+                            out.write(this.getPlayerInventory());
+                            out.newLine();
+                            out.flush();
+                            out.write("Choose an item by pressing a number: ");
+                            out.newLine();
+                            out.flush();
+                            try {
+                                int itemNumber = Integer.parseInt(in.readLine());
+                                if (itemNumber > player.getInventory().size() || itemNumber < 0) {
+                                    out.write("You do not have that item...");
+                                    out.newLine();
+                                    out.flush();
+                                } else {
+                                    if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
+                                        out.write(player.useItem(itemNumber));
+                                        equipped = true;
+                                        out.newLine();
+                                        out.flush();
+                                    } else {
+                                        out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
+                                        out.newLine();
+                                        out.flush();
+                                        int slotNumber = Integer.parseInt(in.readLine());
+                                        while (slotNumber != 1 && slotNumber != 2){
+                                            out.write("You have to choose between slot 1 and slot 2" + System.lineSeparator());
+                                            out.flush();
+                                            slotNumber = Integer.parseInt(in.readLine());
+                                        }
+                                        out.write(player.equip(itemNumber, slotNumber));
+                                        equipped = true;
+                                        out.newLine();
+                                        out.flush();
+                                    }
+                                }
+                            } catch (NumberFormatException ex) {
+                                out.write("You have to enter a number. Please try again!" + System.lineSeparator());
+                                out.newLine();
+                                out.flush();
+                            }
+                        }
+                        equipped = false;
                         break;
                     case "gear":
                         out.write(this.getPlayerGear());
@@ -289,7 +322,6 @@ private static final long serialVersionUID = 19981017L;
         } catch (IOException ex) {
             System.out.println(ex);
         }
-
-
     }
+
 }

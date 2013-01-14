@@ -22,7 +22,7 @@ public class Player implements Serializable {
     private Item slot2;
     private int gold;
     private Room currentRoom;
-    ArrayList inventory = new ArrayList();
+    ArrayList<Item> inventory = new ArrayList();
 
     public Player(String name, int hitPoints, Item slot1, Item slot2, int gold, Room room) {
         this.name = name;
@@ -68,12 +68,11 @@ public class Player implements Serializable {
     public int getGold() {
         return gold;
     }
-
     public void setGold(int gold) {
         this.gold = gold;
     }
 
-    public ArrayList getInventory() {
+    public ArrayList<Item> getInventory() {
         return inventory;
     }
 
@@ -94,39 +93,51 @@ public class Player implements Serializable {
     }
 
     public Item getGearSlot2() {
-        return slot1;
+        return slot2;
     }
 
     public String useItem(int itemNumber) {
         String res = null;
-        int gold = 0;
-        if (itemNumber > inventory.size() || itemNumber < 0) {
-            return "You do not have that item.. ";
-        } else {
-            Item item = (Item) inventory.get(itemNumber);
-            switch (item.getItemType()) {
-                case 1:
-                    res = null;
-                    break;
-                case 2:
-                    res = null;
-                    break;
-                case 3:
-                    this.hitPoints = this.hitPoints + item.getHealthpoints();
-                    res = "You use a " + item.getName() + System.getProperty("line.separator");
-                    res += "You now have " + this.getHitPoints() + " healthpoints";
-                    inventory.remove(itemNumber);
-                    break;
-                case 4:
-                    for (int i = 0; i < inventory.size(); i++) {
-                        item = (Item) inventory.get(i);
-                        gold += item.getGold();
-                    }
-                    res = "You look at all your gold.... You got " + gold;
-                    break;
-            }
-            return res;
-        }
 
+        Item item = (Item) inventory.get(itemNumber);
+        switch (item.getItemType()) {
+            case 3:
+                this.hitPoints = this.hitPoints + item.getHealthpoints();
+                res = "You use a " + item.getName() + System.getProperty("line.separator");
+                res += "You now have " + this.getHitPoints() + " healthpoints";
+                inventory.remove(itemNumber);
+                break;
+            case 4:
+                for (int i = 0; i < inventory.size(); i++) {
+                    item = (Item) inventory.get(i);
+                    gold += item.getGold();
+                }
+                res = "You look at all your gold.... You got " + gold;
+                break;
+        }
+        return res;
+    }
+
+    public String equip(int itemNumber, int slotNumber) {
+        String res = null;
+        switch (slotNumber) {
+            case 1:
+                res = "You put your " + this.slot1.getName() + " in your backpack." + System.lineSeparator();
+                inventory.add(this.slot1);
+                this.slot1 = inventory.get(itemNumber);
+                inventory.remove(itemNumber);
+                res += "and you equip a " + this.slot1.getName() + " in slot 1" + System.lineSeparator();
+                break;
+            case 2:
+                res = "You put your " + this.slot2.getName() + " in your backpack." + System.lineSeparator();
+                inventory.add(this.slot2);
+                this.slot2 = inventory.get(itemNumber);
+                inventory.remove(itemNumber);
+                res += "and you equip a " + this.slot2.getName() + " in slot 2" + System.lineSeparator();
+                break;
+            default :
+                res = "That slot does not exist!";
+        }
+        return res;
     }
 }
