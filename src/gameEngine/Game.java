@@ -27,6 +27,7 @@ import java.util.logging.Logger;
  * @author Thomas
  */
 public class Game implements Serializable {
+
     private static final long serialVersionUID = 19981017L;
     private static final String newLine = System.getProperty("line.separator");
     private Item sword;
@@ -46,10 +47,12 @@ public class Game implements Serializable {
             for (int i = 0; i < dungeon.size(); i++) {
                 Random gen = new Random();
                 int nextMonster = gen.nextInt(monsters.size());
-                int amountOfMonsters = gen.nextInt(5);
-                for (int j = 0; j < amountOfMonsters; j++) {
-                    dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
-                    nextMonster = gen.nextInt(monsters.size());
+                if (gen.nextInt(10) > 5) {
+                    int amountOfMonsters = gen.nextInt(5);
+                    for (int j = 0; j < amountOfMonsters; j++) {
+                        dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
+                        nextMonster = gen.nextInt(monsters.size());
+                    }
                 }
             }
             sword = items.get(0);
@@ -128,7 +131,7 @@ public class Game implements Serializable {
         res += "Type \"gear\" to see what gear you got equipped" + System.getProperty("line.separator");
         res += "Type \"savegame\" to save your progress" + System.getProperty("line.separator");
         res += "Type \"stop\" to quit the game." + System.lineSeparator();
-        
+
         return res;
     }
 
