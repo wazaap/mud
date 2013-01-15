@@ -48,7 +48,7 @@ public class Game implements Serializable {
                 Random gen = new Random();
                 int nextMonster = gen.nextInt(monsters.size());
                 if (gen.nextInt(10) > 5) {
-                    int amountOfMonsters = gen.nextInt(5);
+                    int amountOfMonsters = gen.nextInt(5)+1;
                     for (int j = 0; j < amountOfMonsters; j++) {
                         dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
                         nextMonster = gen.nextInt(monsters.size());
