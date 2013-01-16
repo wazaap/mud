@@ -48,13 +48,27 @@ public class Game implements Serializable {
                 Random gen = new Random();
                 int nextMonster = gen.nextInt(monsters.size());
                 if (gen.nextInt(10) > 5) {
-                    int amountOfMonsters = gen.nextInt(5)+1;
+                    int amountOfMonsters = gen.nextInt(5) + 1;
                     for (int j = 0; j < amountOfMonsters; j++) {
                         dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
                         nextMonster = gen.nextInt(monsters.size());
                     }
                 }
             }
+
+            // Add treasure chests to rooms
+            for (int i = 0; i < dungeon.size(); i++) {
+                Random gen = new Random();
+                int nextChest = gen.nextInt(items.size() - 1);
+                if (gen.nextInt(10) > 0) {
+                    int amountOfItems = gen.nextInt(3) + 1;
+                    for (int j = 0; j < amountOfItems; j++) {
+                        dungeon.getRoom(i).addItmeToChest(items.get(nextChest));
+                        nextChest = gen.nextInt(items.size());
+                    }
+                }
+            }
+
             sword = items.get(0);
             shield = items.get(4);
             player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(28));
@@ -102,7 +116,6 @@ public class Game implements Serializable {
                     res += "You enter " + getCurrentRoom().getTitle() + System.getProperty("line.separator");
                     res += getCurrentRoom().getDescription() + System.getProperty("line.separator");
                     res += player.getCurrentRoom().availableDirections() + System.getProperty("line.separator");
-                    res += player.getCurrentRoom().getMonsters();
                     return res;
                 }
             }
@@ -126,7 +139,8 @@ public class Game implements Serializable {
         res += "Type \"east\" to go towards the south" + System.getProperty("line.separator");
         res += "Type \"west\" to go towards the south" + System.getProperty("line.separator");
         res += "Type \"attack\" to attack a monster" + System.getProperty("line.separator");
-        res += "Type \"look\" to look around" + System.getProperty("line.separator");
+        res += "Type \"look\" to look around in the room" + System.getProperty("line.separator");
+        res += "Type \"search\" to search the room for treasure" + System.getProperty("line.separator");
         res += "Type \"use\" to use somthing in your inventory" + System.getProperty("line.separator");
         res += "Type \"gear\" to see what gear you got equipped" + System.getProperty("line.separator");
         res += "Type \"savegame\" to save your progress" + System.getProperty("line.separator");
@@ -145,6 +159,30 @@ public class Game implements Serializable {
 
         return res;
     }
+    // this method checks if the chest in the room contains anything. If it does, it returns the items of the chest.
+    public String search() {
+        currentRoom = player.getCurrentRoom();
+        String res = "You start searching the room....";
+        if (currentRoom.chestSize() > 0) {
+            res += "You find a treasure chest in the corner..." + System.lineSeparator();
+            res += "You pick up the following items from the chest and put them in your backpack" + System.lineSeparator();
+            res += currentRoom.getItemsInChest();
+        } else {
+            res = "You find nothing of intrest in the room...";
+        }
+        return res;
+    }
+    
+    //this method transfers the items from a chest to the players inventory.
+    public void takeItemsFromChest() {
+        currentRoom = player.getCurrentRoom();
+        for (int i = 0; i < currentRoom.getChest().size(); i++){
+            player.addToInventory(currentRoom.getChest().get(i));
+            currentRoom.getChest().remove(i);
+        }
+            
+    }
+    
 
     public String attack() {
         currentRoom = player.getCurrentRoom();
@@ -265,13 +303,23 @@ public class Game implements Serializable {
                         out.newLine();
                         out.flush();
                         break;
+                    case "search":
+                        out.write(this.search());
+                        this.takeItemsFromChest();
+                        out.newLine();
+                        out.flush();
+                        break;
                     case "savegame":
                         out.write("Please give your savegame a name: " + System.getProperty("line.separator"));
                         out.flush();
-
                         String input = in.readLine();
                         out.write(FileIO.saveGame(this, input) + System.getProperty("line.separator"));
                         out.write("Resuming game..." + System.getProperty("line.separator"));
+                        out.flush();
+                        break;
+                    case "inventory":
+                        out.write("You have the following items in your backpack: " + System.lineSeparator());
+                        out.write(this.getPlayerInventory());
                         out.flush();
                         break;
                     default:
