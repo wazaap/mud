@@ -142,4 +142,8 @@ public class Player implements Serializable {
         }
         return res;
     }
+    
+    public void addToInventory (Item item){
+        inventory.add(item);
+    }
 }

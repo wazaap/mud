@@ -37,7 +37,8 @@ public class Game implements Serializable {
     private Room currentRoom;
     private ArrayList<Item> items = FileIO.getAllItems();
     private ArrayList<Monster> monsters = FileIO.getAllMonsters();
-
+    private boolean stop = false;
+    
     public Game(String dungeonPath, OutputStreamWriter newOut, InputStreamReader newIn) {
         // Initialize the dungeon
         dungeon = FileIO.readDungeon(dungeonPath);
@@ -60,18 +61,18 @@ public class Game implements Serializable {
             for (int i = 0; i < dungeon.size(); i++) {
                 Random gen = new Random();
                 int nextChest = gen.nextInt(items.size() - 1);
-                if (gen.nextInt(10) > 0) {
+                if (gen.nextInt(10) > 7) {
                     int amountOfItems = gen.nextInt(3) + 1;
                     for (int j = 0; j < amountOfItems; j++) {
                         dungeon.getRoom(i).addItmeToChest(items.get(nextChest));
-                        nextChest = gen.nextInt(items.size());
+                        nextChest = gen.nextInt(items.size()-1);
                     }
                 }
             }
 
             sword = items.get(0);
             shield = items.get(4);
-            player = new Player("Mads", 1000, sword, shield, 200, dungeon.getRoom(28));
+            player = new Player("Mads", 10, sword, shield, 200, dungeon.getRoom(28));
             player.getInventory().add(items.get(1));
             player.getInventory().add(items.get(2));
             player.getInventory().add(items.get(3));
@@ -121,11 +122,7 @@ public class Game implements Serializable {
             }
             res = "You walk into the wall.. AND IT HURTS!!" + System.getProperty("line.separator");
         }
-
-
-
         return res;
-
     }
 
     public Room getCurrentRoom() {
@@ -145,7 +142,6 @@ public class Game implements Serializable {
         res += "Type \"gear\" to see what gear you got equipped" + System.getProperty("line.separator");
         res += "Type \"savegame\" to save your progress" + System.getProperty("line.separator");
         res += "Type \"stop\" to quit the game." + System.lineSeparator();
-
         return res;
     }
 
@@ -159,7 +155,9 @@ public class Game implements Serializable {
 
         return res;
     }
-    // this method checks if the chest in the room contains anything. If it does, it returns the items of the chest.
+
+    // this method checks if the chest in the room contains anything. 
+    //If it does, it returns the items of the chest and adds them to the player inventory
     public String search() {
         currentRoom = player.getCurrentRoom();
         String res = "You start searching the room....";
@@ -172,39 +170,58 @@ public class Game implements Serializable {
         }
         return res;
     }
-    
+
     //this method transfers the items from a chest to the players inventory.
     public void takeItemsFromChest() {
         currentRoom = player.getCurrentRoom();
-        for (int i = 0; i < currentRoom.getChest().size(); i++){
+        for (int i = 0; i < currentRoom.getChest().size(); i++) {
             player.addToInventory(currentRoom.getChest().get(i));
             currentRoom.getChest().remove(i);
         }
-            
-    }
-    
 
+    }
+    //This method substracts the attackpoints of a montster from your hitpoints and vice versa.
+    //After substraction it checks if either of you have 0 or less hitpoints to determine if anybody is dead.
+    //If the monster is dead, it runs the monsterDropsLoot() method for a chance of  finding loot on the corpse.
+    //If you are dead the game ends.
     public String attack() {
         currentRoom = player.getCurrentRoom();
+        String res = null;
         if (currentRoom.amountOfMonsters() == 0) {
             return "There is no monsters left in the room." + System.getProperty("line.separator");
         }
         if (player.getHitPoints() > 0 && currentRoom.getMonster(0).getHitPoints() > 0) {
             player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
             currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
+            res = "You hit a " + currentRoom.getMonster(0).getName() + "! It now has " + currentRoom.getMonster(0).getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
+            res += "The " + currentRoom.getMonster(0).getName() + " hits you back! You now have " + player.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
 
         }
         if (player.getHitPoints() <= 0) {
-            return "You died!" + System.getProperty("line.separator");
+            res += "You died a horrible death!" + System.getProperty("line.separator");
+            stop = true;
         } else if (currentRoom.getMonster(0).getHitPoints() <= 0) {
             String monsterName = currentRoom.getMonster(0).getName();
             currentRoom.removeFirstMonster();
-            return "You have killed the a " + monsterName + System.getProperty("line.separator");
+            res += "You have killed the a " + monsterName + System.getProperty("line.separator");
+            res += monsterDropsLoot();
         }
-        String res = "You hit a " + currentRoom.getMonster(0).getName() + "! It now has " + currentRoom.getMonster(0).getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
-        res += "The " + currentRoom.getMonster(0).getName() + " hits you back! You now have " + player.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
+
         return res;
 
+    }
+
+    public String monsterDropsLoot() {
+        String res;
+        Random gen = new Random();
+        if (gen.nextInt(100)>75){
+            int tmp = gen.nextInt(items.size());
+            player.addToInventory(items.get(tmp));
+            res = "You search the corpse and loot a " + items.get(tmp).getName() + System.lineSeparator() ;
+        } else {
+            res = "You find nothing of value on the corpse.." + System.lineSeparator();
+        }
+        return res;
     }
 
     public String getPlayerInventory() {
@@ -247,7 +264,7 @@ public class Game implements Serializable {
             out.write(this.getCurrentRoom().availableDirections());
             out.newLine();
             out.flush();
-            boolean stop = false;
+
 
             while (!stop) {
                 out.write("What would you like to do:");

@@ -5,6 +5,8 @@
 package dungeon;
 
 import character.Monster;
+import character.Player;
+import item.Item;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ private static final long serialVersionUID = 19981017L;
     private String title;
     private String description;
     private ArrayList<Monster> monsters = new ArrayList<>();
+    private ArrayList<Item> chest = new ArrayList<>();
 
     public Room(int id, int north, int south, int east, int west, String title, String description) {
         this.id = id;
@@ -136,5 +139,27 @@ private static final long serialVersionUID = 19981017L;
 
     public void removeFirstMonster() {
         monsters.remove(0);
+    }
+    
+    public String getItemsInChest() {
+        String res = null;
+        if (chest.size() > 0){
+            for (int i = 0; i < chest.size(); i++){
+                res = chest.get(i).getName() + System.lineSeparator();
+            }
+        }
+        return res;
+    }
+    
+    public void addItmeToChest(Item item){
+        chest.add(item);
+    }
+    
+    public int chestSize(){
+        return chest.size();
+    }
+    
+    public ArrayList<Item> getChest(){
+        return chest;
     }
 }
