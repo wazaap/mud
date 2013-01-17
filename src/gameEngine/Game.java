@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Thomas
+ * @author Thomas & Mads
  */
 public class Game implements Serializable {
 
@@ -70,12 +70,12 @@ public class Game implements Serializable {
                 }
             }
 
-            sword = items.get(0);
-            shield = items.get(4);
-            player = new Player("Mads", 10, sword, shield, 200, dungeon.getRoom((dungeon.getStartRoom())));
-            player.getInventory().add(items.get(1));
-            player.getInventory().add(items.get(2));
-            player.getInventory().add(items.get(3));
+//            sword = items.get(0);
+//            shield = items.get(4);
+//            player = new Player("Mads", 10, sword, shield, 200, dungeon.getRoom((dungeon.getStartRoom())));
+//            player.getInventory().add(items.get(1));
+//            player.getInventory().add(items.get(2));
+//            player.getInventory().add(items.get(3));
             // Tester noget
             //this.run(newOut, newIn);
         }
@@ -143,7 +143,8 @@ public class Game implements Serializable {
 
     /**
      * Returns all available commands in a string.
-     * @return String 
+     *
+     * @return String
      */
     public String help() {
         String res = "You can use the following commands:" + System.getProperty("line.separator");
@@ -172,13 +173,14 @@ public class Game implements Serializable {
 
         return res;
     }
-    /**
-     * This method checks if the chest in the room contains anything. 
-     * If it does, it returns the items of the chest and adds them to the player inventory
-     * Returns a string with the result.
-     * @return String 
-     */
 
+    /**
+     * This method checks if the chest in the room contains anything. If it
+     * does, it returns the items of the chest and adds them to the player
+     * inventory Returns a string with the result.
+     *
+     * @return String
+     */
     public String search() {
         currentRoom = player.getCurrentRoom();
         String res = "You start searching the room....";
@@ -201,16 +203,16 @@ public class Game implements Serializable {
         }
 
     }
-    
+
     /**
-     * This method subtracts the attack points of a monster from your hit points and vice versa.
-     * After subtraction it checks if either of you have 0 or less hit points to determine if anybody is dead.
-     * If the monster is dead, it runs the monsterDropsLoot() method for a chance of  finding loot on the corpse.
-     * If you are dead the game ends.
+     * This method subtracts the attack points of a monster from your hit points
+     * and vice versa. After subtraction it checks if either of you have 0 or
+     * less hit points to determine if anybody is dead. If the monster is dead,
+     * it runs the monsterDropsLoot() method for a chance of finding loot on the
+     * corpse. If you are dead the game ends.
+     *
      * @return String
      */
-
-
     public String attack() {
         currentRoom = player.getCurrentRoom();
         String res = null;
@@ -239,12 +241,12 @@ public class Game implements Serializable {
     }
 
     /**
-     * This method determines if a monster drops a random item that is automaticly added to the player inventory
-     * Returns a string with the loot dropped or a string if there is no loot.
+     * This method determines if a monster drops a random item that is
+     * automatically added to the player inventory Returns a string with the
+     * loot dropped or a string if there is no loot.
+     *
      * @return String
      */
-    
-    
     public String monsterDropsLoot() {
         String res;
         Random gen = new Random();
@@ -260,6 +262,7 @@ public class Game implements Serializable {
 
     /**
      * Returns all items in the player inventory ArrayList to a String.
+     *
      * @return String
      */
     public String getPlayerInventory() {
@@ -293,7 +296,6 @@ public class Game implements Serializable {
 
     public final void run(OutputStreamWriter newOut, InputStreamReader newIn) {
 
-
         OutputStreamWriter ostream = newOut;
         BufferedWriter out = new BufferedWriter(ostream);
 
@@ -307,8 +309,18 @@ public class Game implements Serializable {
             out.newLine();
             out.write("-------------------------------------");
             out.newLine();
-            out.write("Welcome the this awsome sud!!");
+            out.flush();
+            createPlayer(newOut, newIn);
             out.newLine();
+            out.flush();
+            out.write("-------------------------------------");
+            out.newLine();
+            out.write("Welcome the this awsome sud " + player.getName());
+            out.newLine();
+            out.newLine();
+            out.write(player.getPlayerStats());
+            out.newLine();
+            out.write(getPlayerGear());
             out.newLine();
             out.write("Remeber you can allways type \"help\" to see a list of commands.");
             out.newLine();
@@ -368,6 +380,11 @@ public class Game implements Serializable {
                         out.newLine();
                         out.flush();
                         break;
+                    case "flee":
+                        out.write(this.flee());
+                        out.newLine();
+                        out.flush();
+                        break;
                     case "use":
                         useItem(newOut, newIn);
                         break;
@@ -411,8 +428,8 @@ public class Game implements Serializable {
     /**
      * Lists the player inventory and gives the opportunity to choose a item to
      * use. Determines the type of item the player wants to use. If its
-     * consumable or equipable. Consumable items are called with the useItem()
-     * method Equipable items gives the player the options to equip in slot 1 or
+     * consumable or equip-able. Consumable items are called with the useItem()
+     * method Equip-able items gives the player the options to equip in slot 1 or
      * slot 2.
      *
      * @param out
@@ -466,5 +483,53 @@ public class Game implements Serializable {
                 Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    /**
+     * Asks the player to enter his name and creates an object of the class Player with the name and predefined statistics.
+     * @param newOut
+     * @param newIn
+     * @return String
+     */
+    public String createPlayer(OutputStreamWriter newOut, InputStreamReader newIn) {
+        String name;
+        int hitPoints = 100;
+        Item slot1 = items.get(0);
+        Item slot2 = null;
+        int gold = 0;
+        Room room = dungeon.getRoom(dungeon.getStartRoom());
+        
+        OutputStreamWriter ostream = newOut;
+        BufferedWriter out = new BufferedWriter(ostream);
+
+        InputStreamReader instream = newIn;
+        BufferedReader in = new BufferedReader(instream);
+        try {
+            out.write("Enter your name: ");
+            out.newLine();
+            out.flush();
+            name = in.readLine();
+            player = new Player(name, hitPoints, slot1, slot2, gold, room);
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public String flee (){
+        currentRoom = player.getCurrentRoom();
+        Random random = new Random();
+        String res;
+        if (random.nextInt(100) > 90){
+            res = "In your attempt to flee a " + currentRoom.getMonster(0) + " blocks the path and you start to fight.";
+            res += attack();
+        }else {
+            res = "In panic you scramble to a nearby room ";
+            
+
+        }
+        
+        return res;
+        
     }
 }

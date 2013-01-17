@@ -84,8 +84,8 @@ public class FileIO implements Serializable {
             String[] rooms = fileInput.split("\n");
            
             String[] firstLineInfo = rooms[0].split("#");
-            tempDungeon.setStartRoom(Integer.parseInt(firstLineInfo[0]));
-            tempDungeon.setEndRoom(Integer.parseInt(firstLineInfo[1]));
+            tempDungeon.setStartRoom(Integer.parseInt(firstLineInfo[0])-1);
+            tempDungeon.setEndRoom(Integer.parseInt(firstLineInfo[1])-1);
             tempDungeon.setDescription(firstLineInfo[2]);
         
             

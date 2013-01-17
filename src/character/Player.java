@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * @author Thomas
  */
 public class Player implements Serializable {
-    private static final long serialVersionUID = 19981017L;
 
+    private static final long serialVersionUID = 19981017L;
     private String name;
     private int hitPoints;
     private Item slot1;
@@ -68,6 +68,7 @@ public class Player implements Serializable {
     public int getGold() {
         return gold;
     }
+
     public void setGold(int gold) {
         this.gold = gold;
     }
@@ -137,13 +138,23 @@ public class Player implements Serializable {
                 inventory.remove(itemNumber);
                 res += "and you equip a " + this.slot2.getName() + " in slot 2" + System.lineSeparator();
                 break;
-            default :
+            default:
                 res = "That slot does not exist!";
         }
         return res;
     }
-    
-    public void addToInventory (Item item){
+
+    public void addToInventory(Item item) {
         inventory.add(item);
     }
+
+    public String getPlayerStats() {
+        String res;
+        res = "You have the following stats! " + System.lineSeparator();
+        res += "Name: " + this.name + System.lineSeparator();
+        res += "Healthpoints: " + this.hitPoints + System.lineSeparator();
+        
+        return res;
+    }
+    
 }
