@@ -1,4 +1,4 @@
-29#52#This is a amazing dungeon with a description right here!
+28#52#This is a amazing dungeon with a description right here!
 1#-1#2#10#-1#Room#You enter a room.
 2#1#-1#11#-1#Room#You enter a room.
 3#-1#4#12#-1#Room#You enter a room.
