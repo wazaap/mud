@@ -18,7 +18,6 @@ public class Room implements Serializable {
 private static final long serialVersionUID = 19981017L;
 
     private int id;
-    private int availableExits;
     private int north;
     private int south;
     private int east;
@@ -39,7 +38,7 @@ private static final long serialVersionUID = 19981017L;
     }
 
     public void addMonster(Monster monster) {
-        monsters.add(monster);
+        this.monsters.add(monster);
     }
 
     public String availableDirections() {
@@ -129,16 +128,15 @@ private static final long serialVersionUID = 19981017L;
     }
 
     public int amountOfMonsters() {
-        return monsters.size();
+        return this.monsters.size();
     }
 
     public Monster getMonster(int i) {
-        Monster thisMonster = monsters.get(i);
-        return thisMonster;
+        return this.monsters.get(i);
     }
 
     public void removeMonster(int i) {
-        monsters.remove(i);
+        this.monsters.remove(i);
     }
     
     public String getItemsInChest() {

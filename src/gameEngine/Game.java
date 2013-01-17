@@ -131,7 +131,7 @@ public class Game implements Serializable {
                     return res;
                 }
             }
-            
+
         }
         res = "You walk into the wall.. AND IT HURTS!!" + System.getProperty("line.separator");
         return res;
@@ -215,31 +215,31 @@ public class Game implements Serializable {
      * @return String
      */
     public String attack() {
-        currentRoom = player.getCurrentRoom();
-        Monster currentMonster = currentRoom.getMonster(0);
         String res = null;
-        if (currentRoom.amountOfMonsters() == 0) {
-            return "There is no monsters left in the room." + System.getProperty("line.separator");
+        if (currentRoom.amountOfMonsters() != 0) {
+            Monster currentMonster = currentRoom.getMonster(0);
+            if (currentMonster.getHitPoints() > 0) {
+                player.setHitPoints(player.getHitPoints() - currentMonster.getAttackPoints());
+                currentMonster.setHitPoints((currentMonster.getHitPoints() - player.getWeapon().getDamage()));
+                res = "You hit a " + currentMonster.getName() + "! It now has " + currentMonster.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
+                res += "The " + currentMonster.getName() + " hits you back! You now have " + player.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
+                if (currentMonster.getHitPoints() < 1) {
+                    String monsterName = currentMonster.getName();
+                    int gainedXp = currentMonster.getXp();
+                    player.setXp(player.getXp() + gainedXp);
+                    currentRoom.removeMonster(0);
+                    res += "You have killed a " + monsterName + " and you gain " + gainedXp + " xp" + System.getProperty("line.separator");
+                    res += monsterDropsLoot();
+
+                }
+                if (player.getHitPoints() < 1) {
+                    res += "You died a horrible death!" + System.getProperty("line.separator");
+                    stop = true;
+                }
+            } 
+            return res;
         }
-        if (player.getHitPoints() > 0 && currentMonster.getHitPoints() > 0) {
-            player.setHitPoints(player.getHitPoints() - currentMonster.getAttackPoints());
-            currentMonster.setHitPoints((currentMonster.getHitPoints() - player.getWeapon().getDamage()));
-            res = "You hit a " + currentMonster.getName() + "! It now has " + currentMonster.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
-            res += "The " + currentRoom.getMonster(0).getName() + " hits you back! You now have " + player.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
-            if (currentMonster.getHitPoints() < 1) {
-                String monsterName = currentMonster.getName();
-                int gainedXp = currentMonster.getXp();
-                player.setXp(player.getXp() + gainedXp);
-                currentRoom.removeMonster(0);
-                res += "You have killed the a " + monsterName + " and you gain " + gainedXp + " xp" + System.getProperty("line.separator");
-                res += monsterDropsLoot();
-            }
-            if (player.getHitPoints() < 1) {
-                res += "You died a horrible death!" + System.getProperty("line.separator");
-                stop = true;
-            }
-        } 
-        return res;
+        return "There is no monsters left in the room." + System.getProperty("line.separator");
     }
 
     /**
