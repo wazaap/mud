@@ -38,7 +38,7 @@ public class Game implements Serializable {
     private ArrayList<Item> items = FileIO.getAllItems();
     private ArrayList<Monster> monsters = FileIO.getAllMonsters();
     private boolean stop = false;
-    
+
     public Game(String dungeonPath, OutputStreamWriter newOut, InputStreamReader newIn) {
         // Initialize the dungeon
         dungeon = FileIO.readDungeon(dungeonPath);
@@ -65,7 +65,7 @@ public class Game implements Serializable {
                     int amountOfItems = gen.nextInt(3) + 1;
                     for (int j = 0; j < amountOfItems; j++) {
                         dungeon.getRoom(i).addItmeToChest(items.get(nextChest));
-                        nextChest = gen.nextInt(items.size()-1);
+                        nextChest = gen.nextInt(items.size() - 1);
                     }
                 }
             }
@@ -81,12 +81,21 @@ public class Game implements Serializable {
         }
     }
 
+    //gets a random monster from the monster ArrayList
     public Monster getRandomMonster() {
         Random gen = new Random();
         int num = gen.nextInt(monsters.size());
         return monsters.get(num);
     }
 
+    /**
+     * Verifies your move is valid and moves you to the correct room. Returns
+     * what way you go, what room you enter, the description and what directions
+     * you have available.
+     *
+     * @param direction
+     * @return String
+     */
     public String move(String direction) {
         currentRoom = player.getCurrentRoom();
         String res = "";
@@ -125,10 +134,15 @@ public class Game implements Serializable {
         return res;
     }
 
+    //Returns the current room the player is in.
     public Room getCurrentRoom() {
         return player.getCurrentRoom();
     }
 
+    /**
+     * Returns all available commands in a string.
+     * @return String 
+     */
     public String help() {
         String res = "You can use the following commands:" + System.getProperty("line.separator");
         res += "Type \"north\" to go towards the north" + System.getProperty("line.separator");
@@ -145,6 +159,7 @@ public class Game implements Serializable {
         return res;
     }
 
+    //Returns a string containing the title of the room, description of the room, available directions and monsters in the room.
     public String look() {
         currentRoom = player.getCurrentRoom();
         String res;
@@ -155,9 +170,13 @@ public class Game implements Serializable {
 
         return res;
     }
+    /**
+     * This method checks if the chest in the room contains anything. 
+     * If it does, it returns the items of the chest and adds them to the player inventory
+     * Returns a string with the result.
+     * @return String 
+     */
 
-    // this method checks if the chest in the room contains anything. 
-    //If it does, it returns the items of the chest and adds them to the player inventory
     public String search() {
         currentRoom = player.getCurrentRoom();
         String res = "You start searching the room....";
@@ -180,10 +199,16 @@ public class Game implements Serializable {
         }
 
     }
-    //This method substracts the attackpoints of a montster from your hitpoints and vice versa.
-    //After substraction it checks if either of you have 0 or less hitpoints to determine if anybody is dead.
-    //If the monster is dead, it runs the monsterDropsLoot() method for a chance of  finding loot on the corpse.
-    //If you are dead the game ends.
+    
+    /**
+     * This method subtracts the attack points of a monster from your hit points and vice versa.
+     * After subtraction it checks if either of you have 0 or less hit points to determine if anybody is dead.
+     * If the monster is dead, it runs the monsterDropsLoot() method for a chance of  finding loot on the corpse.
+     * If you are dead the game ends.
+     * @return String
+     */
+
+
     public String attack() {
         currentRoom = player.getCurrentRoom();
         String res = null;
@@ -211,19 +236,30 @@ public class Game implements Serializable {
 
     }
 
+    /**
+     * This method determines if a monster drops a random item that is automaticly added to the player inventory
+     * Returns a string with the loot dropped or a string if there is no loot.
+     * @return String
+     */
+    
+    
     public String monsterDropsLoot() {
         String res;
         Random gen = new Random();
-        if (gen.nextInt(100)>75){
+        if (gen.nextInt(100) > 75) {
             int tmp = gen.nextInt(items.size());
             player.addToInventory(items.get(tmp));
-            res = "You search the corpse and loot a " + items.get(tmp).getName() + System.lineSeparator() ;
+            res = "You search the corpse and loot a " + items.get(tmp).getName() + System.lineSeparator();
         } else {
             res = "You find nothing of value on the corpse.." + System.lineSeparator();
         }
         return res;
     }
 
+    /**
+     * Returns all items in the player inventory ArrayList to a String.
+     * @return String
+     */
     public String getPlayerInventory() {
         String res = "You have the following items in your inventory:" + System.getProperty("line.separator");
         for (int i = 0; i < player.getInventory().size(); i++) {
@@ -232,6 +268,12 @@ public class Game implements Serializable {
         return res;
     }
 
+    /**
+     * Returns all the gear in the players slot 1 and slot 2 Returns a string if
+     * the player has nothing equipped in a slot.
+     *
+     * @return String
+     */
     public String getPlayerGear() {
         String res = "You have the following gear equipped:" + System.getProperty("line.separator");
         if (player.getGearSlot1() == null) {
@@ -257,15 +299,27 @@ public class Game implements Serializable {
         BufferedReader in = new BufferedReader(instream);
 
         try {
-            //Scanner scanner = new Scanner(System.in);
+            // Introduction to the loaded game.
             String command;
+            out.newLine();
+            out.newLine();
+            out.write("-------------------------------------");
+            out.newLine();
+            out.write("Welcome the this awsome sud!!");
+            out.newLine();
+            out.newLine();
             out.write("Remeber you can allways type \"help\" to see a list of commands.");
+            out.newLine();
+            out.newLine();
+            out.write(this.getCurrentRoom().getTitle());
+            out.newLine();
+            out.write(this.getCurrentRoom().getDescription());
             out.newLine();
             out.write(this.getCurrentRoom().availableDirections());
             out.newLine();
             out.flush();
 
-
+            //Switch case that handles all the commands the player can write.
             while (!stop) {
                 out.write("What would you like to do:");
                 out.newLine();
@@ -352,6 +406,16 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Lists the player inventory and gives the opportunity to choose a item to
+     * use. Determines the type of item the player wants to use. If its
+     * consumable or equipable. Consumable items are called with the useItem()
+     * method Equipable items gives the player the options to equip in slot 1 or
+     * slot 2.
+     *
+     * @param out
+     * @param newIn
+     */
     public void useItem(OutputStreamWriter out, InputStreamReader newIn) {
         InputStreamReader instream = newIn;
         BufferedReader in = new BufferedReader(instream);
