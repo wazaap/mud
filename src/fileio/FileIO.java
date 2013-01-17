@@ -78,11 +78,19 @@ public class FileIO implements Serializable {
             fileInput = readFile(filepath);
         }
         Dungeon tempDungeon = new Dungeon();
+        
+        
         if (!"".equals(fileInput)) {
             String[] rooms = fileInput.split("\n");
+           
+            String[] firstLineInfo = rooms[0].split("#");
+            tempDungeon.setStartRoom(Integer.parseInt(firstLineInfo[0]));
+            tempDungeon.setEndRoom(Integer.parseInt(firstLineInfo[1]));
+            tempDungeon.setDescription(firstLineInfo[2]);
+        
+            
             // id, strLine, strLine, north, south, east, west
-
-            for (int i = 0; i < rooms.length; i++) {
+            for (int i = 1; i < rooms.length; i++) {
                 String[] arr = rooms[i].split("#");
                 // Creates a temperary room to be added
                 Room tempRoom = new Room(

@@ -15,6 +15,34 @@ public class Dungeon implements Serializable {
 
     private static final long serialVersionUID = 19981017L;
     private ArrayList<Room> rooms = new ArrayList<>();
+    private int startRoom;
+    private int endRoom;
+    private String description;
+
+    public int getStartRoom() {
+        return startRoom;
+    }
+
+    public void setStartRoom(int startRoom) {
+        this.startRoom = startRoom;
+    }
+
+    public int getEndRoom() {
+        return endRoom;
+    }
+
+    public void setEndRoom(int endRoom) {
+        this.endRoom = endRoom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
     public Dungeon() {
     }
