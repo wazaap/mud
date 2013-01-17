@@ -126,7 +126,8 @@ public class FileIO implements Serializable {
                     arr[0],
                     arr[1],
                     Integer.parseInt(arr[2]),
-                    Integer.parseInt(arr[3]));
+                    Integer.parseInt(arr[3]),
+                    Integer.parseInt(arr[4]));
             monsters.add(tempMonster);
         }
         return monsters;

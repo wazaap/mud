@@ -17,19 +17,25 @@ public class Monster implements Serializable {
     private String description;
     private int healthpoints;
     private int attackPoints;
+    private int xp;
 
     public Monster() {
     }
 
-    public Monster(String name, String description, int hitPoints, int attackPoints) {
+    public Monster(String name, String description, int hitPoints, int attackPoints, int xp) {
         this.name = name;
         this.description = description;
         this.healthpoints = hitPoints;
         this.attackPoints = attackPoints;
+        this.xp = xp;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getXp() {
+        return xp;
     }
 
     public void setName(String name) {

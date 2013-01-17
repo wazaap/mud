@@ -22,6 +22,9 @@ public class Player implements Serializable {
     private Item slot2;
     private int gold;
     private Room currentRoom;
+    private int xp = 0;
+    private int maxHp = 100;
+    private int level = 0;
     ArrayList<Item> inventory = new ArrayList<>();
 
     public Player(String name, int hitPoints, Item slot1, Item slot2, int gold, Room room) {
@@ -37,8 +40,32 @@ public class Player implements Serializable {
         return name;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
     }
 
     public int getHitPoints() {
@@ -153,8 +180,10 @@ public class Player implements Serializable {
         res = "You have the following stats! " + System.lineSeparator();
         res += "Name: " + this.name + System.lineSeparator();
         res += "Healthpoints: " + this.hitPoints + System.lineSeparator();
+        res += "Level: " + this.level + System.lineSeparator();
+        res += "Experience points (xp): " + this.xp + System.lineSeparator();
+        
         
         return res;
     }
-    
 }

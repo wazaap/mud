@@ -131,8 +131,9 @@ public class Game implements Serializable {
                     return res;
                 }
             }
-            res = "You walk into the wall.. AND IT HURTS!!" + System.getProperty("line.separator");
+            
         }
+        res = "You walk into the wall.. AND IT HURTS!!" + System.getProperty("line.separator");
         return res;
     }
 
@@ -215,29 +216,30 @@ public class Game implements Serializable {
      */
     public String attack() {
         currentRoom = player.getCurrentRoom();
+        Monster currentMonster = currentRoom.getMonster(0);
         String res = null;
         if (currentRoom.amountOfMonsters() == 0) {
             return "There is no monsters left in the room." + System.getProperty("line.separator");
         }
-        if (player.getHitPoints() > 0 && currentRoom.getMonster(0).getHitPoints() > 0) {
-            player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
-            currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
-            res = "You hit a " + currentRoom.getMonster(0).getName() + "! It now has " + currentRoom.getMonster(0).getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
+        if (player.getHitPoints() > 0 && currentMonster.getHitPoints() > 0) {
+            player.setHitPoints(player.getHitPoints() - currentMonster.getAttackPoints());
+            currentMonster.setHitPoints((currentMonster.getHitPoints() - player.getWeapon().getDamage()));
+            res = "You hit a " + currentMonster.getName() + "! It now has " + currentMonster.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
             res += "The " + currentRoom.getMonster(0).getName() + " hits you back! You now have " + player.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
-
-        }
-        if (player.getHitPoints() <= 0) {
-            res += "You died a horrible death!" + System.getProperty("line.separator");
-            stop = true;
-        } else if (currentRoom.getMonster(0).getHitPoints() <= 0) {
-            String monsterName = currentRoom.getMonster(0).getName();
-            currentRoom.removeFirstMonster();
-            res += "You have killed the a " + monsterName + System.getProperty("line.separator");
-            res += monsterDropsLoot();
-        }
-
+            if (currentMonster.getHitPoints() < 1) {
+                String monsterName = currentMonster.getName();
+                int gainedXp = currentMonster.getXp();
+                player.setXp(player.getXp() + gainedXp);
+                currentRoom.removeMonster(0);
+                res += "You have killed the a " + monsterName + " and you gain " + gainedXp + " xp" + System.getProperty("line.separator");
+                res += monsterDropsLoot();
+            }
+            if (player.getHitPoints() < 1) {
+                res += "You died a horrible death!" + System.getProperty("line.separator");
+                stop = true;
+            }
+        } 
         return res;
-
     }
 
     /**
@@ -335,6 +337,11 @@ public class Game implements Serializable {
 
             //Switch case that handles all the commands the player can write.
             while (!stop) {
+                if (gainLevel() == true) {
+                    out.write("Congratulations!! You gained a level and are now level " + this.player.getLevel());
+                    out.newLine();
+                    out.flush();
+                }
                 out.write("What would you like to do:");
                 out.newLine();
                 out.flush();
@@ -393,6 +400,11 @@ public class Game implements Serializable {
                         out.newLine();
                         out.flush();
                         break;
+                    case "stats":
+                        out.write(player.getPlayerStats());
+                        out.newLine();
+                        out.flush();
+                        break;
                     case "search":
                         out.write(this.search());
                         this.takeItemsFromChest();
@@ -439,48 +451,56 @@ public class Game implements Serializable {
         InputStreamReader instream = newIn;
         BufferedReader in = new BufferedReader(instream);
         boolean equipped = false;
-        while (!equipped) {
+        if (this.player.getInventory().isEmpty()) {
             try {
-                out.write(this.getPlayerInventory());
-                out.write(System.getProperty("line.separator"));
-                out.write("Choose an item by pressing a number: ");
-                out.write(System.getProperty("line.separator"));
-                out.flush();
+                out.write("You have nothing in your inventory you can use.." + System.lineSeparator());
+            } catch (IOException ex) {
+                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            while (!equipped) {
                 try {
-                    int itemNumber = Integer.parseInt(in.readLine());
-                    if (itemNumber >= player.getInventory().size() || itemNumber < 0) {
-                        out.write("You do not have that item...");
-                        out.write(System.getProperty("line.separator"));
-                        out.flush();
-                    } else {
-                        if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
-                            out.write(player.useItem(itemNumber));
-                            equipped = true;
+                    out.write(this.getPlayerInventory());
+                    out.write(System.getProperty("line.separator"));
+                    out.write("Choose an item by pressing a number: ");
+                    out.write(System.getProperty("line.separator"));
+                    out.flush();
+                    try {
+                        int itemNumber = Integer.parseInt(in.readLine());
+                        if (itemNumber >= player.getInventory().size() || itemNumber < 0) {
+                            out.write("You do not have that item...");
                             out.write(System.getProperty("line.separator"));
                             out.flush();
                         } else {
-                            out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
-                            out.write(System.getProperty("line.separator"));
-                            out.flush();
-                            int slotNumber = Integer.parseInt(in.readLine());
-                            while (slotNumber != 1 && slotNumber != 2) {
-                                out.write("You have to choose between slot 1 and slot 2" + System.lineSeparator());
+                            if (player.getInventory().get(itemNumber).getItemType() == 3 || player.getInventory().get(itemNumber).getItemType() == 4) {
+                                out.write(player.useItem(itemNumber));
+                                equipped = true;
+                                out.write(System.getProperty("line.separator"));
                                 out.flush();
-                                slotNumber = Integer.parseInt(in.readLine());
+                            } else {
+                                out.write("Choose between slot 1 and slot 2 by pressing 1 or 2: ");
+                                out.write(System.getProperty("line.separator"));
+                                out.flush();
+                                int slotNumber = Integer.parseInt(in.readLine());
+                                while (slotNumber != 1 && slotNumber != 2) {
+                                    out.write("You have to choose between slot 1 and slot 2" + System.lineSeparator());
+                                    out.flush();
+                                    slotNumber = Integer.parseInt(in.readLine());
+                                }
+                                out.write(player.equip(itemNumber, slotNumber));
+                                equipped = true;
+                                out.write(System.getProperty("line.separator"));
+                                out.flush();
                             }
-                            out.write(player.equip(itemNumber, slotNumber));
-                            equipped = true;
-                            out.write(System.getProperty("line.separator"));
-                            out.flush();
                         }
+                    } catch (NumberFormatException ex) {
+                        out.write("You have to enter a number. Please try again!" + System.lineSeparator());
+                        out.write(System.getProperty("line.separator"));
+                        out.flush();
                     }
-                } catch (NumberFormatException ex) {
-                    out.write("You have to enter a number. Please try again!" + System.lineSeparator());
-                    out.write(System.getProperty("line.separator"));
-                    out.flush();
+                } catch (IOException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -518,6 +538,14 @@ public class Game implements Serializable {
         return null;
     }
 
+    /**
+     * This method determines if there is any monsters to flee from. If there is
+     * you will have a chance that the monsters will attack you. If you manage
+     * to flee, the method will send you to a random room corresponding to the
+     * current room. Returns a string with the action performed.
+     *
+     * @return String
+     */
     public String flee() {
         currentRoom = player.getCurrentRoom();
         Random random = new Random();
@@ -534,44 +562,44 @@ public class Game implements Serializable {
                     rooms = random.nextInt(3);
                     switch (rooms) {
                         case 0:
-                            if (currentRoom.getNorth() != -1){
-                                for (int i = 0; i < dungeon.size(); i++){
-                                    if (dungeon.getRoom(i).getId() == currentRoom.getNorth() ){
+                            if (currentRoom.getNorth() != -1) {
+                                for (int i = 0; i < dungeon.size(); i++) {
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getNorth()) {
                                         player.setCurrentRoom(dungeon.getRoom(i));
                                         flee = true;
                                     }
-                                }                            
+                                }
                             }
                             break;
 
                         case 1:
-                            if (currentRoom.getSouth() != -1){
-                                for (int i = 0; i < dungeon.size(); i++){
-                                    if (dungeon.getRoom(i).getId() == currentRoom.getSouth() ){
+                            if (currentRoom.getSouth() != -1) {
+                                for (int i = 0; i < dungeon.size(); i++) {
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getSouth()) {
                                         player.setCurrentRoom(dungeon.getRoom(i));
                                         flee = true;
                                     }
-                                }                            
+                                }
                             }
                             break;
                         case 2:
-                            if (currentRoom.getEast() != -1){
-                                for (int i = 0; i < dungeon.size(); i++){
-                                    if (dungeon.getRoom(i).getId() == currentRoom.getEast() ){
+                            if (currentRoom.getEast() != -1) {
+                                for (int i = 0; i < dungeon.size(); i++) {
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getEast()) {
                                         player.setCurrentRoom(dungeon.getRoom(i));
                                         flee = true;
                                     }
-                                }                            
+                                }
                             }
                             break;
                         case 3:
-                            if (currentRoom.getWest() != -1){
-                                for (int i = 0; i < dungeon.size(); i++){
-                                    if (dungeon.getRoom(i).getId() == currentRoom.getWest() ){
+                            if (currentRoom.getWest() != -1) {
+                                for (int i = 0; i < dungeon.size(); i++) {
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getWest()) {
                                         player.setCurrentRoom(dungeon.getRoom(i));
                                         flee = true;
                                     }
-                                }                            
+                                }
                             }
                             break;
                     }
@@ -581,5 +609,16 @@ public class Game implements Serializable {
             res = "There is nothing to flee from...";
         }
         return res;
+    }
+
+    public boolean gainLevel() {
+        if (this.player.getXp() > 100) {
+            this.player.setXp(0);
+            this.player.setMaxHp(this.player.getMaxHp() * 3 / 2);
+            this.player.setHitPoints(this.player.getMaxHp());
+            this.player.setLevel(this.player.getLevel() + 1);
+            return true;
+        }
+        return false;
     }
 }

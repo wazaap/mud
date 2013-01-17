@@ -137,8 +137,8 @@ private static final long serialVersionUID = 19981017L;
         return thisMonster;
     }
 
-    public void removeFirstMonster() {
-        monsters.remove(0);
+    public void removeMonster(int i) {
+        monsters.remove(i);
     }
     
     public String getItemsInChest() {

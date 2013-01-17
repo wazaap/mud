@@ -1,3 +1,3 @@
-DTU Student#Strength: Development and use of virtual machinegunsWeakness: SunlightDescription:Is a very dangerous creature, which have the power to bore people with nonsense until they slowley die.#250#10
-Preschool Student#Strength: Screams until it's opponent surrenderWeakness: SociatyDescription:Is generally an annoying creature and is able to take all seats in the cantine.#250#10
-Teacher#Strength: Is smarter than you!Weakness: Is easy to distractDescription:They used to rule all players by teaching deciplin, but after the early 90's they lost all their power#70#2
+DTU Student#Strength: Development and use of virtual machinegunsWeakness: SunlightDescription:Is a very dangerous creature, which have the power to bore people with nonsense until they slowley die.#250#10#10
+Preschool Student#Strength: Screams until it's opponent surrenderWeakness: SociatyDescription:Is generally an annoying creature and is able to take all seats in the cantine.#250#10#15
+Teacher#Strength: Is smarter than you!Weakness: Is easy to distractDescription:They used to rule all players by teaching deciplin, but after the early 90's they lost all their power#70#2#5
