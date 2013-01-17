@@ -429,8 +429,8 @@ public class Game implements Serializable {
      * Lists the player inventory and gives the opportunity to choose a item to
      * use. Determines the type of item the player wants to use. If its
      * consumable or equip-able. Consumable items are called with the useItem()
-     * method Equip-able items gives the player the options to equip in slot 1 or
-     * slot 2.
+     * method Equip-able items gives the player the options to equip in slot 1
+     * or slot 2.
      *
      * @param out
      * @param newIn
@@ -486,7 +486,9 @@ public class Game implements Serializable {
     }
 
     /**
-     * Asks the player to enter his name and creates an object of the class Player with the name and predefined statistics.
+     * Asks the player to enter his name and creates an object of the class
+     * Player with the name and predefined statistics.
+     *
      * @param newOut
      * @param newIn
      * @return String
@@ -498,7 +500,7 @@ public class Game implements Serializable {
         Item slot2 = null;
         int gold = 0;
         Room room = dungeon.getRoom(dungeon.getStartRoom());
-        
+
         OutputStreamWriter ostream = newOut;
         BufferedWriter out = new BufferedWriter(ostream);
 
@@ -515,21 +517,69 @@ public class Game implements Serializable {
         }
         return null;
     }
-    
-    public String flee (){
+
+    public String flee() {
         currentRoom = player.getCurrentRoom();
         Random random = new Random();
+        int rooms;
         String res;
-        if (random.nextInt(100) > 90){
-            res = "In your attempt to flee a " + currentRoom.getMonster(0) + " blocks the path and you start to fight.";
-            res += attack();
-        }else {
-            res = "In panic you scramble to a nearby room ";
-            
+        if (currentRoom.amountOfMonsters() > 0) {
+            if (random.nextInt(100) > 90) {
+                res = "In your attempt to flee a " + currentRoom.getMonster(0) + " blocks the path and you start to fight.";
+                res += attack();
+            } else {
+                res = "In panic you scramble to a nearby room ";
+                boolean flee = false;
+                while (flee == false) {
+                    rooms = random.nextInt(3);
+                    switch (rooms) {
+                        case 0:
+                            if (currentRoom.getNorth() != -1){
+                                for (int i = 0; i < dungeon.size(); i++){
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getNorth() ){
+                                        player.setCurrentRoom(dungeon.getRoom(i));
+                                        flee = true;
+                                    }
+                                }                            
+                            }
+                            break;
 
+                        case 1:
+                            if (currentRoom.getSouth() != -1){
+                                for (int i = 0; i < dungeon.size(); i++){
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getSouth() ){
+                                        player.setCurrentRoom(dungeon.getRoom(i));
+                                        flee = true;
+                                    }
+                                }                            
+                            }
+                            break;
+                        case 2:
+                            if (currentRoom.getEast() != -1){
+                                for (int i = 0; i < dungeon.size(); i++){
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getEast() ){
+                                        player.setCurrentRoom(dungeon.getRoom(i));
+                                        flee = true;
+                                    }
+                                }                            
+                            }
+                            break;
+                        case 3:
+                            if (currentRoom.getWest() != -1){
+                                for (int i = 0; i < dungeon.size(); i++){
+                                    if (dungeon.getRoom(i).getId() == currentRoom.getWest() ){
+                                        player.setCurrentRoom(dungeon.getRoom(i));
+                                        flee = true;
+                                    }
+                                }                            
+                            }
+                            break;
+                    }
+                }
+            }
+        } else {
+            res = "There is nothing to flee from...";
         }
-        
         return res;
-        
     }
 }
