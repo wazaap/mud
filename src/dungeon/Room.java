@@ -55,7 +55,6 @@ private static final long serialVersionUID = 19981017L;
         if (this.east != -1) {
             res += "[east]";
         }
-        res += System.getProperty("line.separator");
         return res;
     }
 

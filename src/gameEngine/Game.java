@@ -122,7 +122,9 @@ public class Game implements Serializable {
             for (int i = 0; i < dungeon.size(); i++) {
                 if (dungeon.getRoom(i).getId() == moveTo) {
                     player.setCurrentRoom(dungeon.getRoom(i));
-                    res = "You go towards " + direction + System.getProperty("line.separator");
+                    res = System.lineSeparator();
+                    res += "You go towards " + direction + System.getProperty("line.separator");
+                    res += System.lineSeparator();
                     res += "You enter " + getCurrentRoom().getTitle() + System.getProperty("line.separator");
                     res += getCurrentRoom().getDescription() + System.getProperty("line.separator");
                     res += player.getCurrentRoom().availableDirections() + System.getProperty("line.separator");
