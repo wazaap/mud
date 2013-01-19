@@ -98,8 +98,12 @@ public class Game implements Serializable {
      */
     public String move(String direction) {
         currentRoom = player.getCurrentRoom();
-        String res = "";
+        String res;
         int moveTo = 0;
+        while (currentRoom.amountOfMonsters() > 0) {
+            res = "In your attempt to escape, a " + currentRoom.getMonster(0).getName() + " blocks your path" + System.getProperty("line.separator");
+            return res;
+        }
         switch (direction) {
             case "north":
                 moveTo = currentRoom.getNorth();
@@ -113,10 +117,6 @@ public class Game implements Serializable {
             case "west":
                 moveTo = currentRoom.getWest();
                 break;
-        }
-        while (currentRoom.amountOfMonsters() > 0) {
-            res = "In your attempt to escape, a " + currentRoom.getMonster(0).getName() + " blocks your path" + System.getProperty("line.separator");
-            return res;
         }
         if (moveTo > 0) {
             for (int i = 0; i < dungeon.size(); i++) {
@@ -216,9 +216,7 @@ public class Game implements Serializable {
      */
     public String attack() {
         String res = null;
-        currentRoom = player.getCurrentRoom();
         if (currentRoom.amountOfMonsters() != 0) {
-            if (currentRoom.getMonster(0).getHitPoints() > 0) {
                 player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
                 currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
                 res = "You hit a " + currentRoom.getMonster(0).getName() + "! It now has " + currentRoom.getMonster(0).getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
@@ -235,10 +233,11 @@ public class Game implements Serializable {
                     res += "You died a horrible death!" + System.getProperty("line.separator");
                     stop = true;
                 }
-            } 
+            
             return res;
         }
         return "There is no monsters left in the room." + System.getProperty("line.separator");
+
     }
 
     /**

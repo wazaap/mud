@@ -31,11 +31,11 @@ public class Monster implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getXp() {
-        return xp;
+        return this.xp;
     }
 
     public void setName(String name) {
@@ -51,7 +51,7 @@ public class Monster implements Serializable {
     }
 
     public int getHitPoints() {
-        return healthpoints;
+        return this.healthpoints;
     }
 
     public void setHitPoints(int hitPoints) {
