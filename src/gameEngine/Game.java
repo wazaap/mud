@@ -49,7 +49,7 @@ public class Game implements Serializable {
                 if (gen.nextInt(10) > 5) {
                     int amountOfMonsters = gen.nextInt(5) + 1;
                     for (int j = 0; j < amountOfMonsters; j++) {
-                        dungeon.getRoom(i).addMonster((Monster)monsters.get(nextMonster).clone());
+                        dungeon.getRoom(i).addMonster((Monster) monsters.get(nextMonster).clone());
                         nextMonster = gen.nextInt(monsters.size());
                     }
                 }
@@ -204,7 +204,8 @@ public class Game implements Serializable {
      * @return String
      */
     public String attack() {
-        String res = null;
+        String res;
+
         if (currentRoom.amountOfMonsters() != 0) {
             player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
             currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
@@ -220,6 +221,11 @@ public class Game implements Serializable {
             }
             if (player.getHitPoints() < 1) {
                 res += "You died a horrible death!" + System.getProperty("line.separator");
+                stop = true;
+            }
+
+            if (currentRoom.getId() == dungeon.getEndRoom() && currentRoom.amountOfMonsters() < 1) {
+                res += "You have completed the dungeon...";
                 stop = true;
             }
 
@@ -312,7 +318,7 @@ public class Game implements Serializable {
             out.newLine();
             out.write(player.getPlayerStats());
             out.newLine();
-                    
+
             out.newLine();
             out.write(getPlayerGear());
             out.newLine();
