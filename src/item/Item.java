@@ -29,7 +29,12 @@ public class Item implements Serializable {
         this.gold = gold;
         this.shield = amour;
     }
-
+    
+    /**
+     * Returns the variables a item has.
+     * If a variable is 0 it is not valid and will not be shown.
+     * @return String 
+     */
     @Override
     public String toString() {
         String res = "";

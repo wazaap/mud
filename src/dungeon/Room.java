@@ -44,7 +44,11 @@ private static final long serialVersionUID = 19981017L;
     public void removeallMonsters() {
         monsters.clear();
     }
-
+    
+    /**
+     * Returns a string with all directions available.
+     * @return String
+     */
     public String availableDirections() {
         String res = "You can continue towards:" + System.getProperty("line.separator");
         if (this.north != -1) {
@@ -118,6 +122,11 @@ private static final long serialVersionUID = 19981017L;
         this.east = east;
     }
 
+    /**
+     * This method runs through the monsters arraylist and returns all monsters.
+     * If the amount of monsters is 0 or less it returns that no monsters are in the room.
+     * @return String
+     */
     public String getMonsters() {
         String res;
         if (this.monsters.size() > 0) {
@@ -143,11 +152,16 @@ private static final long serialVersionUID = 19981017L;
         this.monsters.remove(i);
     }
     
+    /**
+     * Runs trough the chest array.
+     * Returns a string with all items in a chest.
+     * @return String
+     */
     public String getItemsInChest() {
         String res = null;
         if (chest.size() > 0){
             for (int i = 0; i < chest.size(); i++){
-                res = chest.get(i).getName() + System.lineSeparator();
+                res += chest.get(i).getName() + System.lineSeparator();
             }
         }
         return res;

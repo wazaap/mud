@@ -18,7 +18,13 @@ import java.util.logging.Logger;
  * @author Mads
  */
 public class GameStarter {
-
+    
+    /**
+     * The main menu. Gives the player the choice between starting a new dungeon, loading a game or quitting the game.
+     * Prints out some awesome ASCII art!!
+     * @param outstream
+     * @param instream 
+     */
     public GameStarter(OutputStreamWriter outstream, InputStreamReader instream) {
         Game game;
         try {

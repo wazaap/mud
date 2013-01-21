@@ -123,10 +123,16 @@ public class Player implements Serializable {
     public Item getGearSlot2() {
         return slot2;
     }
-
+    
+    /**
+     * This method handles useable items (defined by itemtype). If a player uses a useable item the stats are added to the players stats
+     * and the item removed from the players inventory(arraylist).
+     * Returns a string with the action performed.
+     * @param itemNumber
+     * @return String
+     */
     public String useItem(int itemNumber) {
         String res = null;
-
         Item item;
         item = inventory.get(itemNumber);
         switch (item.getItemType()) {
@@ -147,7 +153,15 @@ public class Player implements Serializable {
         }
         return res;
     }
-
+    
+    /**
+     * This method equips a item to a slot of the players choice. If the player already has a item equipped in that slot,
+     * the item will be put in the inventory before the new item is removed from the inventory and added to the slot.
+     * Returns a string with the action performed.
+     * @param itemNumber
+     * @param slotNumber
+     * @return String
+     */
     public String equip(int itemNumber, int slotNumber) {
         String res;
         switch (slotNumber) {
@@ -180,7 +194,10 @@ public class Player implements Serializable {
     public void addToInventory(Item item) {
         inventory.add(item);
     }
-
+    /**
+     * Returns a string with the player stats.
+     * @return String
+     */
     public String getPlayerStats() {
         String res;
         res = "You have the following stats! " + System.lineSeparator();

@@ -6,7 +6,6 @@ package gameEngine;
 
 import character.Monster;
 import character.Player;
-
 import dungeon.Dungeon;
 import dungeon.Room;
 import fileio.FileIO;
@@ -149,6 +148,7 @@ public class Game implements Serializable {
         res += "Type \"search\" to search the room for treasure" + System.getProperty("line.separator");
         res += "Type \"use\" to use somthing in your inventory" + System.getProperty("line.separator");
         res += "Type \"gear\" to see what gear you got equipped" + System.getProperty("line.separator");
+        res += "Type \"inventory\" to see what gear you have in your inventory" + System.getProperty("line.separator");
         res += "Type \"savegame\" to save your progress" + System.getProperty("line.separator");
         res += "Type \"stop\" to quit the game." + System.lineSeparator();
         return res;
@@ -207,7 +207,7 @@ public class Game implements Serializable {
      */
     public String attack() {
         String res;
-
+        currentRoom = player.getCurrentRoom();
         if (currentRoom.amountOfMonsters() != 0) {
             player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
             currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
@@ -225,12 +225,10 @@ public class Game implements Serializable {
                 res += "You died a horrible death!" + System.getProperty("line.separator");
                 stop = true;
             }
-
             if ((currentRoom.getId()-1) == dungeon.getEndRoom() && currentRoom.amountOfMonsters() < 1) {
                 res += "You have completed the dungeon...";
                 stop = true;
             }
-
             return res;
         }
         return "There is no monsters left in the room." + System.getProperty("line.separator");
@@ -502,6 +500,7 @@ public class Game implements Serializable {
                         out.write("You have to enter a number. Please try again!" + System.lineSeparator());
                         out.write(System.getProperty("line.separator"));
                         out.flush();
+                        equipped = true;
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
@@ -615,7 +614,12 @@ public class Game implements Serializable {
         }
         return res;
     }
-
+/**
+ * Checks if the players xp is high enough to gain a new lvl.
+ * If the player has enough xp, he gains a lvl and his max hp is increased with 3/2
+ * returns true if he gains a lvl and false if he does not gain a lvl.
+ * @return boolean
+ */
     public boolean gainLevel() {
         if (this.player.getXp() > 100) {
             this.player.setXp(0);
