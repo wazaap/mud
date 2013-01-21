@@ -1,5 +1,12 @@
 Pencil#A sharpned pencil which you are able to stab monsters with#1#0#125#0#0
 Iron sword#A heavy sword, build to slaughter!#1#0#20#0#0
+Laptop#A computer you use to hit your opponent with#1#0#45#0#0
+Beer bottle#A beer bottle from one of the bar 44 parties you can use to hit your opponent#1#0#50#0#0
 Faxi Kondi Booster#Energydrink which gives you 10 hp!#3#10#0#0#0
+Coffee#A hot bewerage that gives you a minor hp boost!#3#5#0#0#0
+Mars Bar#A great snack which gives you a 20 hp boost#3#20#0#0#0
+Toast#A stale snack which gives you a 25 hp boost!#3#25#0#0#0
 Gold#Gold which you can use to buy items#4#0#0#10#0
+Diamond#A useless diamond, but its pretty to look at#4#0#0#50#0
 Anti-virus Shield#Help protecting you against monsters!#2#0#0#0#15
+Cap#Protects you agains the sun and against beeing hit on the head#2#0#0#0#10
