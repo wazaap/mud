@@ -226,7 +226,7 @@ public class Game implements Serializable {
                 stop = true;
             }
 
-            if (currentRoom.getId() == dungeon.getEndRoom() && currentRoom.amountOfMonsters() < 1) {
+            if ((currentRoom.getId()-1) == dungeon.getEndRoom() && currentRoom.amountOfMonsters() < 1) {
                 res += "You have completed the dungeon...";
                 stop = true;
             }

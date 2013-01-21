@@ -1,4 +1,4 @@
-Pencil#A sharpned pencil which you are able to stab monsters with#1#0#125#0#0
+Pencil#A sharpned pencil which you are able to stab monsters with#1#0#1000#0#0
 Iron sword#A heavy sword, build to slaughter!#1#0#20#0#0
 Laptop#A computer you use to hit your opponent with#1#0#45#0#0
 Beer bottle#A beer bottle from one of the bar 44 parties you can use to hit your opponent#1#0#50#0#0
