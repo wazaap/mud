@@ -106,7 +106,7 @@ public class FileIO implements Serializable {
             }
             Random gen = new Random();
             tempDungeon.getRoom(tempDungeon.getEndRoom()).removeallMonsters();
-            tempDungeon.getRoom(tempDungeon.getEndRoom()).addMonster(getAllMonsters().get(gen.nextInt(getAllMonsters().size())));
+            tempDungeon.getRoom(tempDungeon.getEndRoom()).addMonster(getAllBosses().get(gen.nextInt(getAllBosses().size())));
             
             return tempDungeon;
         } else {
