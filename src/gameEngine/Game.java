@@ -118,7 +118,7 @@ public class Game implements Serializable {
                     res += System.lineSeparator();
                     res += "You enter " + getCurrentRoom().getTitle() + System.getProperty("line.separator");
                     res += getCurrentRoom().getDescription() + System.getProperty("line.separator");
-                    res += player.getCurrentRoom().availableDirections() + System.getProperty("line.separator");
+                    res += player.getCurrentRoom().availableDirections();
                     return res;
                 }
             }
@@ -161,7 +161,7 @@ public class Game implements Serializable {
         res = currentRoom.getTitle() + System.getProperty("line.separator");
         res += currentRoom.getDescription() + System.getProperty("line.separator");
         res += currentRoom.availableDirections() + System.getProperty("line.separator");
-        res += currentRoom.getMonsters() + System.getProperty("line.separator");
+        res += currentRoom.getMonsters();
 
         return res;
     }
