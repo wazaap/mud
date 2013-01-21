@@ -123,7 +123,7 @@ private static final long serialVersionUID = 19981017L;
         if (this.monsters.size() > 0) {
             res = "You see the following monsters:"  + System.getProperty("line.separator");
             for (int i = 0; i < monsters.size(); i++) {
-                res += this.monsters.get(i).getName()  + System.getProperty("line.separator");
+                res += this.monsters.get(i).getName() + " - " + this.monsters.get(i).getDescription() + System.getProperty("line.separator");
             }
         } else {
             res = "You see no monsters in this room!" + System.getProperty("line.separator");
