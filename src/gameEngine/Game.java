@@ -316,11 +316,12 @@ public class Game implements Serializable {
             out.write("Welcome the this awsome sud " + player.getName());
             out.newLine();
             out.newLine();
-            out.write(dungeon.getDescription());
+            out.write(dungeon.getDescription().replace("$name", player.getName()));
             out.newLine();
             out.newLine();
             out.write(player.getPlayerStats());
             out.newLine();
+                    
             out.newLine();
             out.write(getPlayerGear());
             out.newLine();
