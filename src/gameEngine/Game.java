@@ -49,7 +49,7 @@ public class Game implements Serializable {
                 if (gen.nextInt(10) > 5) {
                     int amountOfMonsters = gen.nextInt(5) + 1;
                     for (int j = 0; j < amountOfMonsters; j++) {
-                        dungeon.getRoom(i).addMonster(monsters.get(nextMonster));
+                        dungeon.getRoom(i).addMonster((Monster)monsters.get(nextMonster).clone());
                         nextMonster = gen.nextInt(monsters.size());
                     }
                 }
@@ -83,7 +83,7 @@ public class Game implements Serializable {
     public Monster getRandomMonster() {
         Random gen = new Random();
         int num = gen.nextInt(monsters.size());
-        return monsters.get(num);
+        return (Monster) monsters.get(num).clone();
     }
 
     /**

@@ -14,6 +14,10 @@ import java.io.OutputStreamWriter;
  */
 public class LocalCMD {
 
+    /**
+     * 
+     * @param args 
+     */
     public static void main(String[] args) {
         // Gets a reader and a writer of the System: command-line
         OutputStreamWriter out = new OutputStreamWriter(System.out);

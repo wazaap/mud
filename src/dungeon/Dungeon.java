@@ -43,10 +43,6 @@ public class Dungeon implements Serializable {
         this.description = description;
     }
 
-
-    public Dungeon() {
-    }
-
     public void addRoom(Room newRoom) {
         rooms.add(newRoom);
     }

@@ -56,4 +56,3 @@
 56#-1#57#-1#47#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
 57#56#58#-1#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
 58#57#-1#-1#48#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
-

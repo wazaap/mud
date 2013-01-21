@@ -100,5 +100,4 @@ public class Item implements Serializable {
     public int getItemType() {
         return itemType;
     }
-    
 }

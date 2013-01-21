@@ -60,8 +60,6 @@ public class FileIO implements Serializable {
         } catch (FileNotFoundException ex) {
             System.out.println("ERROR: File: \"" + filepath + "\" could not be found!" + System.lineSeparator());
         }
-
-
         return res;
     }
 
