@@ -30,8 +30,6 @@ public class Game implements Serializable {
 
     private static final long serialVersionUID = 19981017L;
     private static final String newLine = System.getProperty("line.separator");
-    private Item sword;
-    private Item shield;
     private Player player;
     private Dungeon dungeon;
     private Room currentRoom;
@@ -217,23 +215,23 @@ public class Game implements Serializable {
     public String attack() {
         String res = null;
         if (currentRoom.amountOfMonsters() != 0) {
-                player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
-                currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
-                res = "You hit a " + currentRoom.getMonster(0).getName() + "! It now has " + currentRoom.getMonster(0).getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
-                res += "The " + currentRoom.getMonster(0).getName() + " hits you back! You now have " + player.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
-                if (currentRoom.getMonster(0).getHitPoints() < 1) {
-                    String monsterName = currentRoom.getMonster(0).getName();
-                    int gainedXp = currentRoom.getMonster(0).getXp();
-                    player.setXp(player.getXp() + gainedXp);
-                    currentRoom.removeMonster(0);
-                    res += "You have killed a " + monsterName + " and you gain " + gainedXp + " xp" + System.getProperty("line.separator");
-                    res += monsterDropsLoot();
-                }
-                if (player.getHitPoints() < 1) {
-                    res += "You died a horrible death!" + System.getProperty("line.separator");
-                    stop = true;
-                }
-            
+            player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
+            currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
+            res = "You hit a " + currentRoom.getMonster(0).getName() + "! It now has " + currentRoom.getMonster(0).getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
+            res += "The " + currentRoom.getMonster(0).getName() + " hits you back! You now have " + player.getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
+            if (currentRoom.getMonster(0).getHitPoints() < 1) {
+                String monsterName = currentRoom.getMonster(0).getName();
+                int gainedXp = currentRoom.getMonster(0).getXp();
+                player.setXp(player.getXp() + gainedXp);
+                currentRoom.removeMonster(0);
+                res += "You have killed a " + monsterName + " and you gain " + gainedXp + " xp" + System.getProperty("line.separator");
+                res += monsterDropsLoot();
+            }
+            if (player.getHitPoints() < 1) {
+                res += "You died a horrible death!" + System.getProperty("line.separator");
+                stop = true;
+            }
+
             return res;
         }
         return "There is no monsters left in the room." + System.getProperty("line.separator");
@@ -318,7 +316,11 @@ public class Game implements Serializable {
             out.write("Welcome the this awsome sud " + player.getName());
             out.newLine();
             out.newLine();
+            out.write(dungeon.getDescription());
+            out.newLine();
+            out.newLine();
             out.write(player.getPlayerStats());
+            out.newLine();
             out.newLine();
             out.write(getPlayerGear());
             out.newLine();
@@ -421,6 +423,11 @@ public class Game implements Serializable {
                         out.write("You have the following items in your backpack: " + System.lineSeparator());
                         out.write(this.getPlayerInventory());
                         out.flush();
+                        break;
+                    case "god":
+                        player.getInventory().add(items.get(1));
+                        player.getInventory().add(items.get(2));
+                        player.getInventory().add(items.get(3));
                         break;
                     default:
                         out.write("I do not understand the command: " + command);
