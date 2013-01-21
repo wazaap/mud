@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Thomas
  */
-public class Monster implements Serializable {
+public class Monster implements Serializable, Cloneable {
     private static final long serialVersionUID = 19981017L;
 
     private String name;
@@ -64,5 +64,17 @@ public class Monster implements Serializable {
 
     public void setAttackPoints(int attackPoints) {
         this.attackPoints = attackPoints;
+    }
+    
+    @Override
+    public Object clone() {
+        Monster clone = null;
+        try {
+            clone = (Monster) super.clone();         
+        }
+        catch(CloneNotSupportedException ex) {
+            System.out.println("Cloning went wrong.\n" + ex);
+        }
+        return clone;
     }
 }
