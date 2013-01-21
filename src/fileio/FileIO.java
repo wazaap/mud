@@ -17,6 +17,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -25,7 +26,8 @@ import java.util.ArrayList;
 public class FileIO implements Serializable {
     private static final long serialVersionUID = 19981017L;
 
-    public static final String RANDOM_MONSTERS_FILEPATH = "random-monsters.txt";
+    public static final String RANDOM_MONSTERS_FILEPATH = "characters/random-monsters.txt";
+    public static final String BOSSES_FILEPATH = "characters/bosses.txt";
     public static final String STANDARD_DUNGEON_FILEPATH = "testDungeon.txt";
     public static final String STANDARD_WEAPONS_PATH = "weapons.txt";
 
@@ -102,6 +104,10 @@ public class FileIO implements Serializable {
                 tempDungeon.addRoom(tempRoom);
 
             }
+            Random gen = new Random();
+            tempDungeon.getRoom(tempDungeon.getEndRoom()).removeallMonsters();
+            tempDungeon.getRoom(tempDungeon.getEndRoom()).addMonster(getAllMonsters().get(gen.nextInt(getAllMonsters().size())));
+            
             return tempDungeon;
         } else {
             return null;
@@ -116,6 +122,23 @@ public class FileIO implements Serializable {
      */
     public static ArrayList<Monster> getAllMonsters() {
         String[] strInput = readFile(RANDOM_MONSTERS_FILEPATH).split("\n");
+
+        ArrayList<Monster> monsters = new ArrayList<>();
+        for (int i = 0; i < strInput.length; i++) {
+            String[] arr = strInput[i].split("#");
+            Monster tempMonster = new Monster(
+                    arr[0],
+                    arr[1],
+                    Integer.parseInt(arr[2]),
+                    Integer.parseInt(arr[3]),
+                    Integer.parseInt(arr[4]));
+            monsters.add(tempMonster);
+        }
+        return monsters;
+    }
+    
+    public static ArrayList<Monster> getAllBosses() {
+        String[] strInput = readFile(BOSSES_FILEPATH).split("\n");
 
         ArrayList<Monster> monsters = new ArrayList<>();
         for (int i = 0; i < strInput.length; i++) {

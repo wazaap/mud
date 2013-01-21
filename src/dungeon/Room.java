@@ -40,6 +40,10 @@ private static final long serialVersionUID = 19981017L;
     public void addMonster(Monster monster) {
         this.monsters.add(monster);
     }
+   
+    public void removeallMonsters() {
+        monsters.clear();
+    }
 
     public String availableDirections() {
         String res = "You can continue towards:" + System.getProperty("line.separator");

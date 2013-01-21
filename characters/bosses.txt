@@ -1,0 +1,1 @@
+BOSS: Henrik Bulskov#Henrik Boulskov is the evil brother of Dr. Frankenstein. He is one of the toughest enemies to hit, as his existence is a NullPointerException in our dimension. Hes forces implements Cloneable and Runneable.#1000#10#18
