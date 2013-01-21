@@ -1,59 +1,58 @@
-29#52#This is a amazing dungeon with a description right here! $name
-1#-1#2#10#-1#Room#You enter a room.
-2#1#-1#11#-1#Room#You enter a room.
-3#-1#4#12#-1#Room#You enter a room.
-4#3#5#-1#-1#Room#You enter a room.
-5#4#6#13#-1#Room#You enter a room.
-6#5#7#-1#-1#Room#You enter a room.
-7#6#8#14#-1#Room#You enter a room.
-8#7#9#-1#-1#Room#You enter a room.
-9#8#-1#15#-1#Room#You enter a room.
-10#-1#-1#16#1#Room#You enter a room.
-11#-1#-1#17#2#Room#You enter a room.
-12#-1#-1#19#3#Room#You enter a room.
-13#-1#-1#-1#5#Room#You enter a room.
-14#-1#-1#22#7#Room#You enter a room.
-15#-1#-1#-1#9#Room#You enter a room.
-16#-1#-1#24#10#Room#You enter a room.
-17#-1#18#-1#11#Room#You enter a room.
-18#17#19#-1#-1#Room#You enter a room.
-19#18#20#-1#12#Room#You enter a room.
-20#19#-1#25#-1#Room#You enter a room.
-21#-1#22#27#-1#Room#You enter a room.
-22#21#23#-1#14#Room#You enter a room.
-23#22#-1#28#-1#Room#You enter a room.
-24#-1#-1#30#16#Room#You enter a room.
-25#-1#26#33#20#Room#You enter a room.
-26#25#27#-1#-1#Room#You enter a room.
-27#26#-1#-1#21#Room#You enter a room.
-28#-1#29#34#23#Room#You enter a room.
-29#28#-1#-1#-1#Entrance#You step into the entrance of CPH Business..
-30#-1#-31#35#24#Room#You enter a room.
-31#30#32#-1#-1#Room#You enter a room.
-32#31#-1#36#-1#Room#You enter a room.
-33#-1#-1#38#33#Room#You enter a room.
-34#-1#-1#41#28#Room#You enter a room.
-35#-1#-1#43#35#Room#You enter a room.
-36#-1#37#44#32#Room#You enter a room.
-37#36#38#-1#-1#Room#You enter a room.
-38#37#39#45#33#Room#You enter a room.
-39#38#40#-1#-1#Room#You enter a room.
-40#39#-1#46#-1#Room#You enter a room.
-41#-1#42#-1#34#Room#You enter a room.
-42#41#-1#48#-1#Room#You enter a room.
-43#-1#-1#35#49#Room#You enter a room.
-44#-1#-1#51#36#Room#You enter a room.
-45#-1#-1#53#38#Room#You enter a room.
-46#-1#47#-1#40#Room#You enter a room.
-47#46#-1#56#-1#Room#You enter a room.
-48#-1#-1#58#42#Room#You enter a room.
-49#-1#50#-1#43#Room#You enter a room.
-50#49#-1#-1#-1#Room#You enter a room.
-51#-1#52#-1#44#Room#You enter a room.
-52#51#-1#-1#-1#Teachers Lounge#End of the game!!!
-53#-1#54#-1#45#Room#You enter a room.
-54#53#-1#-1#-1#Room#You enter a room.
-56#-1#57#-1#47#Room#You enter a room.
-57#56#58#-1#-1#Room#You enter a room.
-58#57#-1#-1#48#Room#You enter a room.
-
+29#52#You have entered the amazing dungeon of CHP Business! The dungeon is know for its fierce monsters and incredible treasure of knowledge and the unlimited amount of beers at bar 44. And you $name have b
+1#-1#2#10#-1#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+2#1#-1#11#-1#kantina#The thick and sickining smell of ham and cheese toast hits your nostrils as you enter the room of neverending feasts!
+3#-1#4#12#-1#ladies room#You enter one of the more mysterious rooms of CPH Business. The ladies room. The scent of roses and neverending flow of soap, handcream and toiletpaper astonishes you!
+4#3#5#-1#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+5#4#6#13#-1#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+6#5#7#-1#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+7#6#8#14#-1#teachers office#You have entered one of the terrible rooms where the keepers of ancient knowledge used to spawn their evil schemes!.
+8#7#9#-1#-1#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+9#8#-1#15#-1#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+10#-1#-1#16#1#kantina#The thick and sickining smell of ham and cheese toast hits your nostrils as you enter the room of neverending feasts!
+11#-1#-1#17#2#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+12#-1#-1#19#3#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+13#-1#-1#-1#5#teachers office#You have entered one of the terrible rooms where the keepers of ancient knowledge used to spawn their evil schemes!.
+14#-1#-1#22#7#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+15#-1#-1#-1#9#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+16#-1#-1#24#10#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+17#-1#18#-1#11#teachers office#You have entered one of the terrible rooms where the keepers of ancient knowledge used to spawn their evil schemes!.
+18#17#19#-1#-1#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+19#18#20#-1#12#library#The room is filled with old books containing ancient knowledge. You see a large desl with a corpse of what used to be a hot librarian behind it.
+20#19#-1#25#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+21#-1#22#27#-1#kantina#The thick and sickining smell of ham and cheese toast hits your nostrils as you enter the room of neverending feasts!
+22#21#23#-1#14#Room#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+23#22#-1#28#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+24#-1#-1#30#16#teachers office#You have entered one of the terrible rooms where the keepers of ancient knowledge used to spawn their evil schemes!.
+25#-1#26#33#20#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+26#25#27#-1#-1#library#The room is filled with old books containing ancient knowledge. You see a large desl with a corpse of what used to be a hot librarian behind it.
+27#26#-1#-1#21#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+28#-1#29#34#23#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+29#28#-1#-1#-1#entrance.#You step into the entrance of CPH Business..
+30#-1#-31#35#24#teachers lounge#You have entered a dark and mysterious place where the keepers of ancient knowlegde used to roam and eat their lunch in during the breaks from torture.
+31#30#32#-1#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+32#31#-1#36#-1#principals office#You enter the old throneroom where the queen of CPH Business used to rule her kingdom!
+33#-1#-1#38#33#library#The room is filled with old books containing ancient knowledge. You see a large desl with a corpse of what used to be a hot librarian behind it.
+34#-1#-1#41#28#hallway#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+35#-1#-1#43#35#auditorium#You enter a large room filled with chairs in one end and a small stage in the other end. This is without a doubt the room where the queen gathers her servants for informative meetings.
+36#-1#37#44#32#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+37#36#38#-1#-1#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+38#37#39#45#33#hallway#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+39#38#40#-1#-1#office#This is the office where the administration makes sure all students get the proper torture..
+40#39#-1#46#-1#councillors office#The room you enter looks like it has been used for some sort of guidance. This might have been the room where they could help sudents decide what kinda of torture was best for them.
+41#-1#42#-1#34#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+42#41#-1#48#-1#teachers office#You have entered one of the terrible rooms where the keepers of ancient knowledge used to spawn their evil schemes!.
+43#-1#-1#35#49#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+44#-1#-1#51#36#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+45#-1#-1#53#38#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+46#-1#47#-1#40#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+47#46#-1#56#-1#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+48#-1#-1#58#42#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+49#-1#50#-1#43#Room#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
+50#49#-1#-1#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+51#-1#52#-1#44#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+52#51#-1#-1#-1#bar 44#You enter a large but dark room. The room contains an endless stream of beer and the music is never ending. The floor is sticky from old beer and the the air is thick with the smell of party!
+53#-1#54#-1#45#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+54#53#-1#-1#-1#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+56#-1#57#-1#47#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.
+57#56#58#-1#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
+58#57#-1#-1#48#classroom#You enter a room of torture. This is where the keepers of ancient knowledge used to punish the students.

@@ -24,7 +24,7 @@ public class Player implements Serializable {
     private Room currentRoom;
     private int xp = 0;
     private int maxHp = 100;
-    private int level = 0;
+    private int level = 1;
     ArrayList<Item> inventory = new ArrayList<>();
 
     public Player(String name, int hitPoints, Item slot1, Item slot2, int gold, Room room) {
@@ -159,11 +159,17 @@ public class Player implements Serializable {
                 res += "and you equip a " + this.slot1.getName() + " in slot 1" + System.lineSeparator();
                 break;
             case 2:
-                res = "You put your " + this.slot2.getName() + " in your backpack." + System.lineSeparator();
-                inventory.add(this.slot2);
-                this.slot2 = inventory.get(itemNumber);
-                inventory.remove(itemNumber);
-                res += "and you equip a " + this.slot2.getName() + " in slot 2" + System.lineSeparator();
+                if (this.slot2 == null) {
+                    this.slot2 = inventory.get(itemNumber);
+                    inventory.remove(itemNumber);
+                    res = "You equip a " + this.slot2.getName() + " in slot 2" + System.lineSeparator();
+                } else {
+                    res = "You put your " + this.slot2.getName() + " in your backpack." + System.lineSeparator();
+                    inventory.add(this.slot2);
+                    this.slot2 = inventory.get(itemNumber);
+                    inventory.remove(itemNumber);
+                    res += "and you equip a " + this.slot2.getName() + " in slot 2" + System.lineSeparator();
+                }
                 break;
             default:
                 res = "That slot does not exist!";
@@ -182,8 +188,8 @@ public class Player implements Serializable {
         res += "Healthpoints: " + this.hitPoints + System.lineSeparator();
         res += "Level: " + this.level + System.lineSeparator();
         res += "Experience points (xp): " + this.xp + System.lineSeparator();
-        
-        
+
+
         return res;
     }
 }
