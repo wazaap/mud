@@ -1,4 +1,4 @@
-29#52#You have entered the amazing dungeon of CHP Business! The dungeon is know for its fierce monsters and incredible treasure of knowledge and the unlimited amount of beers at bar 44. And you $name have b
+29#52#You have entered the amazing dungeon of CHP Business! The dungeon is know for its fierce monsters and incredible treasure of knowledge and the unlimited amount of beers at bar 44. And you $name have been selected by the pupils to find the source of this knowledge.
 1#-1#2#10#-1#mens room#The bathroom has a uncomfortable smell of urin and cheap soap. There is, as allways, a shortage of toiletpaper and soap.
 2#1#-1#11#-1#kantina#The thick and sickining smell of ham and cheese toast hits your nostrils as you enter the room of neverending feasts!
 3#-1#4#12#-1#ladies room#You enter one of the more mysterious rooms of CPH Business. The ladies room. The scent of roses and neverending flow of soap, handcream and toiletpaper astonishes you!
@@ -27,7 +27,7 @@
 26#25#27#-1#-1#library#The room is filled with old books containing ancient knowledge. You see a large desl with a corpse of what used to be a hot librarian behind it.
 27#26#-1#-1#21#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
 28#-1#29#34#23#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
-29#28#-1#-1#-1#entrance.#You step into the entrance of CPH Business..
+29#28#52#-1#-1#entrance.#You step into the entrance of CPH Business..
 30#-1#-31#35#24#teachers lounge#You have entered a dark and mysterious place where the keepers of ancient knowlegde used to roam and eat their lunch in during the breaks from torture.
 31#30#32#-1#-1#hallway.#The hallway is filled with tables, chairs and couches. The room has several dead plants that used to make the room look nice.
 32#31#-1#36#-1#principals office#You enter the old throneroom where the queen of CPH Business used to rule her kingdom!
