@@ -4,7 +4,7 @@
  */
 package userInterfaces;
 
-import gameEngine.GameStarter;
+import gameEngine.GameMenu;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -66,7 +66,7 @@ public class TelnetServer {
         @Override
         public void run() {
             try {
-                GameStarter game = new GameStarter(out, in);
+                GameMenu game = new GameMenu(out, in);
                 out.close();
                 in.close();
                 client.close();

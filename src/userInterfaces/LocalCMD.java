@@ -4,7 +4,7 @@
  */
 package userInterfaces;
 
-import gameEngine.GameStarter;
+import gameEngine.GameMenu;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
@@ -23,6 +23,6 @@ public class LocalCMD {
         OutputStreamWriter out = new OutputStreamWriter(System.out);
         InputStreamReader in = new InputStreamReader(System.in);
         
-        GameStarter game = new GameStarter(out, in);
+        GameMenu game = new GameMenu(out, in);
     }
 }

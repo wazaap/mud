@@ -24,12 +24,11 @@ import java.util.Random;
  * @author Mads
  */
 public class FileIO implements Serializable {
-    private static final long serialVersionUID = 19981017L;
 
-    public static final String RANDOM_MONSTERS_FILEPATH = "characters/random-monsters.txt";
-    public static final String BOSSES_FILEPATH = "characters/bosses.txt";
-    public static final String STANDARD_DUNGEON_FILEPATH = "testDungeon.txt";
-    public static final String STANDARD_WEAPONS_PATH = "weapons.txt";
+    private static final long serialVersionUID = 19981017L;
+    private static final String MONSTERS_FILEPATH = "characters/random-monsters.txt";
+    private static final String BOSSES_FILEPATH = "characters/bosses.txt";
+    private static final String STANDARD_WEAPONS_PATH = "weapons.txt";
 
     /**
      * Reads a file from a specified filepath, and returns a string with the
@@ -66,29 +65,26 @@ public class FileIO implements Serializable {
     }
 
     /**
-     * Reads a dungeon from a specified file.
+     * Reads a dungeon from a specified file, and adds a boss to the endroom of
+     * the dungeon. Returns the dungeon if the file is read correctly, otherwise
+     * null.
      *
-     * @return A dungeon
+     * @return dungeon The dungeon read from file
      */
     public static Dungeon readDungeon(String filepath) {
         String fileInput;
-        if (filepath == null) {
-            fileInput = readFile(STANDARD_DUNGEON_FILEPATH);
-        } else {
-            fileInput = readFile(filepath);
-        }
+        fileInput = readFile(filepath);
+
         Dungeon tempDungeon = new Dungeon();
-        
-        
+
         if (!"".equals(fileInput)) {
             String[] rooms = fileInput.split("\n");
-           
+
             String[] firstLineInfo = rooms[0].split("#");
-            tempDungeon.setStartRoom(Integer.parseInt(firstLineInfo[0])-1);
-            tempDungeon.setEndRoom(Integer.parseInt(firstLineInfo[1])-1);
+            tempDungeon.setStartRoom(Integer.parseInt(firstLineInfo[0]) - 1);
+            tempDungeon.setEndRoom(Integer.parseInt(firstLineInfo[1]) - 1);
             tempDungeon.setDescription(firstLineInfo[2]);
-        
-            
+
             // id, strLine, strLine, north, south, east, west
             for (int i = 1; i < rooms.length; i++) {
                 String[] arr = rooms[i].split("#");
@@ -104,10 +100,11 @@ public class FileIO implements Serializable {
                 tempDungeon.addRoom(tempRoom);
 
             }
+            // Add a random boss to the endroom of the dungeon
             Random gen = new Random();
-            tempDungeon.getRoom(tempDungeon.getEndRoom()).removeallMonsters();
-            tempDungeon.getRoom(tempDungeon.getEndRoom()).addMonster(getAllBosses().get(gen.nextInt(getAllBosses().size())));
-            
+            tempDungeon.getRoom(tempDungeon.getEndRoom()).
+                    addMonster(getAllBosses().get(gen.nextInt(getAllBosses().size())));
+
             return tempDungeon;
         } else {
             return null;
@@ -115,13 +112,13 @@ public class FileIO implements Serializable {
     }
 
     /**
-     * Reads a random monster from the 'random-monsters.txt' file. More monsters
-     * can be added there.
+     * Reads all monsters from the path to 'Random-monsters.txt', and returns an
+     * ArrayList containing them.
      *
-     * @return A random monster
+     * @return ArrayList of all monsters
      */
     public static ArrayList<Monster> getAllMonsters() {
-        String[] strInput = readFile(RANDOM_MONSTERS_FILEPATH).split("\n");
+        String[] strInput = readFile(MONSTERS_FILEPATH).split("\n");
 
         ArrayList<Monster> monsters = new ArrayList<>();
         for (int i = 0; i < strInput.length; i++) {
@@ -136,7 +133,7 @@ public class FileIO implements Serializable {
         }
         return monsters;
     }
-    
+
     public static ArrayList<Monster> getAllBosses() {
         String[] strInput = readFile(BOSSES_FILEPATH).split("\n");
 
@@ -155,10 +152,10 @@ public class FileIO implements Serializable {
     }
 
     /**
-     * Reads a random monster from the 'random-monsters.txt' file. More monsters
-     * can be added there.
+     * Reads all items from the path to 'weapons.txt', and returns an ArrayList
+     * containing them.
      *
-     * @return A random monster
+     * @return ArrayList of all monsters
      */
     public static ArrayList<Item> getAllItems() {
         String[] strArr = readFile(STANDARD_WEAPONS_PATH).split("\n");
@@ -178,10 +175,17 @@ public class FileIO implements Serializable {
                     Integer.parseInt(arr[6]));
             items.add(tempItem);
         }
-
         return items;
     }
 
+    /**
+     * Saves a game with a specific savegame-name. Returns a string which tells
+     * if the game was saved or not.
+     *
+     * @param game the game to be saved
+     * @param savedName the name of the saved game
+     * @return String telling if the game was saved or not
+     */
     public static String saveGame(Game game, String savedName) {
         String filename = "savegames/" + savedName + ".mud";
 
@@ -202,6 +206,12 @@ public class FileIO implements Serializable {
         return "Game was saved to: \"" + savedName + ".mud\"!";
     }
 
+    /**
+     * Reads a specified game from file, and returns the gameobject.
+     *
+     * @param filepath path to the savegame
+     * @return Game loaded game
+     */
     public static Game loadGame(String filepath) {
         String filename = "savegames/" + filepath;
 
@@ -220,9 +230,14 @@ public class FileIO implements Serializable {
             System.out.println(ex);
             return null;
         }
-        
     }
 
+    /**
+     * Returns a string containing a list of files in a specified folder.
+     *
+     * @param folder the folder to be searched
+     * @return String list of files
+     */
     public static String readFilesInFolder(String folder) {
         String res = "";
         File actual = new File(folder);
