@@ -50,7 +50,6 @@ public class Item implements Serializable {
         if (shield > 0) {
             res += this.name + ": " + this.description + " (Amour points: " + this.damage +")";
         }
-
         return res;
     }
 

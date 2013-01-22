@@ -5,7 +5,6 @@
 package dungeon;
 
 import character.Monster;
-import character.Player;
 import item.Item;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,8 +14,8 @@ import java.util.ArrayList;
  * @author Mads & Thomas
  */
 public class Room implements Serializable {
-private static final long serialVersionUID = 19981017L;
 
+    private static final long serialVersionUID = 19981017L;
     private int id;
     private int north;
     private int south;
@@ -40,16 +39,17 @@ private static final long serialVersionUID = 19981017L;
     public void addMonster(Monster monster) {
         this.monsters.add(monster);
     }
-   
-    public void removeallMonsters() {
+
+    public void clearlMonsters() {
         monsters.clear();
     }
-    
+
     /**
      * Returns a string with all directions available.
+     *
      * @return String
      */
-    public String availableDirections() {
+    public String getAvailableDirections() {
         String res = "You can continue towards:" + System.getProperty("line.separator");
         if (this.north != -1) {
             res += "[north]";
@@ -122,15 +122,21 @@ private static final long serialVersionUID = 19981017L;
         this.east = east;
     }
 
+    public ArrayList<Monster> getMonsters() {
+        return this.monsters;
+    }
+    
     /**
      * This method runs through the monsters arraylist and returns all monsters.
-     * If the amount of monsters is 0 or less it returns that no monsters are in the room.
+     * If the amount of monsters is 0 or less it returns that no monsters are in
+     * the room.
+     *
      * @return String
      */
-    public String getMonsters() {
+    public String getMonstersToString() {
         String res;
-        if (this.monsters.size() > 0) {
-            res = "You see the following monsters:"  + System.getProperty("line.separator");
+        if (!this.monsters.isEmpty()) {
+            res = "You see the following monsters:" + System.getProperty("line.separator");
             for (int i = 0; i < monsters.size(); i++) {
                 res += this.monsters.get(i).getName() + " - " + this.monsters.get(i).getDescription() + System.getProperty("line.separator");
             }
@@ -140,7 +146,7 @@ private static final long serialVersionUID = 19981017L;
         return res;
     }
 
-    public int amountOfMonsters() {
+    public int getAmountOfMonsters() {
         return this.monsters.size();
     }
 
@@ -151,31 +157,31 @@ private static final long serialVersionUID = 19981017L;
     public void removeMonster(int i) {
         this.monsters.remove(i);
     }
-    
+
     /**
-     * Runs trough the chest array.
-     * Returns a string with all items in a chest.
+     * Runs trough the chest array. Returns a string with all items in a chest.
+     *
      * @return String
      */
     public String getItemsInChest() {
         String res = null;
-        if (chest.size() > 0){
-            for (int i = 0; i < chest.size(); i++){
+        if (!chest.isEmpty()) {
+            for (int i = 0; i < chest.size(); i++) {
                 res += chest.get(i).getName() + System.lineSeparator();
             }
         }
         return res;
     }
-    
-    public void addItmeToChest(Item item){
+
+    public void addItemToChest(Item item) {
         chest.add(item);
     }
-    
-    public int chestSize(){
+
+    public int getChestSize() {
         return chest.size();
     }
-    
-    public ArrayList<Item> getChest(){
+
+    public ArrayList<Item> getChest() {
         return chest;
     }
 }

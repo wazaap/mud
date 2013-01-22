@@ -63,7 +63,7 @@ public class Game implements Serializable {
                 if (gen.nextInt(10) > 7) {
                     int amountOfItems = gen.nextInt(3) + 1;
                     for (int j = 0; j < amountOfItems; j++) {
-                        dungeon.getRoom(i).addItmeToChest(items.get(nextChest));
+                        dungeon.getRoom(i).addItemToChest(items.get(nextChest));
                         nextChest = gen.nextInt(items.size() - 1);
                     }
                 }
@@ -90,7 +90,7 @@ public class Game implements Serializable {
         currentRoom = player.getCurrentRoom();
         String res;
         int moveTo = 0;
-        while (currentRoom.amountOfMonsters() > 0) {
+        while (!currentRoom.getMonsters().isEmpty()) {
             res = "In your attempt to escape, a " + currentRoom.getMonster(0).getName() + " blocks your path" + System.getProperty("line.separator");
             return res;
         }
@@ -117,7 +117,7 @@ public class Game implements Serializable {
                     res += System.lineSeparator();
                     res += "You enter " + getCurrentRoom().getTitle() + System.getProperty("line.separator");
                     res += getCurrentRoom().getDescription() + System.getProperty("line.separator");
-                    res += player.getCurrentRoom().availableDirections();
+                    res += player.getCurrentRoom().getAvailableDirections();
                     return res;
                 }
             }
@@ -160,8 +160,8 @@ public class Game implements Serializable {
         String res;
         res = currentRoom.getTitle() + System.getProperty("line.separator");
         res += currentRoom.getDescription() + System.getProperty("line.separator");
-        res += currentRoom.availableDirections() + System.getProperty("line.separator");
-        res += currentRoom.getMonsters();
+        res += currentRoom.getAvailableDirections() + System.getProperty("line.separator");
+        res += currentRoom.getMonstersToString();
 
         return res;
     }
@@ -176,7 +176,7 @@ public class Game implements Serializable {
     public String search() {
         currentRoom = player.getCurrentRoom();
         String res = "You start searching the room....";
-        if (currentRoom.chestSize() > 0) {
+        if (currentRoom.getChestSize() > 0) {
             res += "You find a treasure chest in the corner..." + System.lineSeparator();
             res += "You pick up the following items from the chest and put them in your backpack" + System.lineSeparator();
             res += currentRoom.getItemsInChest();
@@ -208,7 +208,7 @@ public class Game implements Serializable {
     public String attack() {
         String res;
         currentRoom = player.getCurrentRoom();
-        if (currentRoom.amountOfMonsters() != 0) {
+        if (currentRoom.getAmountOfMonsters() != 0) {
             player.setHitPoints(player.getHitPoints() - currentRoom.getMonster(0).getAttackPoints());
             currentRoom.getMonster(0).setHitPoints((currentRoom.getMonster(0).getHitPoints() - player.getWeapon().getDamage()));
             res = "You hit a " + currentRoom.getMonster(0).getName() + "! It now has " + currentRoom.getMonster(0).getHitPoints() + " healthpoints left!" + System.getProperty("line.separator");
@@ -225,7 +225,7 @@ public class Game implements Serializable {
                 res += "You died a horrible death!" + System.getProperty("line.separator");
                 stop = true;
             }
-            if ((currentRoom.getId()-1) == dungeon.getEndRoom() && currentRoom.amountOfMonsters() < 1) {
+            if ((currentRoom.getId()-1) == dungeon.getEndRoom() && currentRoom.getAmountOfMonsters() < 1) {
                 res += "You have completed the dungeon...";
                 stop = true;
             }
@@ -329,7 +329,7 @@ public class Game implements Serializable {
             out.newLine();
             out.write(this.getCurrentRoom().getDescription());
             out.newLine();
-            out.write(this.getCurrentRoom().availableDirections());
+            out.write(this.getCurrentRoom().getAvailableDirections());
             out.newLine();
             out.flush();
 
@@ -555,7 +555,7 @@ public class Game implements Serializable {
         Random random = new Random();
         int rooms;
         String res;
-        if (currentRoom.amountOfMonsters() > 0) {
+        if (currentRoom.getAmountOfMonsters() > 0) {
             if (random.nextInt(100) > 90) {
                 res = "In your attempt to flee a " + currentRoom.getMonster(0) + " blocks the path and you start to fight.";
                 res += attack();
