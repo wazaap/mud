@@ -53,7 +53,7 @@ public class Game implements Serializable {
             // Add treasure chests to rooms
             for (int i = 0; i < dungeon.size(); i++) {
                 int nextChest = gen.nextInt(items.size() - 1);
-                if (gen.nextInt(10) > 7) {
+                if (gen.nextInt(10) > 6) {
                     int amountOfItems = gen.nextInt(3) + 1;
                     for (int j = 0; j < amountOfItems; j++) {
                         dungeon.getRoom(i).addItemToChest(items.get(nextChest));
@@ -414,7 +414,7 @@ public class Game implements Serializable {
                         out.flush();
                         break;
                     case "inventory":
-                        out.write("You have the following items in your backpack: " + System.lineSeparator());
+                        out.write(System.lineSeparator());
                         out.write(this.getPlayerInventory());
                         out.flush();
                         break;

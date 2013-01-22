@@ -164,7 +164,7 @@ public class Room implements Serializable {
      * @return String
      */
     public String getItemsInChest() {
-        String res = null;
+        String res = "";
         if (!chest.isEmpty()) {
             for (int i = 0; i < chest.size(); i++) {
                 res += chest.get(i).getName() + System.lineSeparator();
