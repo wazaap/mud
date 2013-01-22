@@ -18,6 +18,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,7 +30,7 @@ public class FileIO implements Serializable {
     private static final long serialVersionUID = 19981017L;
     private static final String MONSTERS_FILEPATH = "characters/random-monsters.txt";
     private static final String BOSSES_FILEPATH = "characters/bosses.txt";
-    private static final String STANDARD_WEAPONS_PATH = "weapons.txt";
+    private static final String STANDARD_WEAPONS_PATH = "data/items.txt";
 
     /**
      * Reads a file from a specified filepath, and returns a string with the
@@ -227,7 +229,7 @@ public class FileIO implements Serializable {
             return myGame;
 
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println(ex);
+            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

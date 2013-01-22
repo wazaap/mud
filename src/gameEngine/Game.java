@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 public class Game implements Serializable {
 
     private static final long serialVersionUID = 19981017L;
-    private static final String newLine = System.getProperty("line.separator");
     private Player player;
     private Dungeon dungeon;
     private Room currentRoom;
@@ -36,29 +35,23 @@ public class Game implements Serializable {
     private ArrayList<Monster> monsters = FileIO.getAllMonsters();
     private boolean stop = false;
 
-    public Game(String dungeonPath, OutputStreamWriter newOut, InputStreamReader newIn) {
+    public Game(String dungeonPath) {
+        Random gen = new Random();
         // Initialize the dungeon
         dungeon = FileIO.readDungeon(dungeonPath);
         if (dungeon != null) {
-
             // Add monsters to rooms
             for (int i = 0; i < dungeon.size(); i++) {
-                if (i != dungeon.getEndRoom()) {
-                    Random gen = new Random();
-                    int nextMonster = gen.nextInt(monsters.size());
-                    if (gen.nextInt(10) > 5) {
+                if (i != dungeon.getEndRoom() && gen.nextInt(10) > 5) {
                         int amountOfMonsters = gen.nextInt(5) + 1;
                         for (int j = 0; j < amountOfMonsters; j++) {
-                            dungeon.getRoom(i).addMonster((Monster) monsters.get(nextMonster).clone());
-                            nextMonster = gen.nextInt(monsters.size());
-                        }
+                            dungeon.getRoom(i).addMonster(getRandomMonster());                        
                     }
                 }
             }
 
             // Add treasure chests to rooms
             for (int i = 0; i < dungeon.size(); i++) {
-                Random gen = new Random();
                 int nextChest = gen.nextInt(items.size() - 1);
                 if (gen.nextInt(10) > 7) {
                     int amountOfItems = gen.nextInt(3) + 1;
@@ -71,8 +64,11 @@ public class Game implements Serializable {
         }
     }
 
-    //gets a random monster from the monster ArrayList
-    public Monster getRandomMonster() {
+    /**
+     * Gets a random monster from the monster ArrayList
+     * @return Monster
+     */
+    private Monster getRandomMonster() {
         Random gen = new Random();
         int num = gen.nextInt(monsters.size());
         return (Monster) monsters.get(num).clone();
@@ -123,7 +119,7 @@ public class Game implements Serializable {
             }
 
         }
-        res = "You walk into the wall.. AND IT HURTS!!" + System.getProperty("line.separator");
+        res = "You walk into the wall.. AND IT HURTS!" + System.getProperty("line.separator");
         return res;
     }
 
@@ -137,7 +133,7 @@ public class Game implements Serializable {
      *
      * @return String
      */
-    public String help() {
+    public String getHelp() {
         String res = "You can use the following commands:" + System.getProperty("line.separator");
         res += "Type \"north\" to go towards the north" + System.getProperty("line.separator");
         res += "Type \"south\" to go towards the south" + System.getProperty("line.separator");
@@ -200,7 +196,7 @@ public class Game implements Serializable {
      * This method subtracts the attack points of a monster from your hit points
      * and vice versa. After subtraction it checks if either of you have 0 or
      * less hit points to determine if anybody is dead. If the monster is dead,
-     * it runs the monsterDropsLoot() method for a chance of finding loot on the
+     * it runs the getMonsterDropsLoot() method for a chance of finding loot on the
      * corpse. If you are dead the game ends.
      *
      * @return String
@@ -219,7 +215,7 @@ public class Game implements Serializable {
                 player.setXp(player.getXp() + gainedXp);
                 currentRoom.removeMonster(0);
                 res += "You have killed a " + monsterName + " and you gain " + gainedXp + " xp" + System.getProperty("line.separator");
-                res += monsterDropsLoot();
+                res += getMonsterDropsLoot();
             }
             if (player.getHitPoints() < 1) {
                 res += "You died a horrible death!" + System.getProperty("line.separator");
@@ -242,7 +238,7 @@ public class Game implements Serializable {
      *
      * @return String
      */
-    public String monsterDropsLoot() {
+    public String getMonsterDropsLoot() {
         String res;
         Random gen = new Random();
         if (gen.nextInt(100) > 75) {
@@ -250,7 +246,7 @@ public class Game implements Serializable {
             player.addToInventory(items.get(tmp));
             res = "You search the corpse and loot a " + items.get(tmp).getName() + System.lineSeparator();
         } else {
-            res = "You find nothing of value on the corpse.." + System.lineSeparator();
+            res = "You find nothing of value on the corpse." + System.lineSeparator();
         }
         return res;
     }
@@ -371,7 +367,7 @@ public class Game implements Serializable {
                         out.flush();
                         break;
                     case "help":
-                        out.write(this.help());
+                        out.write(this.getHelp());
                         out.newLine();
                         out.flush();
                         break;
@@ -436,7 +432,7 @@ public class Game implements Serializable {
                 }
             }
         } catch (IOException | NullPointerException ex) {
-            System.out.println("Håndteret fejl?" + ex);
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -631,3 +627,4 @@ public class Game implements Serializable {
         return false;
     }
 }
+        

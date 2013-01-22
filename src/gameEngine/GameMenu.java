@@ -37,7 +37,7 @@ public class GameMenu {
                 // Indlæs og skriv velkomstskærmen
                 outstream.write(System.getProperty("line.separator"));
                 outstream.write(System.getProperty("line.separator"));
-                try (FileReader inputStream = new FileReader("welcome.txt")) {
+                try (FileReader inputStream = new FileReader("data/welcome.txt")) {
                     int c;
                     while ((c = inputStream.read()) != -1) {
                         outstream.write((char) c);
@@ -69,7 +69,7 @@ public class GameMenu {
                         outstream.write("Type the name of the dungeon you want to load:" + System.getProperty("line.separator"));
                         outstream.flush();
                         String dungeon = "dungeons\\" + in.readLine();
-                        Game newGame = new Game(dungeon, outstream, instream);
+                        Game newGame = new Game(dungeon);
                         newGame.run(outstream, instream);
                         break;
                     case "l":
