@@ -43,9 +43,9 @@ public class Game implements Serializable {
             // Add monsters to rooms
             for (int i = 0; i < dungeon.size(); i++) {
                 if (i != dungeon.getEndRoom() && gen.nextInt(10) > 5) {
-                        int amountOfMonsters = gen.nextInt(5) + 1;
-                        for (int j = 0; j < amountOfMonsters; j++) {
-                            dungeon.getRoom(i).addMonster(getRandomMonster());                        
+                    int amountOfMonsters = gen.nextInt(5) + 1;
+                    for (int j = 0; j < amountOfMonsters; j++) {
+                        dungeon.getRoom(i).addMonster(getRandomMonster());
                     }
                 }
             }
@@ -66,6 +66,7 @@ public class Game implements Serializable {
 
     /**
      * Gets a random monster from the monster ArrayList
+     *
      * @return Monster
      */
     private Monster getRandomMonster() {
@@ -196,8 +197,8 @@ public class Game implements Serializable {
      * This method subtracts the attack points of a monster from your hit points
      * and vice versa. After subtraction it checks if either of you have 0 or
      * less hit points to determine if anybody is dead. If the monster is dead,
-     * it runs the getMonsterDropsLoot() method for a chance of finding loot on the
-     * corpse. If you are dead the game ends.
+     * it runs the getMonsterDropsLoot() method for a chance of finding loot on
+     * the corpse. If you are dead the game ends.
      *
      * @return String
      */
@@ -221,7 +222,7 @@ public class Game implements Serializable {
                 res += "You died a horrible death!" + System.getProperty("line.separator");
                 stop = true;
             }
-            if ((currentRoom.getId()-1) == dungeon.getEndRoom() && currentRoom.getAmountOfMonsters() < 1) {
+            if ((currentRoom.getId() - 1) == dungeon.getEndRoom() && currentRoom.getAmountOfMonsters() < 1) {
                 res += "You have completed the dungeon...";
                 stop = true;
             }
@@ -285,7 +286,7 @@ public class Game implements Serializable {
         return res;
     }
 
-    public final void run(OutputStreamWriter newOut, InputStreamReader newIn) {
+    public final void run(OutputStreamWriter newOut, InputStreamReader newIn) throws IOException {
 
         OutputStreamWriter ostream = newOut;
         BufferedWriter out = new BufferedWriter(ostream);
@@ -295,7 +296,7 @@ public class Game implements Serializable {
 
         try {
             // Introduction to the loaded game.
-            String command;
+            String command = null;
             out.newLine();
             out.newLine();
             out.write("-------------------------------------");
@@ -339,7 +340,9 @@ public class Game implements Serializable {
                 out.write("What would you like to do:");
                 out.newLine();
                 out.flush();
+                
                 command = in.readLine();
+                
                 switch (command) {
                     case "stop":
                         out.write("You quit the game!");
@@ -430,9 +433,10 @@ public class Game implements Serializable {
                         out.newLine();
                         out.flush();
                 }
+
             }
-        } catch (IOException | NullPointerException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException | java.net.SocketException ex) {
+            System.out.println("dasdas");
         }
     }
 
@@ -610,12 +614,14 @@ public class Game implements Serializable {
         }
         return res;
     }
-/**
- * Checks if the players xp is high enough to gain a new lvl.
- * If the player has enough xp, he gains a lvl and his max hp is increased with 3/2
- * returns true if he gains a lvl and false if he does not gain a lvl.
- * @return boolean
- */
+
+    /**
+     * Checks if the players xp is high enough to gain a new lvl. If the player
+     * has enough xp, he gains a lvl and his max hp is increased with 3/2
+     * returns true if he gains a lvl and false if he does not gain a lvl.
+     *
+     * @return boolean
+     */
     public boolean gainLevel() {
         if (this.player.getXp() > 100) {
             this.player.setXp(0);
@@ -627,4 +633,3 @@ public class Game implements Serializable {
         return false;
     }
 }
-        

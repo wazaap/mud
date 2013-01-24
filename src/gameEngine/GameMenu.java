@@ -92,7 +92,7 @@ public class GameMenu {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Closed connection.");
         }
     }
 }

@@ -37,7 +37,7 @@ public class TelnetServer {
             myServer = new ServerSocket(4444);
             while (true) {
                 myClient = myServer.accept();
-
+                System.out.println("Connection opened.");
                 Thread t = new Thread(new ClientGame(myClient));
                 t.start();
             }
